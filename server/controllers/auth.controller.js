@@ -20,6 +20,8 @@
  // Signup
  exports.signup = (req, res) => {
    // Creates user and adds to database
+   console.log(req.body)
+
    User.create({
      username: req.body.username,
      email: req.body.email,
