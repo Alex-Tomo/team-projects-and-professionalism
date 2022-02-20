@@ -56,6 +56,6 @@
  db.lessons.belongsTo(db.user, { foreignKey: 'user_id' })
  
  // Role oulines.
- db.ROLES = ['user', 'admin']
+ db.ROLES = ['user', 'admin', 'tutor']
  
  module.exports = db 

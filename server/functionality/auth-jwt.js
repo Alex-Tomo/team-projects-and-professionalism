@@ -15,18 +15,23 @@
  
  // Token verification
  verifyToken = (req, res, next) => {
-   const token = req.headers['x-access-token']
- 
+   let token = req.headers['authorization']
+   console.log(token)
+
+  if(token.includes("Bearer")){
+    token = token.substring(7, token.length)
+  }
+
    if (!token) {
-     return res.status(403).send({
-       message: 'No token provided!'
+     return res.status(404).send({
+       message: '404 Page Not Found'
      })
    }
  
    jwt.verify(token, config.secret, (err, decoded) => {
      if (err) {
        return res.status(401).send({
-         message: 'Unauthorized!'
+         message: 'Token Expired'
        })
      }
      req.userId = decoded.id
@@ -46,33 +51,53 @@
        }
  
        res.status(403).send({
-         message: 'Require Admin Role!'
+         message: 'Require Admin Role'
        })
      })
    })
  }
- 
- // Initially for mod/admin roles but removed admin as was not required at the moment.
- isModeratorOrAdmin = (req, res, next) => {
-   User.findByPk(req.userId).then(user => {
-     user.getRoles().then(roles => {
-       for (let i = 0; i < roles.length; i++) {
-         if (roles[i].name === 'admin') {
-           next()
-           return
-         }
-       }
- 
-       res.status(403).send({
-         message: 'Admin Role!'
-       })
-     })
-   })
- }
+
+ isTutor = (req, res, next) => {
+  User.findByPk(req.userId).then(user => {
+    user.getRoles().then(roles => {
+      for (let i = 0; i < roles.length; i++) {
+        if (roles[i].name === 'tutor') {
+          next()
+          return
+        }
+      }
+
+      res.status(403).send({
+        message: 'Require tutor Role!'
+      })
+    })
+  })
+}
+
+isTutorAdmin = (req, res, next) => {
+  User.findByPk(req.userId).then(user => {
+    user.getRoles().then(roles => {
+      for (let i = 0; i < roles.length; i++) {
+        if (roles[i].name === "tutor") {
+          next();
+          return;
+        }
+        if (roles[i].name === "admin") {
+          next();
+          return;
+        }
+      }
+      res.status(403).send({
+        message: "Only tutors/admins can access this content"
+      });
+    });
+  });
+};
  
  const authJwt = {
    verifyToken: verifyToken,
    isAdmin: isAdmin,
-   isModeratorOrAdmin: isModeratorOrAdmin
+   isTutor: isTutor,
+   isTutorAdmin: isTutorAdmin
  }
  module.exports = authJwt 

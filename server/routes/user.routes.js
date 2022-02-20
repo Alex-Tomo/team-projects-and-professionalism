@@ -18,17 +18,24 @@
    app.use(function (req, res, next) {
      res.header(
        'Access-Control-Allow-Headers',
-       'x-access-token, Origin, Content-Type, Accept'
+       'Authorization, Origin, Content-Type, Accept'
      )
      next()
    })
  
+   //Everyone can see this route including non-signed in account
    app.get('/api/test/all', controller.allAccess)
  
+   //Everyone logged in can see this route
    app.get('/api/test/user', [authJwt.verifyToken], controller.userBoard)
  
+   //Only admins can see this route
    app.get('/api/test/admin', [authJwt.verifyToken, authJwt.isAdmin], controller.adminBoard)
- 
+   
+   //Tutors and admins can see this route
+   app.get('/api/test/tutor', [authJwt.verifyToken, authJwt.isTutorAdmin], controller.tutorBoard)
+
+   //Test route for lessons can be removed
    app.get('/api/test/lessons', [authJwt.verifyToken], controller.lessons)
 
    // Get all the users for the admin section (Account management)
