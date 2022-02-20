@@ -59,7 +59,7 @@
    })
      .then(user => {
        if (!user) {
-         return res.status(404).send({ message: 'User Not found.' })
+         return res.status(404).send({ message: 'Invalid Username/Password' })
        }
  
        const passwordIsValid = bcrypt.compareSync(
@@ -70,13 +70,13 @@
        if (!passwordIsValid) {
          return res.status(401).send({
            accessToken: null,
-           message: 'Invalid Password!'
+           message: 'Invalid Username/Password'
          })
        }
  
        const token = jwt.sign({ id: user.id }, config.secret, {
          // Expiration of token.
-         expiresIn: 86400
+         expiresIn: 172800
        })
  
        const authorities = []
