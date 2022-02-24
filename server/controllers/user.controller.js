@@ -24,6 +24,10 @@
  exports.adminBoard = (req, res) => {
    res.status(200).send('This is the admin Content.')
  }
+
+ exports.tutorBoard = (req, res) => {
+  res.status(200).send('This is the tutor Content.')
+}
  
  exports.lessons = (req, res) => {
    const token = req.headers['x-access-token'].split('.')

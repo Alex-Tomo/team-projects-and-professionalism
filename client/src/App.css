@@ -1,0 +1,14 @@
+@import 'bulma/css/bulma.css';
+
+.centerall {
+    height: 100vh;
+    padding: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box-size{
+width: 500px !important;
+}
