@@ -1,54 +1,150 @@
 import React from "react"
+import axios from "axios"
 import AdminTable from "./admin/AdminTable";
-import {Accounts} from "./admin/Accounts"
+import authHeader from "../services/auth-header";
 
 class Admin extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      results: []
+      results: [],
+      page: 1,
+      search: ""
     }
+
+    this.handleSearch = this.handleSearch.bind(this)
   }
 
   componentDidMount() {
-    fetch('http://localhost:8080/api/admin/users', {
-      method: 'POST',
-      mode: 'cors',
-      crossDomain: true,
-      headers: {
-        'Access-Control-Allow-Headers': 'x-access-token',
-        'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsImlhdCI6MTY0NDg2NTk1OSwiZXhwIjoxNjQ0OTUyMzU5fQ.KSgJ-tyHZd8pbr5r_wB2Yl8Bi9t8wQUFoPPz11LHiz4'
-      }
-    })
-    .then(r => {
-      return r.json()
-    })
-    .then(r => {
-      this.setState({ results: r })
-    })
-    .catch(e => {
+    axios.post('http://localhost:8080/api/admin/users', null, {
+      headers: authHeader()
+    }).then(r => {
+      this.setState({ results: r.data })
+    }).catch(e => {
       console.log(e)
     })
   }
 
-  render() {
+  handlePreviousClick = () => {
+    this.setState({page: (this.state.page - 1)})
+  }
+
+  handleNextClick = () => {
+    this.setState({page: (this.state.page + 1)})
+  }
+
+  handlePaginationClick = (e) => {
+    let button = e.target
+
+    let li = document.getElementById('pagination-list-id').getElementsByTagName('li')
+
+    for (let i = 0; i < li.length; i++) {
+      let buttons = li[i].getElementsByTagName('button')
+      for (let j = 0; j < buttons.length; j++) {
+        if (buttons[j] !== undefined) {
+          buttons[j].classList.remove("is-current")
+        }
+      }
+    }
+
+    button.classList.add("is-current")
+    this.setState({page: parseInt(e.target.innerText)})
+  }
+
+  handleSearch = (e) => {
+    this.setState({
+      search: e.target.value,
+      page: 1
+    })
+  }
+
+  filterSearch = (s) => {
+    console.log(s)
+    console.log(this.state.search)
+
     return (
-      <div style={{width: "80%", margin: "auto"}}>
-        <h1 className="account-management-title">Account Management</h1>
+      s.username.toLowerCase().includes(this.state.search.toLowerCase()) ||
+      s.email.toLowerCase().includes(this.state.search.toLowerCase()) ||
+      s.role.toLowerCase().includes(this.state.search.toLowerCase()) ||
+      s.dateAdded.toLowerCase().includes(this.state.search.toLowerCase())
+    )
+  }
+
+  render() {
+
+    let buttons = ""
+    let results = this.state.results
+
+    if ((this.state.results.length > 0) && (this.state.search !== undefined)) {
+      results = this.state.results.filter(this.filterSearch)
+    }
+
+    if(this.state.results.length > 0) {
+      const pageSize = 25
+      let pageMax = this.state.page * pageSize
+      let pageMin = pageMax - pageSize
+
+      buttons = (
+        <div
+          className="pagination is-rounded"
+          role="navigation"
+          aria-label="pagination"
+        >
+          <button
+            className="pagination-previous button"
+            onClick={this.handlePreviousClick}
+            disabled={this.state.page <= 1}>Previous
+          </button>
+          <button
+            className="pagination-next button"
+            onClick={this.handleNextClick}
+            disabled={this.state.page >= Math.ceil(this.state.results.length / pageSize)}>Next page
+          </button>
+
+          <ul
+            id="pagination-list-id"
+            className="pagination-list"
+          >
+
+            <li>
+              <button
+                className="pagination-link is-current button"
+                aria-label="Goto page 1"
+                onClick={this.handlePaginationClick}>1
+              </button>
+            </li>
+
+            <li>
+              <span className="pagination-ellipsis">&hellip;</span>
+            </li>
+
+            <li>
+              <button
+                className="pagination-link button"
+                aria-label={"Goto page" + Math.ceil(this.state.results.length / pageSize)}
+                onClick={this.handlePaginationClick}>{Math.ceil(this.state.results.length / pageSize)}
+              </button>
+            </li>
+
+          </ul>
+
+        </div>
+      )
+
+      results = results.slice(pageMin, pageMax)
+    }
+
+    return (
+      <div style={{width: "80%", margin: "20px auto auto auto"}}>
+        <h1 className="account-management-title title">Account Management</h1>
         <div className="account-management-title-line"/>
 
-        <AdminTable results={this.state.results}/>
+        <AdminTable results={results} handleSearch={this.handleSearch} />
 
         <div className="users-table-footer">
-          <p>Showing {this.state.results.length} results</p>
-          <div className="results-buttons">
-            <button className="active-button">1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>4</button>
-            <button>&gt;</button>
-          </div>
+          <p>Showing {results.length} of {this.state.results.length} results</p>
+          {buttons}
         </div>
       </div>
     )
