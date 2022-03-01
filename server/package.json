@@ -4,7 +4,7 @@
   "description": "Learning platform for Kip McGrath tutoring.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --detectOpenHandles"
   },
   "keywords": [
     "learning",
@@ -21,5 +21,12 @@
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3",
     "sequelize": "^6.15.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "jest": "^27.5.1",
+    "superagent": "^7.1.1",
+    "supertest": "^6.2.2"
   }
 }
