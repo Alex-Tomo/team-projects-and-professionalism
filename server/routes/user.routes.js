@@ -37,4 +37,14 @@
 
    //Test route for lessons can be removed
    app.get('/api/test/lessons', [authJwt.verifyToken], controller.lessons)
+
+   // Get all the users for the admin section (Account management)
+   // TODO: all 4 functions below should check for either an admin token OR a tutor token
+   app.post('/api/admin/users', [authJwt.verifyToken, authJwt.isAdmin], controller.adminUsers)
+
+   app.post('/api/admin/adduser', [authJwt.verifyToken, authJwt.isAdmin], controller.adminAddUser)
+
+   app.post('/api/admin/edituser', [authJwt.verifyToken, authJwt.isAdmin], controller.adminEditUser)
+
+   app.post('/api/admin/removeuser', [authJwt.verifyToken, authJwt.isAdmin], controller.adminRemoveUser)
  }
