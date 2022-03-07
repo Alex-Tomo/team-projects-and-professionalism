@@ -4,11 +4,7 @@
 /client/node_modules
 /server/node_modules
 /.idea
-/img
 /questions.sql
-/insert_questions.sql
-/triggers_questions.sql
-/uploadingSVGFiles.md
 /.pnp
 .pnp.js
 
