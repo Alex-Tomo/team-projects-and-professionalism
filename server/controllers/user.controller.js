@@ -10,7 +10,7 @@
  */
 
  const db = require('../schema')
- const { tokenIdCheck } = require('../functionality/')
+ const { tokenIdCheck } = require('../functionality')
  const User = db.user
  
  exports.allAccess = (req, res) => {
@@ -45,6 +45,52 @@
      res.status(200).json(lessons)
    })
  }
+
+
+exports.mathsLesson = (req, res) => {
+    db.math.findAll()
+        .then(r => {
+            console.log(r)
+        }).catch(e => {
+            console.log(e)
+        })
+}
+
+exports.englishStory = (req, res) => {
+    db.englishStory.findAll()
+        .then(r => {
+            console.log(r)
+        }).catch(e => {
+            console.log(e)
+        })
+}
+
+exports.englishLesson = (req, res) => {
+    db.english.findAll()
+        .then(r => {
+            console.log(r)
+        }).catch(e => {
+            console.log(e)
+        })
+}
+
+exports.verbalLesson = (req, res) => {
+    db.verbalReasoning.findAll()
+        .then(r => {
+            console.log(r)
+        }).catch(e => {
+            console.log(e)
+        })
+}
+
+// exports.nonVerbalLesson = (req, res) => {
+//     db.nonVerbalReasoning.findAll()
+//         .then(r => {
+//             console.log(r)
+//         }).catch(e => {
+//             console.log(e)
+//         })
+// }
 
 // Get all the users for the admin section (Account management)
 // TODO: modify so it checked for admin token or tutor token

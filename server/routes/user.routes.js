@@ -10,8 +10,8 @@
  * @author Jordan Short, Alex Thompson
  */
 
- const { authJwt } = require('../functionality')
- const controller = require('../controllers/user.controller')
+const { authJwt } = require('../functionality')
+const controller = require("../controllers/user.controller");
 
  // Sets and allows headers instead of using cors to just allow all.
  module.exports = function (app) {
@@ -38,7 +38,20 @@
    //Test route for lessons can be removed
    app.get('/api/test/lessons', [authJwt.verifyToken], controller.lessons)
 
-   app.post('/api/admin/users', [authJwt.verifyToken, authJwt.isAdmin], controller.adminUsers)
+
+ app.get('/api/mathslesson', [authJwt.verifyToken], controller.mathsLesson)
+
+ app.get('/api/englishstory', [authJwt.verifyToken], controller.englishStory)
+
+ app.get('/api/englishlesson', [authJwt.verifyToken], controller.englishLesson)
+
+ app.get('/api/verballesson', [authJwt.verifyToken], controller.verbalLesson)
+
+ // app.get('/api/nonverballesson', [authJwt.verifyToken], controller.nonVerbalLesson)
+
+
+
+ app.post('/api/admin/users', [authJwt.verifyToken, authJwt.isAdmin], controller.adminUsers)
 
    app.post('/api/admin/adduser', [authJwt.verifyToken, authJwt.isAdmin], controller.adminAddUser)
 

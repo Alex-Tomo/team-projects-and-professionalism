@@ -5,6 +5,9 @@
 /server/node_modules
 /.idea
 /questions.sql
+/triggers_questions.sql
+/insert_questions.sql
+/img
 /.pnp
 .pnp.js
 
