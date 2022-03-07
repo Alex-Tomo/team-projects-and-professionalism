@@ -1,4 +1,6 @@
 import React from "react"
+import authHeader from "../../services/auth-header";
+import axios from "axios";
 
 class AddUser extends React.Component {
   constructor(props) {
@@ -20,27 +22,27 @@ class AddUser extends React.Component {
 
   addUser = () => {
     if(this.state.username.trim() === "") {
-      alert("error")
+      alert("Username field cannot be empty")
       return
     }
     if(this.state.email.trim() === "") {
-      alert("error")
+      alert("Email field cannot be empty")
       return
     }
     if(this.state.password.trim() === "") {
-      alert("error")
+      alert("Password field cannot be empty")
       return
     }
     if(this.state.repeatPassword.trim() === "") {
-      alert("error")
+      alert("Repeated password field cannot be empty")
       return
     }
     if(this.state.password !== this.state.repeatPassword) {
-      alert("error")
+      alert("Passwords do not match")
       return
     }
     if(this.state.role < 1 || this.state.role > 3) {
-      alert("error")
+      alert("Invalid role")
       return
     }
 
@@ -59,21 +61,14 @@ class AddUser extends React.Component {
     }
     formBody = formBody.join("&");
 
-    fetch('http://localhost:8080/api/auth/signup', {
-      method: 'POST',
-      mode: 'cors',
-      crossDomain: true,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-      },
-      body: formBody
-    })
-    .then(() => {
-      alert("successfully added!")
-    })
-    .catch(e => {
-      console.log(e)
-    })
+    // axios.post('http://localhost:8080/api/auth/signup', null, {
+    //   headers: authHeader(),
+    //   body: formBody
+    // }).then(() => {
+    //   alert("successfully added!")
+    // }).catch(e => {
+    //   console.log(e)
+    // })
   }
 
   handleUsername = (e) => {
@@ -100,43 +95,70 @@ class AddUser extends React.Component {
             display: "flex",
             justifyContent: "center"
           }}>
-            <h1 style={{margin: "auto"}}>Add User</h1>
-            <button onClick={this.props.closeAddUser}>X</button>
+            <h1
+              className="title"
+              style={{margin: "auto"}}>Add User
+            </h1>
+            <button
+              className="button"
+              onClick={this.props.closeAddUser}>X
+            </button>
           </div>
 
-          <label htmlFor="name">Name:</label>
-          <input type="text" name="name" onChange={this.handleUsername} />
+          <input
+            style={{width: "50%"}}
+            className="input is-normal"
+            type="text"
+            name="name"
+            placeholder="Username..."
+            onChange={this.handleUsername} />
           <br/>
           <br/>
 
-          <label htmlFor="email">Email:</label>
-          <input type="email" name="email" onChange={this.handleEmail} />
+          <input
+            style={{width: "50%"}}
+            className="input is-normal"
+            type="email"
+            name="email"
+            placeholder="Email..."
+            onChange={this.handleEmail} />
           <br/>
           <br/>
 
-          {/* TODO: Edit this to fit with the 3 roles DB currently has 2 options */}
-          <label htmlFor="role">Role:</label>
-          <select defaultValue={1} name="role" onChange={this.handleChange}>
-            {/*<option value="Student">Student</option>*/}
-            {/*<option value="Tutor">Tutor</option>*/}
-            {/*<option value="Admin">Admin</option>*/}
+          <select
+            className="select is-normal"
+            defaultValue={0} name="role"
+            onChange={this.handleChange}
+          >
+            <option value={0}>   --- Select a Role---   </option>
             <option value={1}>User</option>
             <option value={2}>Admin</option>
+            <option value={3}>Tutor</option>
           </select>
           <br/>
           <br/>
 
-          <label htmlFor="password">Password:</label>
-          <input type="password" name="password" onChange={this.handlePassword} />
+          <input
+            style={{width: "50%"}}
+            className="input is-normal"
+            type="password"
+            name="password"
+            placeholder="Password..."
+            onChange={this.handlePassword} />
           <br/>
           <br/>
 
-          <label htmlFor="repeatPassword">Repeat Password:</label>
-          <input type="password" name="repeatPassword" onChange={this.handleRepeatPassword} />
+          <input
+            style={{width: "50%"}}
+            className="input is-normal"
+            type="password"
+            name="repeatPassword"
+            placeholder="Repeat Password..."
+            onChange={this.handleRepeatPassword} />
           <br/>
           <br/>
 
-          <button onClick={this.addUser}>Add User</button>
+          <button className="button" onClick={this.addUser}>Add User</button>
         </div>
       </div>
     )

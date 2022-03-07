@@ -52,6 +52,8 @@
    db.user.findAll()
      .then(async r => {
        let result = []
+       console.log(r)
+
        for (const element of r) {
 
          await db.role.findOne({

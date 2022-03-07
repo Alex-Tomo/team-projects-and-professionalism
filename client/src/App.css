@@ -1,3 +1,18 @@
+@import 'bulma/css/bulma.css';
+
+.centerall {
+  height: 100vh;
+  padding: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-box-size{
+  width: 500px !important;
+}
+
 .App {
   text-align: center;
 }
@@ -39,6 +54,7 @@
 
 
 /** @author Alex Thompson - W19007452 for the admin component(s) */
+
 .account-management-title {
   text-align: start;
   margin-bottom: 7.5px;
@@ -89,21 +105,9 @@
   border-bottom: 25px solid #FFFFFF;
 }
 
-tbody > tr {
-  background-color: #FAFAFA;
-}
-
-tbody > tr:nth-child(odd) {
-  background-color: #F5F5F5;
-}
-
 th {
   padding: 10px 0;
   background-color: #FAFAFA;
-}
-
-td {
-  padding: 10px 0;
 }
 
 .users-table-footer {
@@ -147,7 +151,7 @@ td {
 #overlay div {
   background-color: #FFFFFF;
   width: 80%;
-  margin: 20px auto;
+  margin: 75px auto 20px auto;
   padding: 0 0 20px 0;
   cursor: default;
 }

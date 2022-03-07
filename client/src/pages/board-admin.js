@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import Admin from "../components/Admin"
 import UserService from "../services/user.service"
 import AuthService from "../services/auth.service"
 
@@ -37,7 +38,7 @@ class BoardUser extends Component {
     return (
       <div>
         <header className="container has-text-centered">
-          <h3>{this.state.content}</h3>
+          <Admin />
         </header>
       </div>
     )
