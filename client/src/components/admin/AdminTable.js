@@ -1,7 +1,9 @@
 import React from "react"
-import Checkbox from "./Checkbox";
-import EditUser from "./EditUser";
-import AddUser from "./AddUser";
+import axios from "axios"
+import Checkbox from "./Checkbox"
+import EditUser from "./EditUser"
+import AddUser from "./AddUser"
+import authHeader from "../../services/auth-header";
 
 class AdminTable extends React.Component {
   constructor(props) {
@@ -83,10 +85,12 @@ class AdminTable extends React.Component {
     {alert(`User ${userId} Dashboard`)}
   }
 
-  addUser = () => {
+  addUser = (e) => {
     this.setState({
       addUser: <AddUser closeAddUser={() => {this.setState({addUser: ""})}} />
     })
+
+    document.getElementById('add-button').blur()
   }
 
   editUser = () => {
@@ -104,6 +108,8 @@ class AdminTable extends React.Component {
         closeEditUser={() => {this.setState({editUser: ""})}}
       />
     })
+
+    document.getElementById('edit-button').blur()
   }
 
   removeUser = () => {
@@ -130,23 +136,14 @@ class AdminTable extends React.Component {
     }
     formBody = formBody.join("&");
 
-    fetch('http://localhost:8080/api/admin/removeuser', {
-      method: 'POST',
-      mode: 'cors',
-      crossDomain: true,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-        'Access-Control-Allow-Headers': 'x-access-token',
-        'x-access-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsImlhdCI6MTY0NDg2NTk1OSwiZXhwIjoxNjQ0OTUyMzU5fQ.KSgJ-tyHZd8pbr5r_wB2Yl8Bi9t8wQUFoPPz11LHiz4'
-      },
+    axios.post('http://localhost:8080/api/admin/removeuser', null, {
+      headers: authHeader(),
       body: formBody
+    }).then(() => {
+      alert("successfully added!")
+    }).catch(e => {
+      console.log(e)
     })
-      .then(() => {
-        alert("successfully added!")
-      })
-      .catch(e => {
-        console.log(e)
-      })
   }
 
   render() {
@@ -164,6 +161,7 @@ class AdminTable extends React.Component {
           <td>{email}</td>
           <td>{role}</td>
           <td>{dateAdded.toString().split('T')[0]}</td>
+          <td>NULL</td>
         </tr>
       )
     })
@@ -175,15 +173,21 @@ class AdminTable extends React.Component {
         <div className="users-table-options">
           <h2 style={{ textAlign: "start" }}>All Accounts</h2>
           <p>{this.state.numSelected} Selected</p>
-          <div className="users-table-options-buttons">
-            <button onClick={this.addUser}>Add</button>
-            <button onClick={this.editUser} disabled={this.state.numSelected !== 1}>Edit</button>
-            <button onClick={this.removeUser} disabled={this.state.numSelected < 1}>Remove</button>
-            <input type="search" placeholder="Search" />
+          <div className="field has-addons">
+            <p className="control">
+              <button id="add-button" className="button" onClick={this.addUser}>Add</button>
+            </p>
+            <p className="control">
+              <button id="edit-button" className="button" onClick={this.editUser} disabled={this.state.numSelected !== 1}>Edit</button>
+            </p>
+            <p className="control">
+              <button id="remove-button" className="button is-danger" onClick={this.removeUser} disabled={this.state.numSelected < 1}>Remove</button>
+            </p>
+            <input type="search" placeholder="Search" onChange={this.props.handleSearch} />
           </div>
         </div>
 
-        <table className="users-table">
+        <table className="table is-striped users-table">
           <thead>
           <tr className="table-row-head">
             <th>
@@ -197,6 +201,7 @@ class AdminTable extends React.Component {
             <th>Email</th>
             <th>Role</th>
             <th>Date Added</th>
+            <th>Added By</th>
           </tr>
           </thead>
           <tbody>
