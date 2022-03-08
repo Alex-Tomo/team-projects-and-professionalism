@@ -1,0 +1,32 @@
+{
+  "name": "kip_learning_platform",
+  "version": "1.0.0",
+  "description": "Learning platform for Kip McGrath tutoring.",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest --detectOpenHandles"
+  },
+  "keywords": [
+    "learning",
+    "node.js",
+    "platform",
+    "tutoring"
+  ],
+  "author": "Jordan Short, Alex Thompson, Graham Stoves, Jake Garnett, Titas Sriubas",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.15.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "jest": "^27.5.1",
+    "superagent": "^7.1.1",
+    "supertest": "^6.2.2"
+  }
+}
