@@ -4,11 +4,13 @@
 /client/node_modules
 /server/node_modules
 /.idea
-/img
 /questions.sql
-/insert_questions.sql
 /.pnp
 .pnp.js
+/img
+/insert_questions.sql
+/uploadingSVGFiles.md
+
 
 # testing
 /coverage
