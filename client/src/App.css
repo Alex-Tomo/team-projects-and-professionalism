@@ -157,3 +157,60 @@ th {
 }
 
 
+
+/** @author Graham Stoves - w19025672 for the generating questions component(s)*/
+
+.login-box-size{
+    width: 500px !important;
+}
+
+a{
+    color: black;
+}
+
+.column figure{
+    background-color: #656565;
+    border-radius: 8px;
+}
+
+#topic:hover{
+    background-color: #d8d7d717;
+    border-radius: 8px;
+}
+
+.line{
+    border: solid 2px black;
+    background-color: black;
+    border-radius: 10px;
+    width: 57px;
+    margin-top: 0;
+}
+
+#question-container{
+    width: 100%;
+}
+
+#englishContainer{
+    display: flow-root;
+}
+
+#storyText{
+    width: 60%;
+    white-space: pre;           /* CSS 2.0 */
+    white-space: pre-wrap;      /* CSS 2.1 */
+    white-space: pre-line;      /* CSS 3.0 */
+    white-space: -pre-wrap;     /* Opera 4-6 */
+    white-space: -o-pre-wrap;   /* Opera 7 */
+    white-space: -moz-pre-wrap; /* Mozilla */
+    white-space: -hp-pre-wrap;  /* HP Printers */
+    word-wrap: break-word;      /* IE 5+ */
+}
+
+#progressBar::-webkit-progress-value{
+    width: 100%;
+    transition: width 0.7s ease;
+}
+
+/*.progress::-webkit-progress-value {
+    transition: width 0.5s ease;
+  }*/
