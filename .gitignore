@@ -4,9 +4,10 @@
 /client/node_modules
 /server/node_modules
 /.idea
-/img
 /questions.sql
+/triggers_questions.sql
 /insert_questions.sql
+/img
 /.pnp
 .pnp.js
 

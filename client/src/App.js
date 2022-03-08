@@ -6,6 +6,7 @@ import Admin from "./pages/board-admin"
 import Tutor from "./pages/board-tutor"
 import Nav from "./components/layout/navbar"
 import Home from "./pages/home"
+import QuestionTest from "./pages/QuestionTest"
 function App() {
   return (
     <BrowserRouter>
@@ -16,6 +17,7 @@ function App() {
               <Route path="user" element={<User />}/>
               <Route path="/tutor" element={<Tutor />}/>
               <Route path="admin" element={<Admin />}/>
+              <Route path="/test" element={<QuestionTest />}/>
             <Route path="*" element={<h1>404 Not Found</h1>}/>
           </Routes>
     </BrowserRouter>

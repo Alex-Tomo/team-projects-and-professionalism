@@ -7,12 +7,12 @@
  * examples can be seen below. To add an admin only route you must add [authJwt.verifyToken, authJwt.isAdmin],
  * again examples can be seen below.
  *
- * @author Jordan Short
+ * @author Jordan Short, Alex Thompson
  */
 
- const { authJwt } = require('../functionality')
- const controller = require('../controllers/user.controller')
- 
+const { authJwt } = require('../functionality')
+const controller = require("../controllers/user.controller");
+
  // Sets and allows headers instead of using cors to just allow all.
  module.exports = function (app) {
    app.use(function (req, res, next) {
@@ -22,25 +22,36 @@
      )
      next()
    })
- 
+
    //Everyone can see this route including non-signed in account
    app.get('/api/test/all', controller.allAccess)
- 
+
    //Everyone logged in can see this route
    app.get('/api/test/user', [authJwt.verifyToken], controller.userBoard)
- 
+
    //Only admins can see this route
    app.get('/api/test/admin', [authJwt.verifyToken, authJwt.isAdmin], controller.adminBoard)
-   
+
    //Tutors and admins can see this route
    app.get('/api/test/tutor', [authJwt.verifyToken, authJwt.isTutorAdmin], controller.tutorBoard)
 
    //Test route for lessons can be removed
    app.get('/api/test/lessons', [authJwt.verifyToken], controller.lessons)
 
-   // Get all the users for the admin section (Account management)
-   // TODO: all 4 functions below should check for either an admin token OR a tutor token
-   app.post('/api/admin/users', [authJwt.verifyToken, authJwt.isAdmin], controller.adminUsers)
+
+ app.get('/api/mathslesson', [authJwt.verifyToken], controller.mathsLesson)
+
+ app.get('/api/englishstory', [authJwt.verifyToken], controller.englishStory)
+
+ app.get('/api/englishlesson', [authJwt.verifyToken], controller.englishLesson)
+
+ app.get('/api/verballesson', [authJwt.verifyToken], controller.verbalLesson)
+
+ // app.get('/api/nonverballesson', [authJwt.verifyToken], controller.nonVerbalLesson)
+
+
+
+ app.post('/api/admin/users', [authJwt.verifyToken, authJwt.isAdmin], controller.adminUsers)
 
    app.post('/api/admin/adduser', [authJwt.verifyToken, authJwt.isAdmin], controller.adminAddUser)
 
