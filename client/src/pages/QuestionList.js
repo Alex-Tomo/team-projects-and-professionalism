@@ -2,8 +2,6 @@ import React from "react";
 import PageTitle from "../components/PageTitle";
 import Test from "./Questions";
 import { Link } from "react-router-dom";
-import authHeader from "../../services/auth-header";
-import UserService from "../../services/user.service";
 
 class QuestionList extends React.Component {
     render() {

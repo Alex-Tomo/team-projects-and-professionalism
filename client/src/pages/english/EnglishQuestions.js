@@ -124,7 +124,7 @@ class EnglishQuestions extends React.Component {
             )
         }
 
-        if (this.state.questionList.length > 0 && this.state.currentIndex >= 0) {
+        if (this.state.questionList.length > 0 && this.state.currentIndex >= 0 && this.state.storyList.length > 0) {
             console.log(this.state.questionList[this.state.currentIndex].answer)
             title = this.state.storyList[this.state.storyIndex].title
             story = this.state.storyList[this.state.storyIndex].story
