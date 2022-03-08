@@ -22,16 +22,16 @@ const controller = require("../controllers/user.controller");
      )
      next()
    })
- 
+
    //Everyone can see this route including non-signed in account
    app.get('/api/test/all', controller.allAccess)
- 
+
    //Everyone logged in can see this route
    app.get('/api/test/user', [authJwt.verifyToken], controller.userBoard)
- 
+
    //Only admins can see this route
    app.get('/api/test/admin', [authJwt.verifyToken, authJwt.isAdmin], controller.adminBoard)
-   
+
    //Tutors and admins can see this route
    app.get('/api/test/tutor', [authJwt.verifyToken, authJwt.isTutorAdmin], controller.tutorBoard)
 
