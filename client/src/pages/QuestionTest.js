@@ -20,24 +20,25 @@ class QuestionTest extends React.Component {
                     loggedIn: true
                 })
             },
-            (error) => {
-                this.setState({
-                    content:
-                        (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                        error.message ||
-                        error.toString()
-                })
-            }
-        ).then(() => {
-            axios.get('http://localhost:8080/api/mathslesson', { headers: authHeader() })
-                .then(res => {
-                    console.log(res)
-                }).catch(e => {
-                console.log("error: " + e)
+                (error) => {
+                    this.setState({
+                        content:
+                            (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                            error.message ||
+                            error.toString()
+                    })
+                }
+            ).then(() => {
+                axios.get('http://localhost:8080/api/mathslesson', { headers: authHeader() })
+                    .then(res => {
+                        console.log(res)
+
+                    }).catch(e => {
+                        console.log("error: " + e)
+                    })
             })
-        })
     }
 
     render() {
