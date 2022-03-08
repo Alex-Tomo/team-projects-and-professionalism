@@ -48,7 +48,7 @@ class NonVerbalQuestions extends React.Component {
     }
 
     nextQuestionHandler = e => {
-        if (this.state.currentIndex != this.state.questionList.length - 1) {
+        if (this.state.currentIndex !== this.state.questionList.length - 1) {
             this.checkAnswer()
             this.setState({
                 currentIndex: this.state.currentIndex + 1,
@@ -65,10 +65,10 @@ class NonVerbalQuestions extends React.Component {
     }
 
     render() {
-        let question = ""
+        //let question = ""
 
         if (this.state.questionList.length > 0 && this.state.currentIndex >= 0) {
-            question = this.state.questionList[this.state.currentIndex].question
+            //question = this.state.questionList[this.state.currentIndex].question
         }
 
         if (this.state.currentIndex === -1) {
@@ -87,7 +87,7 @@ class NonVerbalQuestions extends React.Component {
             )
         }
 
-        console.log(this.state.questionList[this.state.currentIndex].question);
+        //console.log(this.state.questionList[this.state.currentIndex].question);
         console.log(this.state.questionList[this.state.currentIndex].answer);
 
         return (
@@ -108,9 +108,9 @@ class NonVerbalQuestions extends React.Component {
                                 <progress id="progressBar" className="progress is-primary mt-0" value={this.state.currentIndex} max="5"></progress>
 
 
-                                <img className="mt-0">
+                                {/*<img className="mt-0">
                                     {question}
-                                </img>
+                                </img>*/}
 
                                 <input
                                     style={{ width: "100px" }}

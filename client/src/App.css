@@ -206,6 +206,11 @@ a{
     word-wrap: break-word;      /* IE 5+ */
 }
 
-#progressBar{
+#progressBar::-webkit-progress-value{
     width: 100%;
+    transition: width 0.7s ease;
 }
+
+/*.progress::-webkit-progress-value {
+    transition: width 0.5s ease;
+  }*/

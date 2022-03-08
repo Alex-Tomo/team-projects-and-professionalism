@@ -97,7 +97,7 @@ class EnglishQuestions extends React.Component {
             console.log("Well done")
         }
 
-        if (this.state.currentIndex != this.state.questionList.length - 1) {
+        if (this.state.currentIndex !== this.state.questionList.length - 1) {
             this.setState({
                 currentIndex: this.state.currentIndex + 1,
                 userAnswer: null

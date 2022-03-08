@@ -1,7 +1,6 @@
 import React from "react";
 import PageTitle from "../components/PageTitle";
 import Test from "./Questions";
-import { Link } from "react-router-dom";
 
 class QuestionList extends React.Component {
     render() {

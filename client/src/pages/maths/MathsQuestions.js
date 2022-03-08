@@ -75,7 +75,7 @@ class MathQuestions extends React.Component {
             arr[i] = ""
         }
 
-        if (this.state.currentIndex != this.state.questionList.length - 1) {
+        if (this.state.currentIndex !== this.state.questionList.length - 1) {
             await this.setState({
                 currentIndex: this.state.currentIndex + 1,
                 userAnswer: null,
@@ -149,7 +149,7 @@ class MathQuestions extends React.Component {
             }
 
             if (this.state.questionList[this.state.currentIndex].question_type === 5) {
-                let listItems = []
+                //let listItems = []
                 let text = this.state.questionList[this.state.currentIndex].question;
                 console.log(text)
                 //const words = text.split(" ")

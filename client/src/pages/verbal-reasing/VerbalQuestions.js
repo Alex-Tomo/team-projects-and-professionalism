@@ -60,22 +60,6 @@ class VerbalQuestions extends React.Component {
             })
     }
 
-    handleChange(e) {
-        this.setState({
-            userAnswer: e.target.value,
-            val: e.target.value
-        });
-    }
-
-    checkAnswer = () => {
-        if (this.state.userAnswer === this.state.questionList[this.state.currentIndex].answer) {
-            this.setState({
-                score: this.state.score + 1
-            })
-            console.log("Well done!")
-        }
-    }
-
     nextQuestionHandler = async () => {
         let string = this.state.questionList[this.state.currentIndex].answer
         let array = string.split(',');
@@ -91,7 +75,7 @@ class VerbalQuestions extends React.Component {
             arr[i] = ""
         }
 
-        if (this.state.currentIndex != this.state.questionList.length - 1) {
+        if (this.state.currentIndex !== this.state.questionList.length - 1) {
             await this.setState({
                 currentIndex: this.state.currentIndex + 1,
                 userAnswer: null,
