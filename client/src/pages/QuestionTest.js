@@ -20,7 +20,6 @@ class QuestionTest extends React.Component {
                     loggedIn: true
                 })
             },
-<<<<<<< HEAD
                 (error) => {
                     this.setState({
                         content:
@@ -40,26 +39,6 @@ class QuestionTest extends React.Component {
                         console.log("error: " + e)
                     })
             })
-=======
-            (error) => {
-                this.setState({
-                    content:
-                        (error.response &&
-                            error.response.data &&
-                            error.response.data.message) ||
-                        error.message ||
-                        error.toString()
-                })
-            }
-        ).then(() => {
-            axios.get('http://localhost:8080/api/mathslesson', { headers: authHeader() })
-                .then(res => {
-                    console.log(res)
-                }).catch(e => {
-                console.log("error: " + e)
-            })
-        })
->>>>>>> 765f8d850a3d348bf537100e686482219fb18127
     }
 
     render() {
