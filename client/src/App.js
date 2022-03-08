@@ -7,6 +7,7 @@ import Tutor from "./pages/board-tutor"
 import Nav from "./components/layout/navbar"
 import Home from "./pages/home"
 import QuestionTest from "./pages/QuestionTest"
+<<<<<<< HEAD
 import QuestionList from './pages/QuestionList';
 import MathQuestions from './pages/maths/MathsQuestions';
 import EnglishQuestions from './pages/english/EnglishQuestions';
@@ -36,6 +37,23 @@ function App() {
             </Routes>
         </BrowserRouter>
     );
+=======
+function App() {
+  return (
+    <BrowserRouter>
+          <Nav />
+            <Routes>
+              <Route path="/" element={<Home />}/>
+              <Route path='/login' element={<Login />}/>
+              <Route path="user" element={<User />}/>
+              <Route path="/tutor" element={<Tutor />}/>
+              <Route path="admin" element={<Admin />}/>
+              <Route path="/test" element={<QuestionTest />}/>
+            <Route path="*" element={<h1>404 Not Found</h1>}/>
+          </Routes>
+    </BrowserRouter>
+  );
+>>>>>>> 765f8d850a3d348bf537100e686482219fb18127
 }
 
 export default App;
