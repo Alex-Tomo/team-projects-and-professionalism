@@ -25,6 +25,7 @@ class Login extends Component {
             message: ""
         }
     }
+
     onChangeUsername(e) {
         this.setState({
             username: e.target.value
@@ -52,7 +53,7 @@ class Login extends Component {
                             ? (this.props.navigate("/user"), window.location.reload())
                             : userRole === "ROLE_TUTOR"
                                 ? (this.props.navigate("/tutor"), window.location.reload())
-                                : this.props.navigate("/404")
+                                : this.props.navigate("/404")             
                 return roleservice
             },
             (error) => {
@@ -71,7 +72,7 @@ class Login extends Component {
     }
     render() {
         return (
-            <div className="container is-max-desktop centerall login-box-size">
+            <div className="container is-max-desktop login-box-size">
                 <form
                     onSubmit={this.handleLogin}
                     ref={(c) => {
@@ -79,12 +80,12 @@ class Login extends Component {
                     }}
                     className="box"
                 >
-                    <h1 className="is-size-4 has-text-centered has-text-weight-medium">
+                    <h1 className="is-size-4 has-text-centered has-text-weight-bold">
                         Login
                     </h1>
                     {this.state.message && (
                         <div>
-                            <div role="alert">{this.state.message}</div>
+                            <div className="has-text-centered has-text-weight-bold has-text-danger fade-in" role="alert">{this.state.message}</div>
                         </div>
                     )}
                     <div className="field">
@@ -114,8 +115,14 @@ class Login extends Component {
                             />
                         </div>
                     </div>
+                    <div className="has-text-right"><a>Forgot your password?</a></div>
+                    <label className="check-cont">
+                    <input type="checkbox" />
+                    <span className="checkmark"></span>
+                    Remember me
+                    </label>
 
-                    <button className="button is-info">Sign in</button>
+                    <button className="sign-btn is-clickable">Sign in</button>
                 </form>
             </div>
         )

@@ -34,11 +34,13 @@ class BoardTutor extends Component {
         )
     }
     render() {
+        const username = JSON.parse(localStorage.getItem('user')).username;
         return (
             <div>
-                <header className="container has-text-centered">
-                    <h3>{this.state.content}</h3>
-                </header>
+                <section className="section is-medium sub-home-background">
+                    <h1 className="dashboard heading">Welcome Back, {username}!</h1>
+                    <h2 className="dashboard sub-heading">The kids are gonna love it.</h2>
+                </section>
             </div>
         )
     }

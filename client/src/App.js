@@ -12,6 +12,7 @@ import MathQuestions from './pages/maths/MathsQuestions';
 import EnglishQuestions from './pages/english/EnglishQuestions';
 import VerbalQuestions from './pages/verbal-reasing/VerbalQuestions';
 import NonVerbalQuestions from './pages/non-verbal-reasoning/NonVerbalQuestions';
+import ManagementAdmin from "./pages/management-admin";
 
 function App() {
     return (
@@ -23,6 +24,7 @@ function App() {
                 <Route path="user" element={<User />} />
                 <Route path="/tutor" element={<Tutor />} />
                 <Route path="admin" element={<Admin />} />
+                <Route path='management' element={<ManagementAdmin />} />
                 <Route path="/test" element={<QuestionTest />} />
                 <Route path="math" element={<QuestionList />} />
                 <Route path="english" element={<QuestionList />} />

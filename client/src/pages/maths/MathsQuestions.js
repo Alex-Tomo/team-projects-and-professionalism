@@ -198,7 +198,7 @@ class MathQuestions extends React.Component {
                             <div className="content">
                                 <h2 className="mb-6">Question {this.state.currentIndex + 1}</h2>
 
-                                <progress id="progressBar" className="progress is-primary mt-0" value={this.state.currentIndex} max={this.state.questionList.length - 1}></progress>
+                                <progress id="progressBar" className="progress is-branding mt-0" value={this.state.currentIndex} max={this.state.questionList.length - 1}></progress>
 
                                 <h3>
                                     <pre id="question-container" className="is-pulled-left mt-2 mr-3 mb-4 pb-3">
