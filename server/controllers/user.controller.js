@@ -29,24 +29,6 @@ exports.tutorBoard = (req, res) => {
     res.status(200).send('This is the tutor Content.')
 }
 
-exports.lessons = (req, res) => {
-    const token = req.headers['x-access-token'].split('.')
-    const encodedPayload = token[1]
-    const rawPayload = Buffer.from(encodedPayload, 'base64')
-    const user = JSON.parse(rawPayload)
-    console.log(user.id)
-    db.lessons.findAll({
-        include: [{
-            model: db.user,
-            where: { id: user.id },
-            required: true
-        }]
-    }).then(lessons => {
-        res.status(200).json(lessons)
-    })
-}
-
-
 exports.mathsLesson = (req, res) => {
     db.math.findAll()
         .then(r => {
@@ -98,7 +80,6 @@ exports.adminUsers = (req, res) => {
     db.user.findAll()
         .then(async r => {
             let result = []
-            console.log(r)
 
             for (const element of r) {
 

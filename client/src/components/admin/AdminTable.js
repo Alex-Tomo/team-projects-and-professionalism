@@ -82,7 +82,7 @@ class AdminTable extends React.Component {
   }
 
   handleUserClick = (userId) => {
-    {alert(`User ${userId} Dashboard`)}
+    alert(`User ${userId} Dashboard`)
   }
 
   addUser = (e) => {

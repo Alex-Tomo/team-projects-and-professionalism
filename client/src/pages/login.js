@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import AuthService from "../services/auth.service"
+import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 
 const required = (value) => {
@@ -115,7 +116,7 @@ class Login extends Component {
                             />
                         </div>
                     </div>
-                    <div className="has-text-right"><a>Forgot your password?</a></div>
+                    <div className="has-text-right"><Link className="" to="/password-recovery">Forgot your password?</Link></div>
                     <label className="check-cont">
                     <input type="checkbox" />
                     <span className="checkmark"></span>

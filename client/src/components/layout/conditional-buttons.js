@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import AuthService from "../../services/auth.service"
 import grid from "../../images/grid.svg"
 import list from "../../images/list.svg"
