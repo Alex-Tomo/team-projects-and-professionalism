@@ -16,7 +16,6 @@
  // Token verification
  verifyToken = (req, res, next) => {
    let token = req.headers['authorization']
-   console.log(token)
 
   if(token.includes("Bearer")){
     token = token.substring(7, token.length)

@@ -1,5 +1,10 @@
 @import 'bulma/css/bulma.css';
+@import url('https://fonts.googleapis.com/css2?family=Barlow&display=swap');
 
+/** @author Jordan Short - W18039155 Various Styles for Numerous Things*/
+body{
+  font-family: 'Barlow', sans-serif;
+}
 .centerall {
   height: 100vh;
   padding: 0;
@@ -9,8 +14,238 @@
   align-items: center;
 }
 
+.shaddow-nav{
+  box-shadow: inset 0px -1px 0px #EBEBEB;
+}
+
+.button.is-branding::-webkit-button-background-color{
+  background-color: #00549F
+}
+
+.hero-background{
+  background: #004888;
+}
+
+.hero-button{
+  background-color: transparent;
+  color: #FFFFFF;
+  border-radius: 8px;
+  padding: 12px 32px;
+  height: 48px;
+  width: 158px;
+  font-size: 16px;
+}
+
+.dashboard{
+  margin-left: 75px;
+}
+.dashboard.heading{
+font-weight: bold;
+font-size: 56px;
+line-height: 67px;
+color: #004888;
+}
+
+.dashboard.sub-heading{
+  font-family: Barlow;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 32px;
+  color: #505050;
+}
+
+.hero-button-sol{
+  background-color: #ffffff;
+  border-radius: 8px;
+  color: #00549F;
+  padding: 12px 32px;
+  height: 48px;
+  width: 158px;
+  font-size: 16px;
+}
+
+.pad-right{
+  padding-right: 500px;
+}
+
+.pad-left{
+  padding-left: 500px;
+}
+
+.live-head{
+  color: #004888;
+}
+
+.live-sub{
+  color: #656565;
+}
+
+.video-cont{
+    position: relative;
+    padding: 5px;
+}
+
+.video-cont video {
+
+  display: block;
+}
+
+.video-cont:before {
+  content: '';
+  position: absolute;
+  background-image: url("images/play.svg");
+  width: 60px;
+  height: 60px;
+  border-radius: 5px;
+  top: 125px;
+  right: 0;
+  bottom: 0;
+  left: 225px;
+}
+
+.hero-image{
+  background-image: url('./images/graham.png');
+  background-repeat: no-repeat;
+  background-position: right top; 
+}
+.hero-underscore{
+  background: #3E9CF0;
+  height: 4px;
+  width: 64px;
+}
+
+.hero-heading{
+  font-size: 56px;
+}
+.hero-sub{
+  font-size: 24px;
+}
+
+.brand-marg{
+  margin-top: 11px;
+  margin-left: 24px;
+}
+.kip-blue-background{
+  background: #004888;
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 10px 24px;
+}
+
+.kip-blue-background:hover{
+  background: #ffffff;
+  color: #004888;
+  border-color: #004888;
+}
+
+.nav-text:hover{
+  color: #004888!important;
+  background: #ffffff!important;
+}
+
+.sub-home-background{
+  background: #E5ECFF
+}
+
+.sub-home-background.gray{
+  background: #FAFAFA;
+}
+
+.navbar-item.center {
+  flex-grow: 1;
+  flex-direction: row;
+  justify-content: center;
+  justify-items:center;
+  align-items: center;
+}
+
+.navbar-item.gaps {
+width: 197px;
+text-align: center;
+justify-content: center;
+justify-items:center;
+align-items: center;
+}
+
+.navbar-item.gaps:hover {
+color:#004888;
+  }
+
 .login-box-size{
-  width: 500px !important;
+  margin-top: 90px;
+}
+
+.navbar-item.small {
+  width: 150px;
+  }
+.check-cont {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: black;
+}
+
+.check-cont input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eeeeee;
+  border-radius: 2.31667px;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.check-cont input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.check-cont input:checked ~ .checkmark {
+  background-color: #00549F;
+}
+
+.check-cont .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 7px;
+  height: 12px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.sign-btn{
+  margin-top: 10px;
+  padding: 12px 32px;
+  background: #00549F;
+  border-radius: 8px;
+  font-weight: 500;
+font-size: 16px;
+line-height: 24px;
+color: #FFFFFF;
+width: 100%;
 }
 
 .App {
@@ -52,7 +287,22 @@
   }
 }
 
+.fade-in {
+	opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 0.5s;
+}
 
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
 /** @author Alex Thompson - W19007452 for the admin component(s) */
 
 .account-management-title {
@@ -211,6 +461,17 @@ a{
     transition: width 0.7s ease;
 }
 
+.progress.is-branding::-webkit-progress-value {
+  background-color: #00549F
+}
+
+.progress.is-branding::-moz-progress-bar {
+  background-color:#00549F
+}
+
+.progress.is-branding::-ms-fill {
+  background-color:#00549F
+}
 /*.progress::-webkit-progress-value {
     transition: width 0.5s ease;
   }*/

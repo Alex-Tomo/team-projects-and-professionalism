@@ -54,6 +54,16 @@
  
  // Signin
  exports.signin = (req, res) => {
+  //Server side validation, will enable for production. @Jordan Short 
+  /*
+  let usernamePassed = req.body.username
+  let userRegex = /^[a-zA-Z0-9](_(?!(\.|_))|\.(?!(_|\.))|[a-zA-Z0-9]){6,18}[a-zA-Z0-9]$/
+
+    if(userRegex.test(usernamePassed) === false){
+      return res.status(404).send({ message: `Must only contain characters, numbers, minimum length of 8` })
+    }
+  */
+
    User.findOne({
      where: {
        username: req.body.username
