@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import Admin from "../components/Admin"
+import Admin from "../components/admin/Admin"
 import UserService from "../services/user.service"
 import AuthService from "../services/auth.service"
 
@@ -16,7 +16,7 @@ class ManagementAdmin extends Component {
     }
 
     componentDidMount() {
-        UserService.getAdminBoard().then(
+        UserService.getTutorBoard().then(
             (response) => {
                 this.setState({
                     content: response.data

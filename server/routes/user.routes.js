@@ -10,7 +10,7 @@
  * @author Jordan Short, Alex Thompson
  */
 
-const { authJwt } = require('../functionality')
+const { authJwt, verifySignUp} = require('../functionality')
 const controller = require("../controllers/user.controller");
 
  // Sets and allows headers instead of using cors to just allow all.
@@ -45,11 +45,15 @@ const controller = require("../controllers/user.controller");
 
  // app.get('/api/nonverballesson', [authJwt.verifyToken], controller.nonVerbalLesson)
 
- app.post('/api/admin/users', [authJwt.verifyToken, authJwt.isAdmin], controller.adminUsers)
 
-   app.post('/api/admin/adduser', [authJwt.verifyToken, authJwt.isAdmin], controller.adminAddUser)
+  // Admin related content
+  app.post('/api/admin/users', [authJwt.verifyToken, authJwt.isTutorAdmin], controller.adminUsers)
 
-   app.post('/api/admin/edituser', [authJwt.verifyToken, authJwt.isAdmin], controller.adminEditUser)
+  app.post('/api/admin/adduser', [verifySignUp.checkRolesExisted, verifySignUp.checkDuplicateUsernameOrEmail, authJwt.verifyToken, authJwt.isTutorAdmin], controller.adminAddUser)
 
-   app.post('/api/admin/removeuser', [authJwt.verifyToken, authJwt.isAdmin], controller.adminRemoveUser)
+  app.post('/api/admin/edituser', [verifySignUp.checkRolesExisted, verifySignUp.checkDuplicateUsernameOrEmail, authJwt.verifyToken, authJwt.isTutorAdmin], controller.adminEditUser)
+
+  app.post('/api/admin/removeuser', [authJwt.verifyToken, authJwt.isTutorAdmin], controller.adminRemoveUser)
+
+  app.post('/api/amin/changepassword', [authJwt.verifyToken, authJwt.isTutorAdmin], controller.adminChangePassword)
  }

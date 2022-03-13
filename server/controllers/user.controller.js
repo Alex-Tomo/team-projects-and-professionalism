@@ -11,6 +11,8 @@
 
 const db = require('../schema')
 const { tokenIdCheck } = require('../functionality')
+const bcrypt = require("bcryptjs");
+const {Op} = require("sequelize");
 const User = db.user
 
 exports.allAccess = (req, res) => {
@@ -75,56 +77,155 @@ exports.verbalLesson = (req, res) => {
 // }
 
 // Get all the users for the admin section (Account management)
-// TODO: modify so it checked for admin token or tutor token
 exports.adminUsers = (req, res) => {
-    db.user.findAll()
-        .then(async r => {
-            let result = []
-
-            for (const element of r) {
-
-                await db.role.findOne({
-                    include: [{
-                        model: db.user,
-                        where: { id: element.id },
-                        required: true
-                    }]
-                }).then(r => {
-                    result.push({
-                        id: element.id,
-                        username: element.username,
-                        email: element.email,
-                        role: r.name,
-                        dateAdded: element.createdAt
-                    })
-                }).catch(e => {
-                    res.status(404).send("Error: " + e)
-                })
-            }
-            res.status(200).send(result)
-        })
-        .catch(e => {
-            res.status(404).send("Error: " + e)
-        })
+  db.user.findAll({
+    attributes: ['id', 'username', 'email', 'createdAt'],
+    include: [{
+        model: db.role,
+        required: true,
+      },
+      {
+        model: db.user_added_by,
+        required: true
+      }],
+    order: ['createdAt']
+  })
+    .then(result => {
+      res.send(result)
+    })
+    .catch(error => {
+      res.status(500).send("Error: " + error)
+    })
 }
 
 exports.adminAddUser = (req, res) => {
-    res.status(200).send("New user added")
+  db.user.create({
+    username: req.body.username,
+    email: req.body.email,
+    password: bcrypt.hashSync(req.body.password, 8)
+  })
+    .then(user => {
+      if (req.body.role) {
+        db.role.findAll({
+          where: {
+            name: {
+              [Op.or]: req.body.roles
+            }
+          }
+        }).then(roles => {
+          user.setRoles(roles).catch(() => {
+            res.status(500).send({registered: false})
+          })
+        })
+      } else {
+        // Sets a user role automatically to 1 if no value passed.
+        user.setRoles([1]).catch(() => {
+          res.status(500).send({registered: false})
+        })
+      }
+      return user.dataValues
+    }).then((user) => {
+      db.user_added_by.create({
+        added_user: user.id,
+        added_by: req.body.addedById,
+        added_by_name: req.body.addedByUsername
+      }).then(() => {
+        res.status(200).send({id: user.id})
+      })
+    })
+    .catch((error) => {
+      res.status(500).send({ registered: false })
+    })
 }
 
 exports.adminEditUser = (req, res) => {
-    res.status(200).send("User edited")
+  if ((req.body.username !== null) && (req.body.email !== null)) {
+    db.user.update({
+        username: req.body.username,
+        email: req.body.email,
+      },
+      {
+        where: {
+          id: req.body.id
+        }
+      }).catch(error => {
+        res.status(500).send({updated: false})
+      })
+  } else if (req.body.username !== null) {
+    db.user.update({
+        username: req.body.username
+      },
+      {
+        where: {
+          id: req.body.id
+        }
+      }).catch(error => {
+        res.status(500).send({updated: false})
+      })
+  } else if (req.body.email !== null) {
+    db.user.update({
+        email: req.body.email
+      },
+      {
+        where: {
+          id: req.body.id
+        }
+      }).catch(error => {
+        res.status(500).send({updated: false})
+      })
+  }
+  if (req.body.role !== null) {
+    db.user.findOne({
+      where: {
+        id: req.body.id
+      }
+    }).then(user => {
+      if (req.body.roles) {
+        db.role.findAll({
+          where: {
+            name: {
+              [Op.or]: req.body.roles
+            }
+          }
+        }).then(roles => {
+          user.setRoles(roles)
+        }).catch(error => {
+          res.status(500).send({updated: false})
+        })
+      }
+    }).catch(error => {
+      res.status(500).send({updated: false})
+    })
+  }
+
+  res.status(200).send({updated: true})
 }
 
 exports.adminRemoveUser = (req, res) => {
-    let ids = req.body.id.split(',')
-    ids.forEach(id => {
-        db.user.destroy({
-            where: {
-                id: parseInt(id)
-            }
-        })
-    })
+  let ids = req.body.id.split(',')
 
-    res.status(200).send('User deleted')
+  ids.forEach(id => {
+    db.user.destroy({
+      where: {
+        id: parseInt(id)
+      }
+    })
+  })
+
+  res.status(200).send(true)
+}
+
+exports.adminChangePassword = (req, res) => {
+  db.user.update({
+      password: bcrypt.hashSync(req.body.password, 8)
+    },
+    {
+      where: {
+        id: req.body.id
+      }
+    }).then(() => {
+      res.status(200).send({updated: true})
+    }).catch(() => {
+      res.status(500).send({updated: false})
+    })
 }
