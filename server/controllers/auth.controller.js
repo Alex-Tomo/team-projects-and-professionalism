@@ -9,6 +9,7 @@
  */
  const db = require('../schema')
  const config = require('../config/auth-key.config')
+ const email = require('../functionality/pass-recovery')
  const User = db.user
  const Role = db.role
  
@@ -20,8 +21,6 @@
  // Signup
  exports.signup = (req, res) => {
    // Creates user and adds to database
-   console.log(req.body)
-
    User.create({
      username: req.body.username,
      email: req.body.email,
@@ -109,3 +108,37 @@
        res.status(500).send({ message: err.message })
      })
  } 
+
+ exports.passwordRecovery =  (req, res) => {
+  User.findOne({
+    where: {
+      username: req.body.username
+    }
+  }).then(user => {
+    if(user){
+      const token = jwt.sign({ id: user.id }, config.secret, {
+        expiresIn: 900
+      })
+      email.sendEmail(user.email, token, user.username)
+    }
+  })
+  res.send("If the username provided is correct you will recieve a password reset email within 5 - 10 minutes.")
+ }
+
+ exports.passwordReset = (req, res) => {
+   let token = req.body.token;
+   jwt.verify(token, config.secret, (err, decoded) => {
+    if (err) {
+      return res.status(401).send({
+        message: 'Email expired. Please request another password reset email.'
+      })
+    }else{
+        User.update({ password: bcrypt.hashSync(req.body.password, 8) }, {
+          where: {
+            id: decoded.id
+          }
+        });
+    }
+  })
+   res.send("Password Successfully Changed.")
+ }

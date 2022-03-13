@@ -13,6 +13,8 @@ import EnglishQuestions from './pages/english/EnglishQuestions';
 import VerbalQuestions from './pages/verbal-reasing/VerbalQuestions';
 import NonVerbalQuestions from './pages/non-verbal-reasoning/NonVerbalQuestions';
 import ManagementAdmin from "./pages/management-admin";
+import PasswordRecovery from "./pages/password-recovery"
+import PasswordReset from "./pages/password-reset"
 
 function App() {
     return (
@@ -21,6 +23,8 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path='/login' element={<Login />} />
+                <Route path='/password-recovery' element={<PasswordRecovery />} />
+                <Route path='/password-reset' element={<PasswordReset />} />
                 <Route path="user" element={<User />} />
                 <Route path="/tutor" element={<Tutor />} />
                 <Route path="admin" element={<Admin />} />

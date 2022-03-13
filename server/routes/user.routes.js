@@ -35,10 +35,6 @@ const controller = require("../controllers/user.controller");
    //Tutors and admins can see this route
    app.get('/api/test/tutor', [authJwt.verifyToken, authJwt.isTutorAdmin], controller.tutorBoard)
 
-   //Test route for lessons can be removed
-   app.get('/api/test/lessons', [authJwt.verifyToken], controller.lessons)
-
-
  app.get('/api/mathslesson', [authJwt.verifyToken], controller.mathsLesson)
 
  app.get('/api/englishstory', [authJwt.verifyToken], controller.englishStory)
@@ -48,8 +44,6 @@ const controller = require("../controllers/user.controller");
  app.get('/api/verballesson', [authJwt.verifyToken], controller.verbalLesson)
 
  // app.get('/api/nonverballesson', [authJwt.verifyToken], controller.nonVerbalLesson)
-
-
 
  app.post('/api/admin/users', [authJwt.verifyToken, authJwt.isAdmin], controller.adminUsers)
 
