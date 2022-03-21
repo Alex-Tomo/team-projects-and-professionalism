@@ -16,10 +16,10 @@ class ChangePasswordForm extends React.Component {
 
     let userRole = null
     switch (this.props.userDetails.roles[0].name) {
-      case "user": userRole = 1; break;
-      case "tutor": userRole = 3; break;
-      case "admin": userRole = 2; break;
-      default: userRole = 1; break;
+      case "user": userRole = "User"; break;
+      case "tutor": userRole = "Tutor"; break;
+      case "admin": userRole = "Admin"; break;
+      default: userRole = "Select a role"; break;
     }
 
     this.state = {
@@ -71,59 +71,74 @@ class ChangePasswordForm extends React.Component {
     return (
       <div>
         <div className="modal-admin">
-          <h1 className="title modal-title">Change Password</h1>
+          <h4 className="title modal-title">Change password</h4>
+        </div>
+        <hr className="admin-modal-hr" />
+
+        <div className="admin-modal-container">
+          <label className="admin-modal-label">Username</label>
+          <input
+            className="input is-normal admin-modal-input"
+            type="text"
+            placeholder="Username..."
+            defaultValue={this.state.name}
+            disabled={true} />
         </div>
 
-        <br />
-        <input
-          className="input is-normal input-admin"
-          type="text"
-          placeholder="Username..."
-          defaultValue={this.state.name}
-          disabled={true} />
-        <br />
-        <br />
+        <div className="admin-modal-container">
+          <label className="admin-modal-label">Email</label>
+          <input
+            className="input is-normal admin-modal-input"
+            type="email"
+            defaultValue={this.state.email}
+            placeholder="Email..."
+            disabled={true} />
+        </div>
 
-        <input
-          className="input is-normal input-admin"
-          type="email"
-          defaultValue={this.state.email}
-          placeholder="Email..."
-          disabled={true} />
-        <br />
-        <br />
+        <div className="admin-modal-container">
+          <label className="admin-modal-label">Role</label>
+          <input
+            className="input is-normal admin-modal-input"
+            type="email"
+            defaultValue={this.state.role}
+            placeholder="Email..."
+            disabled={true} />
+        </div>
 
-        <select
-          defaultValue={this.state.role}
-          className="select is-normal"
-          onChange={this.handleChange}
-          disabled={true}
-        >
-          <option value={0}>   --- Select a Role---   </option>
-          <option value={1}>User</option>
-          <option value={2}>Tutor</option>
-          <option value={3}>Admin</option>
-        </select>
-        <br />
-        <br />
+        <div className="admin-modal-container">
+          <label className="admin-modal-label">Password</label>
+          <input
+            className="input is-normal admin-modal-input"
+            type="password"
+            placeholder="Password"
+            onChange={this.handlePassword} />
+      </div>
 
-        <input
-          className="input is-normal input-admin"
-          type="password"
-          placeholder="Password..."
-          onChange={this.handlePassword} />
-        <br />
-        <br />
+        <div className="admin-modal-container">
+          <label className="admin-modal-label">Confirm password</label>
+          <input
+            className="input is-normal admin-modal-input"
+            type="password"
+            placeholder="Confirm password"
+            onChange={this.handleRepeatPassword} />
+      </div>
 
-        <input
-          className="input is-normal input-admin"
-          type="password"
-          placeholder="Repeat Password..."
-          onChange={this.handleRepeatPassword} />
-        <br />
-        <br />
+        <hr className="admin-modal-hr" />
 
-        <button className="button" onClick={this.changePassword}>Change Password</button>
+        <div className="admin-modal-button-container">
+          <button
+            className="button admin-modal-submit-button"
+            onClick={this.changePassword}
+          >
+            Update password
+          </button>
+          <button
+            className="button admin-modal-cancel-button"
+            onClick={this.props.closeModal}
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     )
   }

@@ -10,7 +10,6 @@ import authHeader from "../../../services/auth-header"
 
 
   // TODO: add client side validation
-  // TODO: When user is added make sure to add the added by column value
 class AddUserForm extends React.Component {
   constructor(props) {
     super(props)
@@ -20,7 +19,7 @@ class AddUserForm extends React.Component {
       email: "",
       password: "",
       repeatPassword: "",
-      role: 1
+      role: 0
     }
   }
 
@@ -87,6 +86,9 @@ class AddUserForm extends React.Component {
         username: this.state.username,
         email: this.state.email,
         createdAt: new Date().toISOString(),
+        user_added_bies: [{
+          added_by_name: JSON.parse(localStorage.getItem('user')).username
+        }],
         roles: [
           {
             id: this.state.role,
@@ -119,56 +121,79 @@ class AddUserForm extends React.Component {
     return (
         <div>
           <div className="modal-admin">
-            <h1 className="title modal-title">Add User</h1>
+            <h4 className="title modal-title">Add a user</h4>
+          </div>
+          <hr className="admin-modal-hr" />
+
+          <div className="admin-modal-container">
+            <label className="admin-modal-label">Username</label>
+            <input
+              className="input is-normal input-admin admin-modal-input"
+              type="text"
+              placeholder="John Johnson"
+              onChange={this.handleUsername}/>
           </div>
 
-          <br/>
-          <input
-              className="input is-normal input-admin"
-              type="text"
-              placeholder="Username..."
-              onChange={this.handleUsername}/>
-          <br/>
-          <br/>
 
-          <input
-              className="input is-normal input-admin"
+          <div className="admin-modal-container">
+            <label className="admin-modal-label">Email</label>
+            <input
+              className="input is-normal admin-modal-input"
               type="email"
-              placeholder="Email..."
+              placeholder="Example@gmail.com"
               onChange={this.handleEmail}/>
-          <br/>
-          <br/>
+          </div>
 
-          <select
-              className="select is-normal"
-              defaultValue={0} name="role"
+          <div className="admin-modal-container">
+            <label className="admin-modal-label">Role</label>
+            <select
+              style={{ color: (this.state.role === 0) ? "lightgray" : "" }}
+              className="select is-normal admin-modal-select"
+              defaultValue={0}
+              name="role"
               onChange={this.handleChange}
-          >
-            <option value={0}> --- Select a Role---</option>
-            <option value={1}>User</option>
-            <option value={3}>Tutor</option>
-            <option value={2}>Admin</option>
-          </select>
-          <br/>
-          <br/>
+            >
+              <option value={0} hidden={true}>Select a role</option>
+              <option value={1} className="admin-modal-option">User</option>
+              {(JSON.parse(localStorage.getItem('user')).roles[0] === "ROLE_ADMIN") ? <option value={3} style={{color: "black"}}>Tutor</option> : ""}
+              {/*<option value={2} className="admin-modal-option">Admin</option>*/}
+            </select>
+          </div>
 
-          <input
-              className="input is-normal input-admin"
+          <div className="admin-modal-container">
+            <label className="admin-modal-label">Password</label>
+            <input
+              className="input is-normal admin-modal-input"
               type="password"
-              placeholder="Password..."
+              placeholder="Password"
               onChange={this.handlePassword}/>
-          <br/>
-          <br/>
+          </div>
 
-          <input
-              className="input is-normal input-admin"
+          <div className="admin-modal-container">
+            <label className="admin-modal-label">Confirm Password</label>
+            <input
+              className="input is-normal admin-modal-input"
               type="password"
-              placeholder="Repeat Password..."
+              placeholder="Confirm Password"
               onChange={this.handleRepeatPassword}/>
-          <br/>
-          <br/>
+          </div>
 
-          <button className="button" onClick={this.addUser}>Add User</button>
+          <hr className="admin-modal-hr" />
+
+          <div className="admin-modal-button-container">
+            <button
+              className="button admin-modal-submit-button"
+              onClick={this.addUser}
+            >
+              Add
+            </button>
+            <button
+              className="button admin-modal-cancel-button"
+              onClick={this.props.closeModal}
+            >
+              Cancel
+            </button>
+          </div>
         </div>
     )
   }

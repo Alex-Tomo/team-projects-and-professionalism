@@ -12,7 +12,7 @@
 const db = require('../schema')
 const { tokenIdCheck } = require('../functionality')
 const bcrypt = require("bcryptjs");
-const {Op} = require("sequelize");
+const {sequelize, Op} = require("sequelize");
 const User = db.user
 
 exports.allAccess = (req, res) => {
@@ -86,7 +86,8 @@ exports.adminUsers = (req, res) => {
       },
       {
         model: db.user_added_by,
-        required: true
+        required: true,
+        where: (req.body.id !== null) ? { added_by: req.body.id } : {}
       }],
     order: ['createdAt']
   })
@@ -205,6 +206,11 @@ exports.adminRemoveUser = (req, res) => {
   let ids = req.body.id.split(',')
 
   ids.forEach(id => {
+    db.user_added_by.destroy({
+      where: {
+        added_user: parseInt(id)
+      }
+    })
     db.user.destroy({
       where: {
         id: parseInt(id)

@@ -35,18 +35,28 @@ class TableRow extends React.Component {
             }}
           >
             <div className="dropdown-trigger">
-              <button className="button" aria-haspopup="true" aria-controls="dropdown-menu6">
+              <button
+                className="button"
+                aria-haspopup="true"
+                aria-controls="dropdown-menu6"
+              >
                 <span className="icon is-small">
-                  <img src={ellipsis} alt="Ellipsis"/>
+                  <img
+                    src={ellipsis}
+                    alt="Ellipsis" />
                 </span>
               </button>
             </div>
-            <div className="dropdown-menu is-hidden" id={`menu${this.props.result.id}`} role="menu">
+            <div
+              className="dropdown-menu is-hidden"
+              id={`menu${this.props.result.id}`}
+              role="menu"
+            >
               <div className="dropdown-content">
                 <div className="dropdown-item">
                   <button
                     style={{width: "100%"}}
-                    className="button is-radiusless"
+                    className="button is-radiusless admin-option-button"
                     onMouseDown={() => {
                       this.props.editUser(`menu${this.props.result.id}`, this.props.result.id)
                     }}
@@ -55,8 +65,7 @@ class TableRow extends React.Component {
                   </button>
                   <br/>
                   <button
-                    style={{width: "100%"}}
-                    className="button is-radiusless"
+                    className="button is-radiusless admin-option-button"
                     onMouseDown={() => {
                       this.props.changePassword(`menu${this.props.result.id}`, this.props.result.id)
                     }}
@@ -65,10 +74,9 @@ class TableRow extends React.Component {
                   </button>
                   <br/>
                   <button
-                    style={{width: "100%"}}
-                    className="button is-danger is-radiusless"
+                    className="button is-danger is-radiusless admin-option-button remove-button"
                     onMouseDown={() => {
-                      this.props.removeOneUser(this.props.result.id)
+                      this.props.removeUserModal(`menu${this.props.result.id}`, [this.props.result.id])
                     }}
                   >
                     Remove

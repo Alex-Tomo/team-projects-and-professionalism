@@ -1,12 +1,54 @@
 /** @author Alex Thompson - W19007452 for the admin component(s) */
 
+/* Admin.js */
+
+.admin-heading, admin-subheading {
+  text-align: start;
+}
+
+.admin-container {
+  width: 80%;
+  margin: 20px auto auto auto;
+}
+
+
+/* ./table directory */
+/* TableHead.js */
+
+.admin-table-head {
+  height: 52px;
+  background-color: #E5ECFF;
+  border: 1px solid #E4E4E4;
+}
+
+.admin-table-options-subheading {
+  text-align: start;
+  width: fit-content;
+  font-weight: bold;
+}
+
+.admin-table-options-para {
+  margin-right: 20px;
+}
+
+.admin-table-options {
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+
+.admin-table-search-container {
+  margin-left: 20px;
+}
+
 .account-management-title {
   text-align: start;
   margin-bottom: 7.5px;
+  color: #004888;
 }
 
 .account-management-title-line {
-  background-color: #000000;
+  background-color: #004888;
   padding: 2px;
   margin-bottom: 35px;
   width: 60px;
@@ -81,6 +123,10 @@ tbody tr td {
   justify-content: space-between;
 }
 
+.users-table-footer p {
+  color: #656565;
+}
+
 .users-table-footer > * {
   margin: 15px 0;
 }
@@ -125,17 +171,14 @@ tbody tr td {
   cursor: pointer;
 }
 
-.input-admin {
-  width: 50%;
-}
-
 .modal-admin {
   display: flex;
-  justify-content: center;
+  justify-content: start;
 }
 
 .modal-title {
-  margin: auto;
+  margin-left: 10px;
+  color: #004888;
 }
 
 .page-button {
@@ -162,3 +205,143 @@ tbody tr td {
   opacity: 0
 }
 
+#add-button {
+  outline: #004888;
+  border: 1px solid #00549F;
+  color: #00549F;
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+#add-button:hover {
+  background-color: #004888;
+  color: #FFFFFF;
+}
+
+.remove-button {
+  outline: #9F1B1F;
+  border: 1px solid #9F1B1F !important;
+  background-color: #9F1B1F !important;
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+#admin-search {
+  border: 1px solid #C7C7C7;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+.dropdown-content {
+  padding: 0;
+}
+
+.dropdown-item {
+  padding: 0;
+}
+
+.admin-option-button {
+  justify-content: left;
+  width: 100%;
+}
+
+.admin-modal-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 10px 20px 10px;
+}
+
+.admin-modal-label {
+  text-align: start;
+  color: #1A1A1A;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.admin-modal-input {
+  width: 100%;
+  border-radius: 4px;
+}
+
+.admin-modal-select {
+  width: 100%;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+  padding: 7px 11px;
+  height: 40px;
+  cursor: pointer;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.admin-modal-option {
+  color: black;
+}
+
+.admin-modal-hr {
+  margin: 10px 10px 20px 10px;
+}
+
+.admin-modal-button-container {
+  display: flex;
+  gap: 10px;
+}
+
+.admin-modal-submit-button {
+  background-color: #00549F;
+  border-radius: 8px;
+  color: #FFFFFF;
+  flex-grow: 6;
+}
+
+.admin-modal-submit-button-red {
+  background-color: #9F1B1F;
+  border-radius: 8px;
+  color: #FFFFFF;
+  flex-grow: 6;
+}
+
+.admin-modal-cancel-button {
+  border: 1px solid #00549F;
+  color: #00549F;
+  border-radius: 8px;
+  flex-grow: 2;
+}
+
+.admin-options-button-container {
+  display: flex;
+  gap: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+  .users-table-options {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .admin-table-options {
+    width: 100%;
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .admin-table-search-container {
+    order: 1;
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .admin-options-button-container {
+    order: 2;
+    width: 100%;
+  }
+
+  .admin-options-button-container button {
+    width: 100%;
+  }
+
+  .checkbox-admin {
+    margin: 0;
+  }
+}

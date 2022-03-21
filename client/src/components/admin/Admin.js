@@ -11,7 +11,6 @@ import PageButtons from "./Elements/PageButtons"
  * @author Alex Thompson, W19007452
  */
 
-  // TODO: sort out mobile view - CSS
 class Admin extends React.Component {
   constructor(props) {
     super(props)
@@ -46,7 +45,18 @@ class Admin extends React.Component {
           })
         }
       ).then(() => {
-        axios.post('http://localhost:8080/api/admin/users', null, {
+        let userId = null
+        let userRole = JSON.parse(localStorage.getItem('user')).roles[0]
+
+        if (userRole === "ROLE_TUTOR") {
+          userId = JSON.parse(localStorage.getItem('user')).id
+        }
+
+        axios.post('http://localhost:8080/api/admin/users',
+          {
+            id: userId
+          },
+          {
           headers: authHeader()
         }).then(results => {
           this.setState({ results: results.data })
@@ -109,19 +119,17 @@ class Admin extends React.Component {
     })
   }
 
-  // TODO: filter on added by column
   filterSearch = (s) => {
     return (
       s.username.toLowerCase().includes(this.state.search.toLowerCase()) ||
       s.email.toLowerCase().includes(this.state.search.toLowerCase()) ||
       s.roles[0].name.toLowerCase().includes(this.state.search.toLowerCase()) ||
-      s.createdAt.toLowerCase().includes(this.state.search.toLowerCase())
+      s.createdAt.toLowerCase().includes(this.state.search.toLowerCase()) ||
+      s.user_added_bies[0].added_by_name.toLowerCase().includes(this.state.search.toLowerCase())
     )
   }
 
   render() {
-    console.log(this.state.results)
-
     // If the user is not logged in or not a valid user,
     // display this before redirection
     if (!this.state.loggedIn) {
@@ -156,24 +164,31 @@ class Admin extends React.Component {
       results = results.slice(pageMin, pageMax)
     }
 
+    const username = JSON.parse(localStorage.getItem('user')).username
+
     return (
-      <div style={{width: "80%", margin: "20px auto auto auto"}}>
-        <h1 className="account-management-title title">Account Management</h1>
-        <div className="account-management-title-line"/>
+      <div>
+        <section className="section is-medium sub-home-background">
+          <h1 className="dashboard heading admin-heading">Welcome Back, {username}!</h1>
+          <h2 className="dashboard sub-heading admin-subheading">The tutors are gonna hate it.</h2>
+        </section>
 
-        <AdminTable
-          results={results}
-          handleSearch={this.handleSearch}
-          handleRemoveUser={this.handleRemoveUser}
-          handleAddUser={this.handleAddUser}
-          handleEditUser={this.handleEditUser}
-          handlePaginationClick={this.handlePaginationClick}
-          currentPage={this.state.page}
-        />
-
-        <div className="users-table-footer">
-          <p>Showing {results.length} of {this.state.results.length} results</p>
-          {pageButtons}
+        <div className="admin-container">
+          <h1 className="account-management-title title">Account Management</h1>
+          <div className="account-management-title-line"/>
+          <AdminTable
+              results={results}
+              handleSearch={this.handleSearch}
+              handleRemoveUser={this.handleRemoveUser}
+              handleAddUser={this.handleAddUser}
+              handleEditUser={this.handleEditUser}
+              handlePaginationClick={this.handlePaginationClick}
+              currentPage={this.state.page}
+          />
+          <div className="users-table-footer">
+            <p>Showing {results.length} of {this.state.results.length} results</p>
+            {pageButtons}
+          </div>
         </div>
       </div>
     )

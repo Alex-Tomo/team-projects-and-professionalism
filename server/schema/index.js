@@ -46,7 +46,7 @@
  db.englishStory = require('./models/englishstory.model.js')(sequelize, Sequelize)
  db.english = require('./models/english.model.js')(sequelize, Sequelize)
  db.verbalReasoning = require('./models/verbalreasoning.model.js')(sequelize, Sequelize)
- // db.nonVerbalReasoning = require('./models/nonverbalreasoning.model.js')(sequelize, Sequelize)
+ db.nonVerbalReasoning = require('./models/nonverbalreasoning.model.js')(sequelize, Sequelize)
  db.user_added_by = require('./models/user_added_by.model.js')(sequelize, Sequelize)
 
 
@@ -54,13 +54,15 @@
  db.role.belongsToMany(db.user, {
    through: 'user_roles',
    foreignKey: 'roleId',
-   otherKey: 'userId'
+   otherKey: 'userId',
+   onDelete: 'cascade'
  })
  
  db.user.belongsToMany(db.role, {
    through: 'user_roles',
    foreignKey: 'userId',
-   otherKey: 'roleId'
+   otherKey: 'roleId',
+   onDelete: 'cascade'
  })
 
  db.user.hasMany(db.lessons, { foreignKey: 'id' })
@@ -69,7 +71,7 @@
  db.questions.hasMany(db.math, {foreignKey: 'question_id'})
  db.questions.hasMany(db.english, {foreignKey: 'question_id'})
  db.questions.hasMany(db.verbalReasoning, {foreignKey: 'question_id'})
- // db.questions.hasMany(db.nonVerbalReasoning, {foreignKey: 'question_id'})
+ db.questions.hasMany(db.nonVerbalReasoning, {foreignKey: 'question_id'})
  db.englishStory.hasMany(db.english, {foreignKey: 'story_id'})
 
  db.user.hasMany(db.user_added_by, { foreignKey: 'added_user' })

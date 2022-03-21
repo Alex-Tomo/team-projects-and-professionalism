@@ -13,6 +13,9 @@ import EditUserModal from "../Modals/EditUserModal"
 import TableOptions from "./TableOptions"
 import TableHead from "./TableHead"
 import TableBody from "./TableBody"
+import RemoveUserForm from "../Forms/RemoveUserForm"
+import RemoveUserModal from "../Modals/RemoveUserModal"
+import TableBodyMobile from "../Mobile/TableBodyMobile";
 
 /**
  * Displays the admin table with the users details
@@ -33,7 +36,8 @@ class AdminTable extends React.Component {
       addUser: "",
       editUser: "",
       changePassword: "",
-      results: this.props.results
+      results: this.props.results,
+      windowSize: window.innerWidth
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -113,6 +117,7 @@ class AdminTable extends React.Component {
               handleSubmit={() => this.closeModal("modal-edit-user")}
               showMessage={(msg, cls) => this.displayNotification(msg, cls)}
               handleEditUser={this.props.handleEditUser}
+              closeModal={() => this.closeModal("modal-edit-user")}
             />
           })
           break
@@ -245,6 +250,7 @@ class AdminTable extends React.Component {
               userDetails={this.props.results[i]}
               handleSubmit={() => this.closeModal("modal-change-password")}
               showMessage={(msg, cls) => this.displayNotification(msg, cls)}
+              closeModal={() => this.closeModal("modal-change-password")}
             />
           })
           break
@@ -253,6 +259,60 @@ class AdminTable extends React.Component {
 
       await this.openModal('modal-change-password')
     }
+  }
+
+  removeUserModal = async (id = null, userId = null) => {
+    if (id !== null) {
+      this.closeButtonMenu(id)
+    }
+
+    if (userId === null) {
+      let userDetails = []
+
+      this.state.isCheck.forEach(id => {
+        if(id !== undefined) {
+          for (let i = 0; i < this.props.results.length; i++) {
+            if (id === this.props.results[i].id) {
+              userDetails.push(this.props.results[i])
+              break
+            }
+          }
+        }
+      })
+
+      if (userDetails.length > 0) {
+        await this.setState({
+          removeUser: <RemoveUserForm
+            userDetails={userDetails}
+            handleSubmit={() => this.removeOneUser(userId)}
+            showMessage={(msg, cls) => this.displayNotification(msg, cls)}
+            closeModal={() => this.closeModal("modal-remove-user")}
+            removeManyUsers={this.removeManyUsers}
+            removeOneUser={(id) => this.removeOneUser(id)}
+          />
+        })
+      }
+    } else {
+      if (userId[0] !== null) {
+        for (let i = 0; i < this.props.results.length; i++) {
+          if(userId[0] === this.props.results[i].id) {
+            await this.setState({
+              removeUser: <RemoveUserForm
+                userDetails={[this.props.results[i]]}
+                handleSubmit={() => this.removeOneUser(userId)}
+                showMessage={(msg, cls) => this.displayNotification(msg, cls)}
+                closeModal={() => this.closeModal("modal-remove-user")}
+                removeManyUsers={this.removeManyUsers}
+                removeOneUser={(id) => this.removeOneUser(id)}
+              />
+            })
+            break
+          }
+        }
+      }
+    }
+
+    await this.openModal('modal-remove-user')
   }
 
   handleToggle = (id) => {
@@ -312,6 +372,15 @@ class AdminTable extends React.Component {
     setTimeout(this.hideNotification, 5000)
   }
 
+  componentDidMount() {
+    window.onresize = async () => {
+      if ((this.state.windowSize > 768 && window.innerWidth <= 768) ||
+          (this.state.windowSize <= 768 && window.innerWidth > 768)) {
+        await this.setState({windowSize: window.innerWidth})
+      }
+    }
+  }
+
   render() {
     return (
       <div>
@@ -321,24 +390,43 @@ class AdminTable extends React.Component {
           removeManyUsers={() => { this.removeManyUsers() }}
           handleSearch={this.props.handleSearch}
           numSelected={this.state.numSelected}
+          removeUserModal={this.removeUserModal}
         />
 
-        <table className="users-table">
-          <TableHead
-            handleChangeAll={this.handleChangeAll}
-            isCheckAll={this.state.isCheckAll}
-          />
-          <TableBody
-            results={this.props.results}
-            handleChange={this.handleChange}
-            isCheck={this.state.isCheck}
-            editUser={this.editUser}
-            changePassword={this.changePassword}
-            removeOneUser={this.removeOneUser}
-            handleToggle={this.handleToggle}
-            closeButtonMenu={this.closeButtonMenu}
-          />
-        </table>
+        {
+          (this.state.windowSize > 768) ?
+            <table className="users-table">
+              <TableHead
+                  handleChangeAll={this.handleChangeAll}
+                  isCheckAll={this.state.isCheckAll}
+              />
+              <TableBody
+                  results={this.props.results}
+                  handleChange={this.handleChange}
+                  isCheck={this.state.isCheck}
+                  editUser={this.editUser}
+                  changePassword={this.changePassword}
+                  removeOneUser={this.removeOneUser}
+                  handleToggle={this.handleToggle}
+                  closeButtonMenu={this.closeButtonMenu}
+                  removeUserModal={this.removeUserModal}
+              />
+            </table>
+
+            :
+
+            <TableBodyMobile
+                results={this.props.results}
+                handleChange={this.handleChange}
+                isCheck={this.state.isCheck}
+                editUser={this.editUser}
+                changePassword={this.changePassword}
+                removeOneUser={this.removeOneUser}
+                handleToggle={this.handleToggle}
+                closeButtonMenu={this.closeButtonMenu}
+                removeUserModal={this.removeUserModal}
+            />
+        }
 
         <AddUserModal
           handleSubmit={() => this.closeModal("modal-add-user")}
@@ -355,6 +443,11 @@ class AdminTable extends React.Component {
         <EditUserModal
           editUser={this.state.editUser}
           closeModal={() => this.closeModal("modal-edit-user")}
+        />
+
+        <RemoveUserModal
+          removeUser={this.state.removeUser}
+          closeModal={() => this.closeModal("modal-remove-user")}
         />
 
         <div id="notification" className="notification hide">

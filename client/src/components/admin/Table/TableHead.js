@@ -4,11 +4,7 @@ class TableHead extends React.Component {
   render() {
     return (
       <thead>
-        <tr style={{
-          height: "52px",
-          backgroundColor: "#E5ECFF",
-          border: "1px solid #E4E4E4"
-        }}>
+        <tr>
           <th>
             <input
                 className="clickable checkbox checkbox-admin"

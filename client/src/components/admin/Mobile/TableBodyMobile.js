@@ -1,14 +1,14 @@
-import React from "react"
-import TableRow from "./TableRow"
+import React from 'react'
+import TableRowMobile from "./TableRowMobile";
 
-class TableBody extends React.Component {
+class TableBodyMobile extends React.Component {
   render() {
     let accounts = ""
     if (this.props.results.length > 0) {
       accounts = this.props.results.map((result, i) => {
 
-        return (
-          <TableRow
+      return (
+          <TableRowMobile
             key={i}
             result={result}
             handleChange={this.props.handleChange}
@@ -25,11 +25,11 @@ class TableBody extends React.Component {
     }
 
     return (
-      <tbody>
+      <>
         {accounts !== "" ? accounts : null}
-      </tbody>
+      </>
     )
   }
 }
 
-export default TableBody
+export default TableBodyMobile

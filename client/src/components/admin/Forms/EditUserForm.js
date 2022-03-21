@@ -103,12 +103,13 @@ class EditUserForm extends React.Component {
             username: this.state.username,
             email: this.state.email,
             createdAt: this.props.userDetails.createdAt,
-            roles: [
-              {
-                id: this.state.role,
-                name: roles[0]
-              }
-            ]
+            user_added_bies: [{
+              added_by_name: JSON.parse(localStorage.getItem('user')).username
+            }],
+            roles: [{
+              id: this.state.role,
+              name: roles[0]
+            }]
           })
         }).catch((error) => {
           console.log(error)
@@ -120,44 +121,65 @@ class EditUserForm extends React.Component {
     return (
       <div>
         <div className="modal-admin">
-          <h1 className="title modal-title">Edit User</h1>
+          <h4 className="title modal-title">Edit existing user</h4>
         </div>
 
-        <br/>
-        <input
-          type="text"
-          className="input is-normal input-admin"
-          defaultValue={this.state.username}
-          onChange={this.handleUsername}
-          placeholder="Username..."
-        />
-        <br/>
-        <br/>
+        <hr className="admin-modal-hr" />
 
-        <input
-          type="email"
-          onChange={this.handleEmail}
-          className="input is-normal input-admin"
-          defaultValue={this.state.email}
-          placeholder="Email..."
-        />
-        <br/>
-        <br/>
+        <div className="admin-modal-container">
+          <label className="admin-modal-label">Username</label>
+          <input
+              type="text"
+              className="input is-normal admin-modal-input"
+              defaultValue={this.state.username}
+              onChange={this.handleUsername}
+              placeholder="Username..."
+          />
+        </div>
 
-        <select
-          defaultValue={this.state.role}
-          name="role" onChange={this.handleChange}
-          className="select is-normal"
-        >
-          <option value={0}> --- Select a Role---</option>
-          <option value={1}>User</option>
-          <option value={3}>Tutor</option>
-          <option value={2}>Admin</option>
-        </select>
-        <br/>
-        <br/>
 
-        <button className="button" onClick={this.updateUser}>Update</button>
+        <div className="admin-modal-container">
+          <label className="admin-modal-label">Email</label>
+          <input
+              type="email"
+              onChange={this.handleEmail}
+              className="input is-normal admin-modal-input"
+              defaultValue={this.state.email}
+              placeholder="Email..." />
+        </div>
+
+        <div className="admin-modal-container">
+          <label className="admin-modal-label">Role</label>
+          <select
+              style={{color: (this.state.role === 0) ? "lightgray" : ""}}
+              className="select is-normal admin-modal-select"
+              defaultValue={this.state.role}
+              name="role"
+              onChange={this.handleChange}
+          >
+            <option value={0} hidden={true}>Select a role</option>
+            <option value={1} className="admin-modal-option">User</option>
+            {(JSON.parse(localStorage.getItem('user')).roles[0] === "ROLE_ADMIN") ? <option value={3} style={{color: "black"}}>Tutor</option> : ""}
+            {/*<option value={2} className="admin-modal-option">Admin</option>*/}
+          </select>
+        </div>
+
+        <hr className="admin-modal-hr" />
+
+        <div className="admin-modal-button-container">
+          <button
+            className="button admin-modal-submit-button"
+            onClick={this.updateUser}
+          >
+            Save changes
+          </button>
+          <button
+            className="button admin-modal-cancel-button"
+            onClick={this.props.closeModal}
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     )
   }
