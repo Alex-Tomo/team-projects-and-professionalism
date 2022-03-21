@@ -9,7 +9,6 @@ import authHeader from "../../../services/auth-header"
  * @author Alex Thompson, W19007452
  */
 
-  // TODO: add client side validation
 class EditUserForm extends React.Component {
   constructor(props) {
     super(props)
@@ -35,7 +34,6 @@ class EditUserForm extends React.Component {
     }
   }
 
-  // TODO: Add validation
   handleUsername = (event) => {
     this.setState({username: event.target.value})
   }
@@ -53,14 +51,29 @@ class EditUserForm extends React.Component {
       this.props.showMessage("Username Cannot Be Empty!", "is-danger")
       return
     }
+    if (this.state.username.trim().includes(" ")) {
+      this.props.showMessage("Username Cannot Contain Spaces!", "is-danger")
+      return
+    }
+    if ((this.state.username.length <= 7) || (this.state.username.length > 32)) {
+      this.props.showMessage("Username Must Be Between 8 and 32 Characters!", "is-danger")
+      return
+    }
+
     if (this.state.email.trim() === "") {
       this.props.showMessage("Email Cannot Be Empty!", "is-danger")
       return
     }
+    if (this.state.email.trim().includes(" ")) {
+      this.props.showMessage("Email Cannot Contain Spaces!", "is-danger")
+      return
+    }
+
     if (this.state.role < 1 || this.state.role > 3) {
       this.props.showMessage("Invalid Role Selected!", "is-danger")
       return
     }
+
     if (
         (this.state.username === this.props.userDetails.username) &&
         (this.state.email === this.props.userDetails.email) &&

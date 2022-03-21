@@ -16,6 +16,7 @@ import TableBody from "./TableBody"
 import RemoveUserForm from "../Forms/RemoveUserForm"
 import RemoveUserModal from "../Modals/RemoveUserModal"
 import TableBodyMobile from "../Mobile/TableBodyMobile";
+import RemoveUserFormMobile from "../Mobile/RemoveUserFormMobile";
 
 /**
  * Displays the admin table with the users details
@@ -281,31 +282,57 @@ class AdminTable extends React.Component {
       })
 
       if (userDetails.length > 0) {
-        await this.setState({
-          removeUser: <RemoveUserForm
-            userDetails={userDetails}
-            handleSubmit={() => this.removeOneUser(userId)}
-            showMessage={(msg, cls) => this.displayNotification(msg, cls)}
-            closeModal={() => this.closeModal("modal-remove-user")}
-            removeManyUsers={this.removeManyUsers}
-            removeOneUser={(id) => this.removeOneUser(id)}
-          />
-        })
+        if (window.innerWidth > 768) {
+          await this.setState({
+            removeUser: <RemoveUserForm
+              userDetails={userDetails}
+              handleSubmit={() => this.removeOneUser(userId)}
+              showMessage={(msg, cls) => this.displayNotification(msg, cls)}
+              closeModal={() => this.closeModal("modal-remove-user")}
+              removeManyUsers={this.removeManyUsers}
+              removeOneUser={(id) => this.removeOneUser(id)}
+            />
+          })
+        } else {
+          await this.setState({
+            removeUser: <RemoveUserFormMobile
+              userDetails={userDetails}
+              handleSubmit={() => this.removeOneUser(userId)}
+              showMessage={(msg, cls) => this.displayNotification(msg, cls)}
+              closeModal={() => this.closeModal("modal-remove-user")}
+              removeManyUsers={this.removeManyUsers}
+              removeOneUser={(id) => this.removeOneUser(id)}
+            />
+          })
+        }
       }
     } else {
       if (userId[0] !== null) {
         for (let i = 0; i < this.props.results.length; i++) {
           if(userId[0] === this.props.results[i].id) {
-            await this.setState({
-              removeUser: <RemoveUserForm
-                userDetails={[this.props.results[i]]}
-                handleSubmit={() => this.removeOneUser(userId)}
-                showMessage={(msg, cls) => this.displayNotification(msg, cls)}
-                closeModal={() => this.closeModal("modal-remove-user")}
-                removeManyUsers={this.removeManyUsers}
-                removeOneUser={(id) => this.removeOneUser(id)}
-              />
-            })
+            if (window.innerWidth > 768) {
+              await this.setState({
+                removeUser: <RemoveUserForm
+                  userDetails={[this.props.results[i]]}
+                  handleSubmit={() => this.removeOneUser(userId)}
+                  showMessage={(msg, cls) => this.displayNotification(msg, cls)}
+                  closeModal={() => this.closeModal("modal-remove-user")}
+                  removeManyUsers={this.removeManyUsers}
+                  removeOneUser={(id) => this.removeOneUser(id)}
+                />
+              })
+            } else {
+              await this.setState({
+                removeUser: <RemoveUserFormMobile
+                  userDetails={[this.props.results[i]]}
+                  handleSubmit={() => this.removeOneUser(userId)}
+                  showMessage={(msg, cls) => this.displayNotification(msg, cls)}
+                  closeModal={() => this.closeModal("modal-remove-user")}
+                  removeManyUsers={this.removeManyUsers}
+                  removeOneUser={(id) => this.removeOneUser(id)}
+                />
+              })
+            }
             break
           }
         }

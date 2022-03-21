@@ -314,6 +314,19 @@ tbody tr td {
   gap: 10px;
 }
 
+.admin-modal-submit-button:hover {
+  color: #FFFFFF;
+}
+
+.admin-modal-submit-button-red:hover {
+  color: #FFFFFF;
+}
+
+.admin-modal-cancel-button:hover {
+  border: 1px solid #00549F;
+  color: #00549F;
+}
+
 @media only screen and (max-width: 768px) {
   .users-table-options {
     flex-direction: column;
@@ -343,5 +356,14 @@ tbody tr td {
 
   .checkbox-admin {
     margin: 0;
+  }
+
+  .modal-content {
+    width: 90%;
+    margin: auto;
+  }
+
+  .pagination-next {
+    order: 1;
   }
 }

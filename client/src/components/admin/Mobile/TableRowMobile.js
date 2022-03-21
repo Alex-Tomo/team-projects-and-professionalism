@@ -10,7 +10,7 @@ class TableRowMobile extends React.Component {
     }
 
     return (
-        <div key={this.props.result.id} style={{border: "1px solid black", borderRadius: "8px", marginBlock: "20px"}}>
+        <div key={this.props.result.id} style={{border: "1px solid black", borderRadius: "8px", marginBottom: "20px"}}>
           <div style={{ display: "flex", flexDirection: "column", alignItems: "start", width: "90%", margin: " 20px auto"}}>
             <div>
               <Checkbox
@@ -18,30 +18,30 @@ class TableRowMobile extends React.Component {
                 handleChange={this.props.handleChange}
                 isChecked={this.props.isCheck.includes(this.props.result.id)}
               />
-              <span style={{marginLeft: "10px"}}>Select Account</span>
+              <span style={{marginLeft: "10px", fontWeight: "bold"}}>Select Account</span>
             </div>
             <div style={{textAlign: "start", marginTop: "10px"}}>
-              <p><strong>Username</strong></p>
+              <p  style={{color: "#004888", fontWeight: "bold"}}>Username</p>
               <p>{this.props.result.username}</p>
             </div>
             <div style={{textAlign: "start", marginTop: "10px"}}>
-              <p><strong>Email</strong></p>
+              <p  style={{color: "#004888", fontWeight: "bold"}}>Email</p>
               <p>{this.props.result.email}</p>
             </div>
             <div style={{textAlign: "start", marginTop: "10px"}}>
-              <p><strong>Role</strong></p>
+              <p  style={{color: "#004888", fontWeight: "bold"}}>Role</p>
               <p>{this.props.result.roles[0].name}</p>
             </div>
             <div style={{textAlign: "start", marginTop: "10px"}}>
-              <p><strong>Date Added</strong></p>
+              <p  style={{color: "#004888", fontWeight: "bold"}}>Date Added</p>
               <p>{this.props.result.createdAt.toString().split('T')[0]}</p>
             </div>
             <div style={{textAlign: "start", marginTop: "10px"}}>
-              <p><strong>Added By</strong></p>
+              <p style={{color: "#004888", fontWeight: "bold"}}>Added By</p>
               <p>{addedBy}</p>
             </div>
           </div>
-          <div style={{ display: "flex", flexDirection: "column"}}>
+          <div style={{ display: "flex", flexDirection: "column", marginBottom: "20px"}}>
             <button
               style={{width: "90%", margin: "5px auto", borderRadius: "8px"}}
               className="button admin-option-button"

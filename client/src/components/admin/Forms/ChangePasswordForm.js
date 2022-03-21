@@ -9,7 +9,6 @@ import authHeader from "../../../services/auth-header"
  * @author Alex Thompson, W19007452
  */
 
-  // TODO: add client side validation
 class ChangePasswordForm extends React.Component {
   constructor(props) {
     super(props)
@@ -33,8 +32,16 @@ class ChangePasswordForm extends React.Component {
   }
 
   changePassword = () => {
+    if ((this.state.password.length <= 7) || (this.state.password.length > 32)) {
+      this.props.showMessage("Password Must Be Between 8 and 32 Characters!", "is-danger")
+      return
+    }
     if (this.state.password.trim() === "") {
       this.props.showMessage("Password Cannot Be Empty!", "is-danger")
+      return
+    }
+    if (this.state.password.trim().includes(" ")) {
+      this.props.showMessage("Password Cannot Contain Spaces!", "is-danger")
       return
     }
     if (this.state.repeatPassword.trim() === "") {

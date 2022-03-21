@@ -9,7 +9,6 @@ import authHeader from "../../../services/auth-header"
  */
 
 
-  // TODO: add client side validation
 class AddUserForm extends React.Component {
   constructor(props) {
     super(props)
@@ -32,12 +31,34 @@ class AddUserForm extends React.Component {
       this.props.showMessage("Username Cannot Be Empty!", "is-danger")
       return
     }
+    if (this.state.username.trim().includes(" ")) {
+      this.props.showMessage("Username Cannot Contain Spaces!", "is-danger")
+      return
+    }
+    if ((this.state.username.length <= 7) || (this.state.username.length > 32)) {
+      this.props.showMessage("Username Must Be Between 8 and 32 Characters!", "is-danger")
+      return
+    }
+
     if (this.state.email.trim() === "") {
       this.props.showMessage("Email Cannot Be Empty!", "is-danger")
       return
     }
+    if (this.state.email.trim().includes(" ")) {
+      this.props.showMessage("Email Cannot Contain Spaces!", "is-danger")
+      return
+    }
+
+    if ((this.state.password.length <= 7) || (this.state.password.length > 32)) {
+      this.props.showMessage("Password Must Be Between 8 and 32 Characters!", "is-danger")
+      return
+    }
     if (this.state.password.trim() === "") {
       this.props.showMessage("Password Cannot Be Empty!", "is-danger")
+      return
+    }
+    if (this.state.password.trim().includes(" ")) {
+      this.props.showMessage("Password Cannot Contain Spaces!", "is-danger")
       return
     }
     if (this.state.repeatPassword.trim() === "") {
@@ -48,6 +69,7 @@ class AddUserForm extends React.Component {
       this.props.showMessage("Passwords Do Not Match!", "is-danger")
       return
     }
+
     if (this.state.role < 1 || this.state.role > 3) {
       this.props.showMessage("Invalid Role Selected!", "is-danger")
       return
@@ -130,7 +152,7 @@ class AddUserForm extends React.Component {
             <input
               className="input is-normal input-admin admin-modal-input"
               type="text"
-              placeholder="John Johnson"
+              placeholder="JohnJohnson"
               onChange={this.handleUsername}/>
           </div>
 
