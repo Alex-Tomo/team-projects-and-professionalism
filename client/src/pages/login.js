@@ -2,6 +2,8 @@ import React, { Component } from "react"
 import AuthService from "../services/auth.service"
 import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
+import Reaptcha from 'reaptcha';
+
 
 const required = (value) => {
     if (!value) {
@@ -23,9 +25,19 @@ class Login extends Component {
             username: "",
             password: "",
             loading: false,
-            message: ""
+            message: "",
+            verified: false
         }
     }
+
+    onVerify = recaptchaResponse => {
+        this.setState({
+          verified: true
+        });
+        var element = document.getElementById("submit-btn");
+        element.classList.remove("sign-btn-disabled");
+        element.classList.add("sign-btn");
+      };
 
     onChangeUsername(e) {
         this.setState({
@@ -38,13 +50,13 @@ class Login extends Component {
         })
     }
 
-    handleLogin(e) {
+   async handleLogin(e) {
         e.preventDefault()
         this.setState({
             message: "",
             loading: true
         })
-        AuthService.login(this.state.username, this.state.password).then(
+       await AuthService.login(this.state.username, this.state.password).then(
             () => {
                 const userRole = AuthService.getCurrentUser().roles[0]
                 let roleservice =
@@ -80,6 +92,7 @@ class Login extends Component {
                         this.form = c
                     }}
                     className="box"
+                    method="POST"
                 >
                     <h1 className="is-size-4 has-text-centered has-text-weight-bold">
                         Login
@@ -116,14 +129,10 @@ class Login extends Component {
                             />
                         </div>
                     </div>
+                    <Reaptcha  className="g-recaptcha" sitekey="6LdV3dQeAAAAAIJVDWQ7UNjvGj03Jmzp0nkEduIg" onVerify={this.onVerify} />
+                    <br></br>
                     <div className="has-text-right"><Link className="" to="/password-recovery">Forgot your password?</Link></div>
-                    <label className="check-cont">
-                    <input type="checkbox" />
-                    <span className="checkmark"></span>
-                    Remember me
-                    </label>
-
-                    <button className="sign-btn is-clickable">Sign in</button>
+                    <button id="submit-btn" type="submit" disabled={!this.state.verified} className="sign-btn-disabled is-clickable">Sign in</button>
                 </form>
             </div>
         )
