@@ -94,7 +94,13 @@
   text-align: left !important;
 }
 
+tr {
+  border: 1px solid #E4E4E4;
+}
+
 th {
+  height: 52px;
+  background-color: #E5ECFF;
   vertical-align: middle !important;
 }
 

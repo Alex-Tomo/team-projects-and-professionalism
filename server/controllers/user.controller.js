@@ -210,11 +210,12 @@ exports.adminRemoveUser = (req, res) => {
       where: {
         added_user: parseInt(id)
       }
-    })
-    db.user.destroy({
-      where: {
-        id: parseInt(id)
-      }
+    }).then(() => {
+      db.user.destroy({
+        where: {
+          id: parseInt(id)
+        }
+      })
     })
   })
 

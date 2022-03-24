@@ -117,6 +117,14 @@ class AddUserForm extends React.Component {
             name: roles[0]
           }
         ]
+      }).then(() => {
+        this.setState({
+          username: "",
+          email: "",
+          password: "",
+          repeatPassword: "",
+          role: 0
+        })
       })
     }).catch(e => {
       this.props.showMessage("Could Not Add User!", "is-danger")
@@ -153,6 +161,7 @@ class AddUserForm extends React.Component {
               className="input is-normal input-admin admin-modal-input"
               type="text"
               placeholder="JohnJohnson"
+              value={this.state.username}
               onChange={this.handleUsername}/>
           </div>
 
@@ -163,6 +172,7 @@ class AddUserForm extends React.Component {
               className="input is-normal admin-modal-input"
               type="email"
               placeholder="Example@gmail.com"
+              value={this.state.email}
               onChange={this.handleEmail}/>
           </div>
 
@@ -171,7 +181,7 @@ class AddUserForm extends React.Component {
             <select
               style={{ color: (this.state.role === 0) ? "lightgray" : "" }}
               className="select is-normal admin-modal-select"
-              defaultValue={0}
+              value={this.state.role}
               name="role"
               onChange={this.handleChange}
             >
@@ -188,6 +198,7 @@ class AddUserForm extends React.Component {
               className="input is-normal admin-modal-input"
               type="password"
               placeholder="Password"
+              value={this.state.password}
               onChange={this.handlePassword}/>
           </div>
 
@@ -197,6 +208,7 @@ class AddUserForm extends React.Component {
               className="input is-normal admin-modal-input"
               type="password"
               placeholder="Confirm Password"
+              value={this.state.repeatPassword}
               onChange={this.handleRepeatPassword}/>
           </div>
 

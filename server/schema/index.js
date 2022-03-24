@@ -39,7 +39,7 @@
  // Tables or models as the orm refers to them.
  db.user = require('./user.model.js')(sequelize, Sequelize)
  db.role = require('./role.model.js')(sequelize, Sequelize)
- db.lessons = require('./lessons.model.js')(sequelize, Sequelize)
+ // db.lessons = require('./lessons.model.js')(sequelize, Sequelize)
 
  db.questions = require('./models/questions.model.js')(sequelize, Sequelize)
  db.math = require('./models/math.model.js')(sequelize, Sequelize)
@@ -48,6 +48,8 @@
  db.verbalReasoning = require('./models/verbalreasoning.model.js')(sequelize, Sequelize)
  db.nonVerbalReasoning = require('./models/nonverbalreasoning.model.js')(sequelize, Sequelize)
  db.user_added_by = require('./models/user_added_by.model.js')(sequelize, Sequelize)
+ db.lessons = require('./models/lessons.model.js')(sequelize, Sequelize)
+ db.user_lessons = require('./models/user_lessons.model.js')(sequelize, Sequelize)
 
 
  // Defined relationships between tables.
@@ -65,8 +67,8 @@
    onDelete: 'cascade'
  })
 
- db.user.hasMany(db.lessons, { foreignKey: 'id' })
- db.lessons.belongsTo(db.user, { foreignKey: 'user_id' })
+ // db.user.hasMany(db.lessons, { foreignKey: 'id' })
+ // db.lessons.belongsTo(db.user, { foreignKey: 'user_id' })
 
  db.questions.hasMany(db.math, {foreignKey: 'question_id'})
  db.questions.hasMany(db.english, {foreignKey: 'question_id'})
@@ -76,6 +78,9 @@
 
  db.user.hasMany(db.user_added_by, { foreignKey: 'added_user' })
  db.user_added_by.belongsTo(db.user, { foreignKey: 'added_by' })
+
+db.user_lessons.belongsTo(db.lessons, { foreignKey: 'lesson_id' })
+db.user.hasMany(db.user_lessons, { foreignKey: 'user_id' })
 
  // ONLY UNCOMMENT THIS IF WE DROP THE DATABASE
  // temp_function(db).then(r => console.log("success")).catch(e => console.log(e))
