@@ -11,15 +11,15 @@
  */
 
 module.exports = (sequelize, Sequelize) => {
-  return sequelize.define('user_added_by', {
-    added_user: {
-      type: Sequelize.INTEGER
-    },
-    added_by: {
-      type: Sequelize.INTEGER
-    },
-    added_by_name: {
-      type: Sequelize.STRING
-    }
-  })
+    return sequelize.define('user_added_by', {
+        added_user: {
+            type: Sequelize.INTEGER
+        },
+        added_by: {
+            type: Sequelize.INTEGER
+        },
+        added_by_name: {
+            type: Sequelize.STRING
+        }
+    })
 }

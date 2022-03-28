@@ -1,10 +1,8 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
-class TestsSelection extends React.Component {
-
+class Topics extends React.Component {
     render() {
-        ls
         return (
             <div>
                 <div className="top">
@@ -17,7 +15,7 @@ class TestsSelection extends React.Component {
                 <div className="columns">
                     <Link className="" to="/english">
                         <div className="column" id="topic">
-                            <figure className="image is-4by3"></figure>
+                            <figure className="image is-4by3" />
                             <h3>English</h3>
                             <p>Increase productivity of customer service staff and improve your customer.</p>
                         </div>
@@ -25,7 +23,7 @@ class TestsSelection extends React.Component {
 
                     <Link className="" to="/math">
                         <div className="column" id="topic">
-                            <figure className="image is-4by3"></figure>
+                            <figure className="image is-4by3" />
                             <h3>Maths</h3>
                             <p>Increase productivity of customer service staff and improve your customer.</p>
                         </div>
@@ -33,7 +31,7 @@ class TestsSelection extends React.Component {
 
                     <Link className="" to="/verbal">
                         <div className="column" id="topic">
-                            <figure className="image is-4by3"></figure>
+                            <figure className="image is-4by3" />
                             <h3>Verbal Reasoning</h3>
                             <p>Increase productivity of customer service staff and improve your customer.</p>
                         </div>
@@ -41,15 +39,15 @@ class TestsSelection extends React.Component {
 
                     <Link className="" to="/nonverbal">
                         <div className="column" id="topic">
-                            <figure className="image is-4by3"></figure>
+                            <figure className="image is-4by3" />
                             <h3>Non-Verbal Reasoning</h3>
                             <p>Increase productivity of customer service staff and improve your customer.</p>
                         </div>
                     </Link>
                 </div>
-            </div >
+            </div>
         )
     }
 }
 
-export default TestsSelection;
+export default Topics

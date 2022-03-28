@@ -15,50 +15,50 @@ export default function ConditionalButtons(props) {
         //Admin pages here
         return (
             <div className="navbar-item center ">
-            <NavLink className="navbar-item gaps small nav-text" to="admin">
-            <img className="mr-2" alt="dashboard" src={grid} />Dashboard
-            </NavLink>
-            <NavLink className="navbar-item gaps small nav-text" to="management">
-            <img className="mr-2" alt="management" src={list} />Management
-            </NavLink>
-            <NavLink className="navbar-item gaps small nav-text" to="admin">
-            <img className="mr-2" alt="support" src={support} />Support
-            </NavLink>
+                <NavLink className="navbar-item gaps small nav-text" to="admin">
+                    <img className="mr-2" alt="dashboard" src={grid} />Dashboard
+                </NavLink>
+                <NavLink className="navbar-item gaps small nav-text" to="management">
+                    <img className="mr-2" alt="management" src={list} />Management
+                </NavLink>
+                <NavLink className="navbar-item gaps small nav-text" to="admin">
+                    <img className="mr-2" alt="support" src={support} />Support
+                </NavLink>
             </div>
         )
     } else if (userRole === "ROLE_USER") {
         //User pages here
         return (
             <div className="navbar-item center ">
-            <NavLink className="navbar-item gaps small nav-text" to="user">
-            <img className="mr-2" alt="dashboard" src={grid} />Dashboard
-            </NavLink>
-            <NavLink className="navbar-item gaps small nav-text" to="/math">
-            <img className="mr-2" alt="practice" src={list} />Practice
-            </NavLink>
-            <NavLink className="navbar-item gaps nav-text" to="/user">
-            <img className="mr-2" alt="completed" src={completed} />Completed Tests
-            </NavLink>
-            <NavLink className="navbar-item gaps small nav-text" to="/user">
-            <img className="mr-2" alt="support" src={support} />Support
-            </NavLink>
+                <NavLink className="navbar-item gaps small nav-text" to="user">
+                    <img className="mr-2" alt="dashboard" src={grid} />Dashboard
+                </NavLink>
+                <NavLink className="navbar-item gaps small nav-text" to="/topics">
+                    <img className="mr-2" alt="practice" src={list} />Practice
+                </NavLink>
+                <NavLink className="navbar-item gaps nav-text" to="/completed">
+                    <img className="mr-2" alt="completed" src={completed} />Completed Tests
+                </NavLink>
+                <NavLink className="navbar-item gaps small nav-text" to="/user">
+                    <img className="mr-2" alt="support" src={support} />Support
+                </NavLink>
             </div>
         )
     } else if (userRole === "ROLE_TUTOR") {
         return (
             <div className="navbar-item center ">
-            <NavLink className="navbar-item gaps small" to="user">
-            <img className="mr-2" alt="dashboard" src={grid} />Dashboard
-            </NavLink>
-            <NavLink className="navbar-item gaps small" to="/math">
-            <img className="mr-2" alt="practice" src={list} />Practice
-            </NavLink>
-            <NavLink className="navbar-item gaps" to="/user">
-            <img className="mr-2" alt="completed" src={completed} />Completed Tests
-            </NavLink>
-            <NavLink className="navbar-item gaps small" to="/user">
-            <img className="mr-2" alt="support" src={support} />Support
-            </NavLink>
+                <NavLink className="navbar-item gaps small" to="user">
+                    <img className="mr-2" alt="dashboard" src={grid} />Dashboard
+                </NavLink>
+                <NavLink className="navbar-item gaps small" to="/math">
+                    <img className="mr-2" alt="practice" src={list} />Practice
+                </NavLink>
+                <NavLink className="navbar-item gaps" to="/user">
+                    <img className="mr-2" alt="completed" src={completed} />Completed Tests
+                </NavLink>
+                <NavLink className="navbar-item gaps small" to="/user">
+                    <img className="mr-2" alt="support" src={support} />Support
+                </NavLink>
             </div>
         )
     }

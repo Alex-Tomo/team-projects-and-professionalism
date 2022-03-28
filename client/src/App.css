@@ -2,6 +2,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Barlow&display=swap');
 
 @import './css/admin.css';
+@import './css/questions.css';
+
 
 /** @author Jordan Short - W18039155 Various Styles for Numerous Things*/
 body{
@@ -290,22 +292,21 @@ width: 100%;
 }
 
 .fade-in {
-	opacity: 1;
-	animation-name: fadeInOpacity;
-	animation-iteration-count: 1;
-	animation-timing-function: ease-in;
-	animation-duration: 0.5s;
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 0.5s;
 }
 
 @keyframes fadeInOpacity {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
-
 
 /** @author Graham Stoves - w19025672 for the generating questions component(s)*/
 
