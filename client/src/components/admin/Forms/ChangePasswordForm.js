@@ -61,6 +61,11 @@ class ChangePasswordForm extends React.Component {
     }).then(() => {
       this.props.handleSubmit()
       this.props.showMessage("Password changed!", "is-success")
+    }).then(() => {
+      this.setState({
+        password: "",
+        repeatPassword: "",
+      })
     }).catch(() => {
       this.props.showMessage("Could Not Change Password!", "is-danger")
     })
@@ -118,6 +123,7 @@ class ChangePasswordForm extends React.Component {
             className="input is-normal admin-modal-input"
             type="password"
             placeholder="Password"
+            value={this.state.password}
             onChange={this.handlePassword} />
       </div>
 
@@ -127,6 +133,7 @@ class ChangePasswordForm extends React.Component {
             className="input is-normal admin-modal-input"
             type="password"
             placeholder="Confirm password"
+            value={this.state.repeatPassword}
             onChange={this.handleRepeatPassword} />
       </div>
 

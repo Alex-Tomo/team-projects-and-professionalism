@@ -39,6 +39,27 @@ db.sequelize = sequelize
 // Tables or models as the orm refers to them.
 db.user = require('./user.model.js')(sequelize, Sequelize)
 db.role = require('./role.model.js')(sequelize, Sequelize)
+// db.lessons = require('./lessons.model.js')(sequelize, Sequelize)
+
+db.questions = require('./models/questions.model.js')(sequelize, Sequelize)
+db.math = require('./models/math.model.js')(sequelize, Sequelize)
+db.englishStory = require('./models/englishstory.model.js')(sequelize, Sequelize)
+db.english = require('./models/english.model.js')(sequelize, Sequelize)
+db.verbalReasoning = require('./models/verbalreasoning.model.js')(sequelize, Sequelize)
+db.nonVerbalReasoning = require('./models/nonverbalreasoning.model.js')(sequelize, Sequelize)
+db.user_added_by = require('./models/user_added_by.model.js')(sequelize, Sequelize)
+db.lessons = require('./models/lessons.model.js')(sequelize, Sequelize)
+db.user_lessons = require('./models/user_lessons.model.js')(sequelize, Sequelize)
+
+const db = {}
+
+// Sequelize object initialization.
+db.Sequelize = Sequelize
+db.sequelize = sequelize
+
+// Tables or models as the orm refers to them.
+db.user = require('./user.model.js')(sequelize, Sequelize)
+db.role = require('./role.model.js')(sequelize, Sequelize)
 db.lessons = require('./lessons.model.js')(sequelize, Sequelize)
 
 db.questions = require('./models/questions.model.js')(sequelize, Sequelize)

@@ -296,15 +296,15 @@ exports.adminRemoveUser = (req, res) => {
             where: {
                 added_user: parseInt(id)
             }
+        }).then(() => {
+            db.user.destroy({
+                where: {
+                    id: parseInt(id)
+                }
+            })
         })
-        db.user.destroy({
-            where: {
-                id: parseInt(id)
-            }
-        })
+        res.status(200).send(true)
     })
-
-    res.status(200).send(true)
 }
 
 exports.adminChangePassword = (req, res) => {

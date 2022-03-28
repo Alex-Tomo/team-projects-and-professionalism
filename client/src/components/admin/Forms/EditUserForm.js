@@ -124,6 +124,13 @@ class EditUserForm extends React.Component {
               name: roles[0]
             }]
           })
+
+          this.setState({
+            username: "",
+            email: "",
+            role: 1,
+          })
+
         }).catch((error) => {
           console.log(error)
           this.props.showMessage("Could Not Update User!", "is-danger")
@@ -144,7 +151,7 @@ class EditUserForm extends React.Component {
           <input
               type="text"
               className="input is-normal admin-modal-input"
-              defaultValue={this.state.username}
+              value={this.state.username}
               onChange={this.handleUsername}
               placeholder="Username..."
           />
@@ -157,7 +164,7 @@ class EditUserForm extends React.Component {
               type="email"
               onChange={this.handleEmail}
               className="input is-normal admin-modal-input"
-              defaultValue={this.state.email}
+              value={this.state.email}
               placeholder="Email..." />
         </div>
 
@@ -166,7 +173,7 @@ class EditUserForm extends React.Component {
           <select
               style={{color: (this.state.role === 0) ? "lightgray" : ""}}
               className="select is-normal admin-modal-select"
-              defaultValue={this.state.role}
+              value={this.state.role}
               name="role"
               onChange={this.handleChange}
           >

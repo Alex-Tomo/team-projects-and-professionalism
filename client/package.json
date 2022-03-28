@@ -15,6 +15,7 @@
         "react-scripts": "5.0.0",
         "react-string-replace": "^0.4.4",
         "react-validation": "^3.0.7",
+        "reaptcha": "^1.11.0",
         "validator": "^13.7.0",
         "web-vitals": "^2.1.4"
     },
