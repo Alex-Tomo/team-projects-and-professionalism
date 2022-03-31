@@ -53,15 +53,13 @@
  
  // Signin
  exports.signin = (req, res) => {
-  //Server side validation, will enable for production. @Jordan Short 
-  /*
   let usernamePassed = req.body.username
-  let userRegex = /^[a-zA-Z0-9](_(?!(\.|_))|\.(?!(_|\.))|[a-zA-Z0-9]){6,18}[a-zA-Z0-9]$/
+  let passwordPassed = req.body.password
+  let userRegex = /^[a-zA-Z0-9](_(?!(\.|_))|\.(?!(_|\.))|[a-zA-Z0-9]){6,30}[a-zA-Z0-9]$/
 
-    if(userRegex.test(usernamePassed) === false){
-      return res.status(404).send({ message: `Must only contain characters, numbers, minimum length of 8` })
+    if(userRegex.test(usernamePassed) === false || userRegex.test(passwordPassed) === false){
+      return res.status(404).send({ message: `Username and password must only contain characters, numbers, minimum length of 8, maximum length of 32` })
     }
-  */
 
    User.findOne({
      where: {
@@ -110,6 +108,12 @@
  } 
 
  exports.passwordRecovery =  (req, res) => {
+  let usernamePassed = req.body.username
+  let userRegex = /^[a-zA-Z0-9](_(?!(\.|_))|\.(?!(_|\.))|[a-zA-Z0-9]){6,30}[a-zA-Z0-9]$/
+
+    if(userRegex.test(usernamePassed) === false){
+      return res.status(404).send({ message: `Username must only contain characters, numbers, minimum length of 8, maximum length of 32` })
+    }
   User.findOne({
     where: {
       username: req.body.username
@@ -126,6 +130,13 @@
  }
 
  exports.passwordReset = (req, res) => {
+  let passwordPassed = req.body.password
+  let userRegex = /^[a-zA-Z0-9](_(?!(\.|_))|\.(?!(_|\.))|[a-zA-Z0-9]){6,30}[a-zA-Z0-9]$/
+
+    if(userRegex.test(passwordPassed) === false){
+      return res.status(404).send({ message: `Password must only contain characters, numbers, minimum length of 8, maximum length of 32` })
+    }
+
    let token = req.body.token;
    jwt.verify(token, config.secret, (err, decoded) => {
     if (err) {

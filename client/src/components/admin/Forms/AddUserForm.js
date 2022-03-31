@@ -126,8 +126,8 @@ class AddUserForm extends React.Component {
           role: 0
         })
       })
-    }).catch(e => {
-      this.props.showMessage("Could Not Add User!", "is-danger")
+    }).catch((e) => {
+      this.props.showMessage(e.response.data.message, "is-danger")
     })
   }
 

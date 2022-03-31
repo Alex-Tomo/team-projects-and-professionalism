@@ -100,6 +100,7 @@ exports.adminUsers = (req, res) => {
 }
 
 exports.adminAddUser = (req, res) => {
+  console.log(req.body)
   db.user.create({
     username: req.body.username,
     email: req.body.email,
@@ -135,6 +136,7 @@ exports.adminAddUser = (req, res) => {
       })
     })
     .catch((error) => {
+      console.log(error)
       res.status(500).send({ registered: false })
     })
 }

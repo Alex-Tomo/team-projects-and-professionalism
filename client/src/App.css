@@ -4,6 +4,76 @@
 @import './css/admin.css';
 
 /** @author Jordan Short - W18039155 Various Styles for Numerous Things*/
+html {
+  scroll-behavior: smooth;
+}
+
+.card-color-green {
+  background: #B8D335;
+}
+
+.card-color-purple {
+  background: #5352A3;
+}
+
+.card-color-red {
+  background: #CC3366;
+}
+
+.card-size-home {
+  width: 25vw;
+  height: 60vh;
+}
+
+.card-size-head {
+  height: 20vh;
+}
+
+.cards-home-align {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-list-home {
+  list-style-type: none !important;
+  margin-right: 10px;
+}
+
+.card-content-home {
+  padding-left: 16px;
+}
+
+.heading-support-home {
+  text-align: center;
+  margin-top: -250px;
+}
+
+.cards-underscore{
+  margin: auto;
+  background: #3E9CF0;
+  height: 4px;
+  width: 64px;
+}
+
+.cards-sub {
+  margin-left: 20vw;
+  margin-right: 20vw;
+  font-size: 14px;
+}
+
+.support-overall{
+  height: 100vh;
+}
+
+.card-buttons-position{
+  display: flex;
+  justify-content: center;
+}
+
+.card-buttons {
+  width: 20vw;
+}
+
 body{
   font-family: 'Barlow', sans-serif;
 }
@@ -15,7 +85,6 @@ body{
   justify-content: center;
   align-items: center;
 }
-
 .shaddow-nav{
   box-shadow: inset 0px -1px 0px #EBEBEB;
 }
@@ -89,7 +158,7 @@ color: #004888;
 }
 
 .video-cont video {
-
+  margin-top: 10vh;
   display: block;
 }
 
@@ -100,10 +169,49 @@ color: #004888;
   width: 60px;
   height: 60px;
   border-radius: 5px;
-  top: 125px;
+  top: 25vh;
   right: 0;
   bottom: 0;
   left: 225px;
+}
+
+.wrapper {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: 265px 265px;
+  gap: 10px;
+}
+
+.contact-icon {
+  margin-top: 20px;
+  margin-left: 15px;
+}
+
+.contact-card-title {
+  margin-top: 8px;
+  margin-left: 15px;
+  margin-right: 15px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.contact-card-sub {
+  margin-top: 10px;
+  margin-left: 15px;
+  margin-right: 15px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+}
+.contact-background {
+  background: #FFFFFF;
+  border-radius: 12px;
+  width: 264px;
+  height: 216px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.05);
 }
 
 .hero-image{
@@ -111,6 +219,18 @@ color: #004888;
   background-repeat: no-repeat;
   background-position: right top;
 }
+
+.hero-image-mob{
+  background-image: url('./images/graham.png');
+  background-repeat: no-repeat;
+  background-size: 80vh 130vw;
+  background-position: center bottom;
+}
+
+.hero-size-mob{
+  height: 65vh;
+}
+
 .hero-underscore{
   background: #3E9CF0;
   height: 4px;
@@ -128,11 +248,20 @@ color: #004888;
   margin-top: 11px;
   margin-left: 24px;
 }
+
+.login-button-nav{
+  padding-left: 9vw;
+}
+
 .kip-blue-background{
   background: #004888;
   color: #ffffff;
   border-radius: 8px;
   padding: 10px 24px;
+}
+
+.kip-blue-background:focus{
+  color: #FFFFFF;
 }
 
 .kip-blue-background:hover{
@@ -148,6 +277,29 @@ color: #004888;
 
 .sub-home-background{
   background: #E5ECFF
+}
+
+.contact-align {
+  margin-top: 80px;
+}
+
+.back-to-top{
+  padding: 20px;
+  position: fixed;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.05);
+  bottom: 0;
+  right: 0;
+  color: #FFFFFF;
+  background: #00549F;
+  border-top-left-radius: 10px;
+}
+
+.back-to-top a {
+  color: #FFFFFF;
+}
+
+.full-screen-height {
+  height: 100vh;
 }
 
 .sub-home-background.gray{
@@ -248,10 +400,6 @@ font-size: 16px;
 line-height: 24px;
 color: #FFFFFF;
 width: 100%;
-}
-
-.g-recaptcha {
-  transform:scale(1.5, 1);-webkit-transform:scale(152%, 1.3);transform-origin:0 0;-webkit-transform-origin:0 0;
 }
 
 .sign-btn-disabled{
@@ -391,10 +539,88 @@ width: 100%;
     }
 }
 
-/** @author Graham Stoves - w19025672 for the generating questions component(s)*/
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+ 
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 45vw;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 4px solid transparent;
+  border-top-color: #00549F;
+  border-bottom-color: #00549F;
+  animation: spinner .8s ease infinite;
+}
 
+@media only screen and (min-width: 900px) {
+  .spinner:before {
+  left: 48vw;
+  }
+}
+.g-recaptcha {
+  display: flex;
+justify-content: center;
+  transform:scale(1, 1);-webkit-transform:scale(100%, 1);transform-origin:0 0;-webkit-transform-origin:0 0;
+}
+
+@media only screen and (min-width: 900px) {
+.g-recaptcha {
+  display: block;
+  transform:scale(1.5, 1);-webkit-transform:scale(152%, 1.3);transform-origin:0 0;-webkit-transform-origin:0 0;
+}
+}
+
+@media only screen and (min-width: 1020px) {
+.mobile-nav-items{
+  display: none;
+}
+}
+
+.login-loading{
+  position: absolute;
+  top: 58%;
+  width: 100%;
+  text-align: center;
+}
+
+.mobile-nav-items{
+  z-index: 3;
+  position: absolute;
+  width: 100%; 
+  background-color: #FFFFFF;
+}
+
+.mobile-nav-item{
+  padding: 25px;
+}
+
+.mobile-dash{
+  padding-left: 35vw;
+}
+
+.mobile-dash div {
+  width: 100%;
+  height: 100%;
+}
+
+.navbar-burger:hover{
+  background-color: #FFFFFF;
+}
+
+/** @author Graham Stoves - w19025672 for the generating questions component(s)*/
+.login-box-size{
+  width: 75vw !important;
+}
+@media only screen and (min-width: 900px) {
 .login-box-size{
     width: 500px !important;
+}
 }
 
 a{
@@ -458,3 +684,19 @@ a{
 /*.progress::-webkit-progress-value {
     transition: width 0.5s ease;
   }*/
+
+  @media only screen   
+and (min-width : 1024px)   
+and (max-width : 2200px)  {
+
+  .mobile-ver{
+    display: none;
+  }
+}
+
+@media only screen and (min-width : 320px)   
+and (max-width : 1024px)   {
+  .desktop-ver{
+    display:none;
+  }
+}
