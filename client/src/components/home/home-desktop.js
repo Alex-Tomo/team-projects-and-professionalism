@@ -98,7 +98,7 @@ export default class HomeMobile extends Component {
         </div>
         <div className="contact-background">
           <div className="contact-icon"><img src={Pencil} alt="pencil" width="29px"/></div>
-          <div className="contact-card-title">Personalised Programme</div>
+          <div className="contact-card-title">Personalised Programmes</div>
           <div className="contact-card-sub">Our ticket dispensers have a unique design that looks excellent in the exterior and interior.</div>
         </div>
         <div className="contact-background">

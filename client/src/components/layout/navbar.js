@@ -77,19 +77,19 @@ class NavBar extends Component {
               </Link>
               </li>
               <li onClick={this.showMenu} className="mobile-nav-item">
-              <a className="navbar-item nav-text" href="#about">
+              <a className="navbar-item nav-text" href="#2">
                 About Us
               </a>
               </li>
               <li onClick={this.showMenu} className="mobile-nav-item">
-              <a className="navbar-item nav-text" href="#support">
+              <a className="navbar-item nav-text" href="#3">
                 Learning
               </a>
               </li>
               <li onClick={this.showMenu} className="mobile-nav-item">
-              <Link className="navbar-item nav-text" to="/">
+              <a className="navbar-item nav-text" href="#4">
                 Work With Us
-              </Link>
+              </a>
               </li>
               <li onClick={this.showMenu}>
               <LogButtons />

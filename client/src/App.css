@@ -26,7 +26,7 @@ html {
 }
 
 .card-size-head {
-  height: 20vh;
+  height: 15vh;
 }
 
 .cards-home-align {
@@ -62,7 +62,7 @@ html {
 }
 
 .support-overall{
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .card-buttons-position{
@@ -95,6 +95,7 @@ body{
 
 .hero-background{
   background: #004888;
+  max-height: 100vh;
 }
 
 .hero-button{
@@ -218,15 +219,84 @@ color: #004888;
   background-image: url('./images/graham.png');
   background-repeat: no-repeat;
   background-position: right top;
+  max-height: 100vh;
+  min-width: 100vh;
 }
 
 .hero-image-mob{
   background-image: url('./images/graham.png');
   background-repeat: no-repeat;
-  background-size: 80vh 130vw;
   background-position: center bottom;
+  max-height: 10vh;
+  max-width: 100vh;
+  background-position: center;
 }
 
+.mobile-size {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 110vh;
+  min-width: 100vw;
+}
+
+.mobile-norm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+.video-player {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 1rem;
+  margin-bottom: 3rem;
+}
+
+.mobile-hero-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
+}
+
+.card-position-mobile{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+
+.about-mobile-sub {
+  color: #656565 !important;
+}
+
+.about-mobile-heading {
+  margin-top: 5rem;;
+  color: #004888 !important;
+}
+
+.mobile-hero-heading {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 38px;
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.mobile-hero-sub {
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+text-align: center;
+color: #FFFFFF;
+}
 .hero-size-mob{
   height: 65vh;
 }
@@ -289,7 +359,21 @@ color: #004888;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.05);
   bottom: 0;
   right: 0;
+  color: #FFFFFF !important;
+  background: #00549F;
+  border-top-left-radius: 10px;
+}
+
+.back-to-top-color {
   color: #FFFFFF;
+}
+
+.back-to-top-mob {
+  padding: 5px;
+  position: fixed;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.05);
+  bottom: 0;
+  right: 0;
   background: #00549F;
   border-top-left-radius: 10px;
 }
@@ -299,7 +383,7 @@ color: #004888;
 }
 
 .full-screen-height {
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .sub-home-background.gray{

@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import {Navigate} from 'react-router-dom';
 import HomeDesktop from "../components/home/home-desktop";
+import MobileDesktop from "../components/home/home-mobile"
 
 export default class Home extends Component {
   constructor(props) {
@@ -28,7 +29,7 @@ export default class Home extends Component {
     return (
     <div>
       <div className="mobile-ver">
-        mobile-ver
+        <MobileDesktop />
       </div>
 
       <div className="desktop-ver">
