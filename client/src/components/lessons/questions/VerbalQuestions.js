@@ -79,10 +79,15 @@ class VerbalQuestions extends React.Component {
     }
 
     nextQuestionHandler = async () => {
-        let string = this.state.questionList[this.state.currentIndex].answer
-        let array = string.split(',')
+        let answerString = this.state.questionList[this.state.currentIndex].answer
+        let answerArray = answerString.split(',')
         let arr = this.state.val
         let answerLength = this.state.questionList[this.state.currentIndex].answer.split(',').length
+
+        if (this.state.userAnswer.length < answerArray.length) {
+            alert("You need to input an answer")
+            return
+        }
 
         this.setState({
             totalNumber: this.state.totalNumber + answerLength,
@@ -90,7 +95,7 @@ class VerbalQuestions extends React.Component {
 
         for (let i = 0; i < arr.length; i++) {
             this.state.finalAnswer.push(arr[i])
-            if (arr[i] === array[i]) {
+            if (arr[i] === answerArray[i]) {
                 await this.setState({
                     score: this.state.score + 1,
 
@@ -102,7 +107,7 @@ class VerbalQuestions extends React.Component {
         if (this.state.currentIndex !== this.state.questionList.length - 1) {
             await this.setState({
                 currentIndex: this.state.currentIndex + 1,
-                userAnswer: null,
+                userAnswer: [],
                 val: arr
             })
         } else if (this.state.currentIndex === this.state.questionList.length - 1) {
@@ -142,12 +147,13 @@ class VerbalQuestions extends React.Component {
     }
 
     handleChange(e) {
-        let arr = this.state.val
+        let arr = this.state.userAnswer
         arr[e.target.id] = e.target.value
         this.setState({
-            userAnswer: e.target.value,
+            userAnswer: arr,
             val: arr
         })
+        console.log(this.state.userAnswer);
     }
 
     render() {

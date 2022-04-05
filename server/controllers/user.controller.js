@@ -153,7 +153,11 @@ exports.completedLessons = (req, res) => {
         include: [{
             model: db.lessons,
             required: true
-        }]
+        }],
+        where: {
+            user_id: req.query.userId
+        },
+        order: ['createdAt']
     })
         .then(r => {
             res.send(r)

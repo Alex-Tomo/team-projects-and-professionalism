@@ -78,7 +78,6 @@ class NonVerbalQuestions extends React.Component {
             images[item.replace('./', '')] = r(item)
         })
         return images
-
     }
 
     handleChange(e) {
@@ -90,6 +89,13 @@ class NonVerbalQuestions extends React.Component {
 
     nextQuestionHandler = async e => {
         let answerLength = this.state.questionList[this.state.currentIndex].answer.split(',').length
+        let answerString = this.state.questionList[this.state.currentIndex].answer
+        let answerArray = answerString.split(',')
+
+        if (this.state.userAnswer.length < answerArray.length) {
+            alert("You need to input an answer")
+            return
+        }
 
         this.setState({
             totalNumber: this.state.totalNumber + answerLength,

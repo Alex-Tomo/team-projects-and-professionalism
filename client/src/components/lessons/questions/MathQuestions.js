@@ -1,4 +1,4 @@
-import React from "react"
+import React from "react";
 import axios from "axios"
 import { Link } from "react-router-dom"
 import authHeader from "../../../services/auth-header"
@@ -85,6 +85,18 @@ class MathQuestions extends React.Component {
         let arr = this.state.val
         let answerLength = this.state.questionList[this.state.currentIndex].answer.split(',').length
 
+        if (this.state.userAnswer.length < answerArray.length) {
+            alert("You need to input an answer")
+            return
+        }
+
+        for (let i = 0; i < this.state.userAnswer.length; i++) {
+            if (this.state.userAnswer[i] === "") {
+                alert("You need to input an answer")
+                return
+            }
+        }
+
         this.setState({
             totalNumber: this.state.totalNumber + answerLength,
         })
@@ -124,7 +136,7 @@ class MathQuestions extends React.Component {
         if (this.state.currentIndex !== this.state.questionList.length - 1) {
             await this.setState({
                 currentIndex: this.state.currentIndex + 1,
-                userAnswer: null,
+                userAnswer: [],
                 val: arr
             })
         } else if (this.state.currentIndex === this.state.questionList.length - 1) {
@@ -163,12 +175,13 @@ class MathQuestions extends React.Component {
     }
 
     handleChange(e) {
-        let arr = this.state.val
+        let arr = this.state.userAnswer
         arr[e.target.id] = e.target.value
         this.setState({
-            userAnswer: e.target.value,
+            userAnswer: arr,
             val: arr
         })
+        console.log(this.state.userAnswer);
     }
 
     displayAnswer = async (e, i, j, buttonsLength) => {
@@ -211,6 +224,8 @@ class MathQuestions extends React.Component {
                 </div>
             )
         }
+
+        console.log(this.state.questionList[this.state.currentIndex]);
 
         if (this.state.questionList.length > 0 && this.state.currentIndex >= 0) {
             question = this.state.questionList[this.state.currentIndex].question

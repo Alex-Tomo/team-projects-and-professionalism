@@ -1,24 +1,24 @@
 /** @author Graham Stoves - w19025672 for the generating questions component(s)*/
 
-.login-box-size{
+.login-box-size {
     width: 500px !important;
 }
 
-a{
+a {
     color: black;
 }
 
-.column figure{
+.column figure {
     background-color: #656565;
     border-radius: 8px;
 }
 
-#topic:hover{
+#topic:hover {
     background-color: #d8d7d717;
     border-radius: 8px;
 }
 
-.line{
+.line {
     border: solid 2px black;
     background-color: black;
     border-radius: 10px;
@@ -26,49 +26,57 @@ a{
     margin-top: 0;
 }
 
-#question-container{
+#question-container {
     width: 100%;
 }
 
-#englishContainer{
+#englishContainer {
     display: flow-root;
 }
 
-#storyText{
+#storyText {
     width: 60%;
-    white-space: pre;           /* CSS 2.0 */
-    white-space: pre-wrap;      /* CSS 2.1 */
-    white-space: pre-line;      /* CSS 3.0 */
-    white-space: -pre-wrap;     /* Opera 4-6 */
-    white-space: -o-pre-wrap;   /* Opera 7 */
-    white-space: -moz-pre-wrap; /* Mozilla */
-    white-space: -hp-pre-wrap;  /* HP Printers */
-    word-wrap: break-word;      /* IE 5+ */
+    white-space: pre;
+    /* CSS 2.0 */
+    white-space: pre-wrap;
+    /* CSS 2.1 */
+    white-space: pre-line;
+    /* CSS 3.0 */
+    white-space: -pre-wrap;
+    /* Opera 4-6 */
+    white-space: -o-pre-wrap;
+    /* Opera 7 */
+    white-space: -moz-pre-wrap;
+    /* Mozilla */
+    white-space: -hp-pre-wrap;
+    /* HP Printers */
+    word-wrap: break-word;
+    /* IE 5+ */
 }
 
-#progressBar::-webkit-progress-value{
+#progressBar::-webkit-progress-value {
     width: 100%;
     transition: width 0.7s ease;
 }
 
 .progress.is-branding::-webkit-progress-value {
-  background-color: #00549F
+    background-color: #00549F
 }
 
 .progress.is-branding::-moz-progress-bar {
-  background-color:#00549F
+    background-color: #00549F
 }
 
 .progress.is-branding::-ms-fill {
-  background-color:#00549F
+    background-color: #00549F
 }
 
-.buttonPressed{
+.buttonPressed {
     background-color: #00549F !important;
     color: white !important;
 }
 
-.button{
+.button {
     background-color: white;
 }
 
@@ -77,15 +85,44 @@ a{
     height: 25px;
 }
 
-pre{
+pre {
     background-color: white;
     font-family: 'Barlow', sans-serif;
 }
 
-.correct{
+.correct {
     color: green;
 }
 
-.incorrect{
+.incorrect {
     color: red;
 }
+
+.flex-grid {
+    display: flex;
+    /*flex-wrap: wrap;*/
+    justify-content: center;
+    /*width: 50%;*/
+    margin: 20px 115px;
+}
+
+.grid-item {
+    flex: 1 1 calc(100% - 50px);
+    /*width: 30%;*/
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.grid-item:nth-child(odd) {
+    flex: 0 0 50px;
+}
+
+.link {
+    margin: 10px;
+}
+
+/*@media screen and (min-width: 1408px) {
+    .container:not(.is-max-desktop):not(.is-max-widescreen) {
+        max-width: 1244px;
+    }
+}*/

@@ -15,7 +15,7 @@ class EnglishQuestions extends React.Component {
         this.state = {
             content: "",
             loggedIn: false,
-            userAnswer: null,
+            userAnswer: [],
             completed: false,
             score: 0,
             currentIndex: -1,
@@ -93,6 +93,13 @@ class EnglishQuestions extends React.Component {
 
     nextQuestionHandler = async () => {
         let answerLength = this.state.questionList[this.state.currentIndex].answer.split(',').length
+        let answerString = this.state.questionList[this.state.currentIndex].answer
+        let answerArray = answerString.split(',')
+
+        if (this.state.userAnswer.length < answerArray.length) {
+            alert("You need to input an answer")
+            return
+        }
 
         this.setState({
             totalNumber: this.state.totalNumber + answerLength,
@@ -108,7 +115,7 @@ class EnglishQuestions extends React.Component {
         if (this.state.currentIndex !== this.state.questionList.length - 1) {
             await this.setState({
                 currentIndex: this.state.currentIndex + 1,
-                userAnswer: null
+                userAnswer: [],
             })
         } else if (this.state.currentIndex === this.state.questionList.length - 1) {
             await this.setState({

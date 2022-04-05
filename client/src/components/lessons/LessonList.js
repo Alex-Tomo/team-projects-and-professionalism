@@ -34,6 +34,31 @@ class LessonList extends React.Component {
         })
     }
 
+    importAll = (r) => {
+        let images = {}
+        r.keys().forEach((item, index) => {
+            images[item.replace('./', '')] = r(item)
+        })
+        return images
+    }
+
+    imageGenerator = () => {
+        const images = this.importAll(require.context('./topic-images', false, /\.(jpg)$/))
+        let number = Math.floor(Math.random() * 2) + 1
+        switch (this.props.type) {
+            case "math":
+                return images["math_" + number + ".jpg"]
+            case "english":
+                return images["english_" + number + ".jpg"]
+            case "verbal_reasoning":
+                return images["verbal_" + number + ".jpg"]
+            case "non_verbal_reasoning":
+                return images["non_verbal_" + number + ".jpg"]
+            default:
+                break
+        }
+    }
+
     render() {
         let lesson = ""
 
@@ -50,7 +75,9 @@ class LessonList extends React.Component {
                     <div key={i} className="box is-shadowless mb-4" style={{ border: "2px solid #F2F2F2", borderRadius: "8px" }}>
                         <div className="columns">
                             <div className="column is-3">
-                                <figure className="image has-background-black is-16by9" />
+                                <figure className="image is-16by9">
+                                    <img src={this.imageGenerator()} alt="English" />
+                                </figure>
                             </div>
                             <div className="column is-pulled-left" style={{ margin: "auto", width: "50%", padding: "10px" }}>
                                 <h4 className="subtitle is-5 mb-0 has-text-weight-bold">{result.lesson_name}</h4>
@@ -64,7 +91,7 @@ class LessonList extends React.Component {
                                 </Link>
                             </div>
                         </div>
-                    </div>
+                    </div >
                 )
             })
         }
@@ -72,25 +99,18 @@ class LessonList extends React.Component {
         return (
             <div>
                 <section className="section is-medium sub-home-background">
-                    <h1 className="dashboard heading">
-                        <div className="container">
-                            <h1 className="title is-2 has-text-weight-bold">{this.props.title}</h1>
-                            <p className="subtitle is-6" style={{ width: "30%", textTransform: "none" }}>
-                                Increase productivity of customer service staff and improve your customer.
-                                Increase productivity of customer service staff and improve your customer.
-                            </p>
-                            <Link className="is-danger" to="/user">
-                                <button className="button is-info" style={{ backgroundColor: "#00549F" }}>
-                                    Back to Dashboard
-                                </button>
-                            </Link>
-                        </div>
-                    </h1>
+                    <h1 className="dashboard heading">{this.props.title}</h1>
+                    <h2 className="dashboard sub-heading mb-4"> Increase productivity of customer service staff and improve your customer.</h2>
+                    <Link className="is-danger" style={{ marginLeft: "75px" }} to="/topics">
+                        <button className="button is-info" style={{ backgroundColor: "#00549F" }}>
+                            Back to Practice
+                        </button>
+                    </Link>
                 </section>
                 <div className="container mt-5">
                     {lesson}
                 </div>
-            </div>
+            </div >
         )
     }
 }

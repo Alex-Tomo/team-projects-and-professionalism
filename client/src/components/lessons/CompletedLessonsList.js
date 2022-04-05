@@ -18,6 +18,9 @@ class CompletedLessonList extends React.Component {
     checkLessonType = () => {
         axios.get('http://localhost:8080/api/completedlessons', {
             headers: authHeader(),
+            params: {
+                userId: JSON.parse(localStorage.getItem('user')).id
+            }
         }).then(res => {
             this.setState({
                 completedLessons: res.data
@@ -27,15 +30,43 @@ class CompletedLessonList extends React.Component {
         })
     }
 
+    importAll = (r) => {
+        let images = {}
+        r.keys().forEach((item, index) => {
+            images[item.replace('./', '')] = r(item)
+        })
+        return images
+    }
+
+    imageGenerator = (imageType) => {
+        const images = this.importAll(require.context('./topic-images', false, /\.(jpg)$/))
+        let number = Math.floor(Math.random() * 2) + 1
+        switch (imageType) {
+            case "math":
+                return images["math_" + number + ".jpg"]
+            case "english":
+                return images["english_" + number + ".jpg"]
+            case "verbal_reasoning":
+                return images["verbal_" + number + ".jpg"]
+            case "non_verbal_reasoning":
+                return images["non_verbal_" + number + ".jpg"]
+            default:
+                break
+        }
+    }
+
     render() {
         let completedLesson = ""
         if (this.state.completedLessons.length > 0) {
             completedLesson = this.state.completedLessons.map((result, i) => {
+                console.log(result);
                 return (
                     <div key={i} className="box is-shadowless mb-4" style={{ border: "2px solid #F2F2F2", borderRadius: "8px" }}>
                         <div className="columns">
                             <div className="column is-3">
-                                <figure className="image has-background-black is-16by9" />
+                                <figure className="image is-16by9">
+                                    <img src={this.imageGenerator(result.lesson.lesson_type)} alt={result.lesson.lesson_type + " image"} />
+                                </figure>
                             </div>
                             <div className="column is-pulled-left" style={{ margin: "auto", width: "50%", padding: "10px" }}>
                                 <h4 className="subtitle is-5 mb-0 has-text-weight-bold">{result.lesson.lesson_name}</h4>
@@ -57,20 +88,14 @@ class CompletedLessonList extends React.Component {
         return (
             <div>
                 <section className="section is-medium sub-home-background">
-                    <h1 className="dashboard heading">
-                        <div className="container">
-                            <h1 className="title is-2 has-text-weight-bold">Completed Tests</h1>
-                            <p className="subtitle is-6" style={{ width: "30%", textTransform: "none" }}>
-                                Increase productivity of customer service staff and improve your customer.
-                                Increase productivity of customer service staff and improve your customer.
-                            </p>
-                            <Link className="is-danger" to="/user">
-                                <button className="button is-info" style={{ backgroundColor: "#00549F" }}>
-                                    Back to Dashboard
-                                </button>
-                            </Link>
-                        </div>
-                    </h1>
+                    <h1 className="dashboard heading">Completed Tests</h1>
+                    <h2 className="dashboard sub-heading mb-4"> Increase productivity of customer service staff and improve your customer.</h2>
+                    <Link className="is-danger" style={{ marginLeft: "75px" }} to="/topics">
+                        <button className="button is-info" style={{ backgroundColor: "#00549F" }}>
+                            Back to Practice
+                        </button>
+                    </Link>
+
                 </section>
                 <div className="container mt-5">
                     {completedLesson}
@@ -81,52 +106,3 @@ class CompletedLessonList extends React.Component {
 }
 
 export default CompletedLessonList
-
-//if (this.state.completed) {
-//    axios.post('http://localhost:8080/api/userlessons', {
-//        lessonId: this.props.lessonId,
-//        userId: JSON.parse(localStorage.getItem('user')).id,
-//        completed: this.state.completed,
-//        userScore: this.state.score,
-//        possibleScore: this.state.totalNumber
-//    },
-//        {
-//            headers: authHeader()
-//        }).then((result) => {
-//            console.log(result)
-//        }).catch(e => {
-//            console.log(e)
-//        })
-
-//    return (
-//        <div>
-//            <p>Added</p>
-//        </div>
-//    )
-//}
-//    let percent = this.state.score / this.state.totalNumber * 100
-//    let totalPercent = percent.toFixed(0)
-
-//    return (
-//        <div className="has-text-centered">
-//            <div>
-//                <h1 className="title">Your total is: {totalPercent}%</h1>
-//                <br />
-//                <h1 className="title">Your score is: {this.state.score} out of {this.state.totalNumber}. Good job!</h1>
-//            </div>
-//            <div>
-//                <h2 className="subtitle is-4 mt-4 mb-1">Your answers:</h2>
-//                {this.state.finalAnswer.map((ind) =>
-//                    //this.state.questionList.map((index) =>
-//                    <div>
-//                        {/*<h3 className="subtitle is-5">{index.question}</h3>*/}
-//                        <h3 className="subtitle is-5 mt-1" style={{}}>{ind}</h3>
-//                    </div>
-//                )}
-//            </div>
-//            <Link className="is-danger mt-5" to="/user">
-//                <button className="button is-link">Back to Dashboard</button>
-//            </Link>
-//        </div>
-//    )
-//}

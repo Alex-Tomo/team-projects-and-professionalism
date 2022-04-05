@@ -12,6 +12,7 @@ class Completed extends React.Component {
             questionList: [],
             lessonType: "",
             questionValue: [],
+            answersArray: [],
             currentIndex: 0
         }
     }
@@ -117,17 +118,22 @@ class Completed extends React.Component {
     render() {
         const reactStringReplace = require('react-string-replace')
         let lesson = ""
+        if (this.state.answers.userAnswers === undefined) {
+            return (
+                <div>
+                    <h1>Loading...</h1>
+                </div>
+            )
+        }
 
         if (this.state.questionList.length > 0 && this.state.lessons.length > 0) {
             lesson = this.state.lessons.map((res, i) => {
                 return (
-                    <div>
+                    <div style={{ textAlign: "center" }}>
                         <div key={i} className="box is-shadowless mb-4" style={{ border: "2px solid #F2F2F2", borderRadius: "8px" }}>
                             <div className="columns">
                                 <div className="column is-pulled-left" style={{ margin: "auto", width: "50%", padding: "10px" }}>
-                                    <h4 className="subtitle is-5 mb-0 has-text-weight-bold">Lesson Name: {res.lesson_name}</h4>
-                                </div>
-                                <div className="column is-1 is-pulled-right hide-mobile" style={{ margin: "auto", width: "10%", padding: "10px" }}>
+                                    <h4 className="subtitle is-5 mb-0 has-text-weight-bold is-underlined">Lesson Name: {res.lesson_name}</h4>
                                 </div>
                             </div>
                             <div>
@@ -136,18 +142,27 @@ class Completed extends React.Component {
                             <div>{
                                 this.state.questionList.map((result, i) => {
                                     let question = result.question
+                                    let answer = this.state.answers.userAnswers
+                                    let style = ""
+
+                                    for (let x = 0; x < this.state.answers.userAnswers.length; x++) {
+                                        if (this.state.answers.userAnswers[x] === result.answer[x]) {
+                                            style = "#34A853"
+                                        } else {
+                                            style = "#EA4335"
+                                        }
+                                    }
+
                                     if (result.question.includes("{?}")) {
                                         question = (
                                             <div className="pb-0">
                                                 {reactStringReplace(result.question, '{?}', (match, i) => (
                                                     <input
-                                                        style={{ width: "100px" }}
+                                                        style={{ width: "100px", color: "white", backgroundColor: style }}
                                                         className="input is-info mb-3"
                                                         key={i}
                                                         type="number"
-                                                        //id={Math.floor(i / 2)}
-                                                        //placeholder="Answer"
-                                                        value={result.answer}
+                                                        value={answer[Math.floor(i / 2)]}
                                                         onChange={this.handleChange}
                                                         disabled
                                                     />
@@ -186,16 +201,17 @@ class Completed extends React.Component {
                                     }
 
                                     return (
-                                        <pre
-                                            id="question-container"
-                                            className="is-pulled-left"
-                                            style={{ letterSpacing: "3px", wordSpacing: "5px" }}
-                                        >
-                                            {result.statement}
-                                            {question}
-                                            <p className="mb-5">{this.state.answers.userAnswers[i]}</p>
-                                            {/*{result.answer}*/}
-                                        </pre>
+                                        <div>
+                                            <pre
+                                                id="question-container"
+                                                className="pb-0"
+                                                style={{ letterSpacing: "2px", fontSize: "1em", wordSpacing: "5px" }}
+                                            >
+                                                {result.statement}
+                                                {question}
+                                            </pre>
+                                            <p className="pb-6">Correct answer/answers: {result.answer}</p>
+                                        </div>
                                     )
                                 })}
                             </div>
@@ -214,52 +230,3 @@ class Completed extends React.Component {
     }
 }
 export default Completed
-
-//if (this.state.completed) {
-//    axios.post('http://localhost:8080/api/userlessons', {
-//        lessonId: this.props.lessonId,
-//        userId: JSON.parse(localStorage.getItem('user')).id,
-//        completed: this.state.completed,
-//        userScore: this.state.score,
-//        possibleScore: this.state.totalNumber
-//    },
-//        {
-//            headers: authHeader()
-//        }).then((result) => {
-//            console.log(result)
-//        }).catch(e => {
-//            console.log(e)
-//        })
-
-//    return (
-//        <div>
-//            <p>Added</p>
-//        </div>
-//    )
-//}
-//    let percent = this.state.score / this.state.totalNumber * 100
-//    let totalPercent = percent.toFixed(0)
-
-//    return (
-//        <div className="has-text-centered">
-//            <div>
-//                <h1 className="title">Your total is: {totalPercent}%</h1>
-//                <br />
-//                <h1 className="title">Your score is: {this.state.score} out of {this.state.totalNumber}. Good job!</h1>
-//            </div>
-//            <div>
-//                <h2 className="subtitle is-4 mt-4 mb-1">Your answers:</h2>
-//                {this.state.finalAnswer.map((ind) =>
-//                    //this.state.questionList.map((index) =>
-//                    <div>
-//                        {/*<h3 className="subtitle is-5">{index.question}</h3>*/}
-//                        <h3 className="subtitle is-5 mt-1" style={{}}>{ind}</h3>
-//                    </div>
-//                )}
-//            </div>
-//            <Link className="is-danger mt-5" to="/user">
-//                <button className="button is-link">Back to Dashboard</button>
-//            </Link>
-//        </div>
-//    )
-//}
