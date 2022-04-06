@@ -19,7 +19,7 @@ class RemoveUserForm extends React.Component {
       rows = this.props.userDetails.map((result, i) => {
         return (
           <tr key={i}>
-            <td>{result.username}</td>
+            <td className="admin-modal-column">{result.username}</td>
             <td>{result.email}</td>
             <td>{result.roles[0].name}</td>
             <td>{result.createdAt.toString().split('T')[0]}</td>
@@ -40,7 +40,7 @@ class RemoveUserForm extends React.Component {
           <table className="users-table">
             <thead>
               <tr className="admin-table-head">
-                <th>Name</th>
+                <th className="admin-modal-column">Name</th>
                 <th>Email</th>
                 <th>Role</th>
                 <th>Date Added</th>

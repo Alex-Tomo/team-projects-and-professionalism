@@ -37,9 +37,7 @@ class ManagementAdmin extends Component {
     render() {
         return (
             <div>
-                <header className="container has-text-centered">
-                    <Admin />
-                </header>
+                <Admin />
             </div>
         )
     }
