@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import UserService from "../services/user.service"
 import AuthService from "../services/auth.service"
+import AdminStatistics from "../components/statistics/AdminStatistics";
 
 class BoardUser extends Component {
     constructor(props) {
@@ -41,6 +42,7 @@ class BoardUser extends Component {
                     <h1 className="dashboard heading">Welcome Back, {username}!</h1>
                     <h2 className="dashboard sub-heading">The tutors are gonna hate it.</h2>
                 </section>
+                <AdminStatistics />
             </div>
         )
     }

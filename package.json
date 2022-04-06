@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "react-chartjs-2": "^4.0.1",
     "react-native-selectmultiple-button": "^0.1.105"
   }
 }

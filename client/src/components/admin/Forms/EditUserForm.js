@@ -68,6 +68,10 @@ class EditUserForm extends React.Component {
       this.props.showMessage("Email Cannot Contain Spaces!", "is-danger")
       return
     }
+    if (!this.state.email.trim().includes("@")) {
+      this.props.showMessage("Invalid Email Format!", "is-danger")
+      return
+    }
 
     if (this.state.role < 1 || this.state.role > 3) {
       this.props.showMessage("Invalid Role Selected!", "is-danger")

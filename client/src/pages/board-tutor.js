@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import UserService from "../services/user.service"
 import AuthService from "../services/auth.service"
+import TutorStatistics from "../components/statistics/TutorStatistics";
 
 class BoardTutor extends Component {
     constructor(props) {
@@ -9,6 +10,7 @@ class BoardTutor extends Component {
             content: ""
         }
     }
+
     logout() {
         AuthService.logout()
         window.location.href = "http://localhost:3000/"
@@ -41,6 +43,7 @@ class BoardTutor extends Component {
                     <h1 className="dashboard heading">Welcome Back, {username}!</h1>
                     <h2 className="dashboard sub-heading">The kids are gonna love it.</h2>
                 </section>
+                <TutorStatistics />
             </div>
         )
     }
