@@ -41,7 +41,7 @@ class BoardTutor extends Component {
             <div>
                 <section className="section is-medium sub-home-background">
                     <h1 className="dashboard heading">Welcome Back, {username}!</h1>
-                    <h2 className="dashboard sub-heading">The kids are gonna love it.</h2>
+                    <h2 className="dashboard sub-heading">The tutors dashboard.</h2>
                 </section>
                 <TutorStatistics />
             </div>

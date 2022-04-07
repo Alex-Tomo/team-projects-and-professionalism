@@ -148,7 +148,7 @@ class AdminTable extends React.Component {
     }
     formBody = formBody.join("&")
 
-    axios.post('http://localhost:8080/api/admin/removeuser', formBody, {
+    axios.post('https://kip-learning.herokuapp.com/api/admin/removeuser', formBody, {
       headers: authHeader()
     }).then(result => {
       if (result.data === true) {
@@ -201,7 +201,7 @@ class AdminTable extends React.Component {
     }
     formBody = formBody.join("&")
 
-    axios.post('http://localhost:8080/api/admin/removeuser', formBody, {
+    axios.post('https://kip-learning.herokuapp.com/api/admin/removeuser', formBody, {
       headers: authHeader()
     }).then(result => {
       if (result.data === true) {

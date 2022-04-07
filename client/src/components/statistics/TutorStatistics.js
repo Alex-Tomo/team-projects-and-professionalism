@@ -65,7 +65,7 @@ class TutorStatistics extends React.Component {
         ).then(() => {
       let userId = JSON.parse(localStorage.getItem('user')).id
 
-      axios.post('http://localhost:8080/api/statistics/tutorstatistics', {
+      axios.post('https://kip-learning.herokuapp.com/api/statistics/tutorstatistics', {
             id: userId
           },
           {

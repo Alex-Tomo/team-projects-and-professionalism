@@ -52,7 +52,7 @@ class Admin extends React.Component {
           userId = JSON.parse(localStorage.getItem('user')).id
         }
 
-        axios.post('http://localhost:8080/api/admin/users',
+        axios.post('https://kip-learning.herokuapp.com/api/admin/users',
           {
             id: userId
           },

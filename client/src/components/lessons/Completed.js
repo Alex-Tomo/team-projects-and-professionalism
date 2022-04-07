@@ -41,7 +41,7 @@ class Completed extends React.Component {
     }
 
     getLesson = async () => {
-        await axios.get('http://localhost:8080/api/lessons', {
+        await axios.get('https://kip-learning.herokuapp.com/api/lessons', {
             headers: authHeader(),
             params: {
                 lesson_id: this.props.lessonId
@@ -78,16 +78,16 @@ class Completed extends React.Component {
 
             switch (this.state.lessonType) {
                 case "math":
-                    url = "http://localhost:8080/api/mathslesson"
+                    url = "https://kip-learning.herokuapp.com/api/mathslesson"
                     break
                 case "english":
-                    url = "http://localhost:8080/api/englishlesson"
+                    url = "https://kip-learning.herokuapp.com/api/englishlesson"
                     break
                 case "verbal_reasoning":
-                    url = "http://localhost:8080/api/verballesson"
+                    url = "https://kip-learning.herokuapp.com/api/verballesson"
                     break
                 case "non_verbal_reasoning":
-                    url = "http://localhost:8080/api/nonverballesson"
+                    url = "https://kip-learning.herokuapp.com/api/nonverballesson"
                     break
                 default:
                     break

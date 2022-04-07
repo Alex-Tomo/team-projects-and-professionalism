@@ -92,7 +92,7 @@ class AddUserForm extends React.Component {
         break;
     }
 
-    axios.post('http://localhost:8080/api/admin/adduser', {
+    axios.post('https://kip-learning.herokuapp.com/api/admin/adduser', {
           addedById: JSON.parse(localStorage.getItem('user')).id,
           addedByUsername: JSON.parse(localStorage.getItem('user')).username,
           username: this.state.username,

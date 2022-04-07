@@ -53,7 +53,7 @@ class ChangePasswordForm extends React.Component {
       return
     }
 
-    axios.post('http://localhost:8080/api/amin/changepassword', {
+    axios.post('https://kip-learning.herokuapp.com/api/amin/changepassword', {
       id: this.state.id,
       password: this.state.password
     }, {

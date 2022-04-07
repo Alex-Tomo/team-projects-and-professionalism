@@ -62,7 +62,7 @@ class AdminStatistics extends React.Component {
               })
             }
         ).then(() => {
-          axios.post('http://localhost:8080/api/statistics/adminstatistics', {
+          axios.post('https://kip-learning.herokuapp.com/api/statistics/adminstatistics', {
                 id: null
               },
             {

@@ -55,7 +55,7 @@ class EnglishQuestions extends React.Component {
     }
 
     getQuestions = async () => {
-        await axios.get('http://localhost:8080/api/englishlesson', {
+        await axios.get('https://kip-learning.herokuapp.com/api/englishlesson', {
             headers: authHeader(),
             params: { questionList: this.props.question }
         })
@@ -129,7 +129,7 @@ class EnglishQuestions extends React.Component {
 
             let stringAnswers = JSON.stringify(answers)
 
-            axios.post('http://localhost:8080/api/userlessons', {
+            axios.post('https://kip-learning.herokuapp.com/api/userlessons', {
                 lessonId: this.props.lessonId,
                 userId: JSON.parse(localStorage.getItem('user')).id,
                 completed: this.state.completed,

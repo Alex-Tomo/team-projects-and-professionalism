@@ -20,7 +20,7 @@ class LessonList extends React.Component {
     }
 
     checkLessonType = () => {
-        axios.get('http://localhost:8080/api/lessons', {
+        axios.get('https://kip-learning.herokuapp.com/api/lessons', {
             headers: authHeader(),
             params: {
                 type: this.props.type

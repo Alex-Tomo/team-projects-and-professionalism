@@ -100,7 +100,7 @@ class EditUserForm extends React.Component {
         break;
     }
 
-    axios.post('http://localhost:8080/api/admin/edituser',
+    axios.post('https://kip-learning.herokuapp.com/api/admin/edituser',
   {
         id: this.state.id,
         username: (this.state.username === this.props.userDetails.username) ? null : this.state.username,
