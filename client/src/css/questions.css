@@ -8,14 +8,24 @@ a {
     color: black;
 }
 
-.column figure {
-    background-color: #656565;
-    border-radius: 8px;
+.topic-img {
+    border-radius: 20px;
 }
 
-#topic:hover {
-    background-color: #d8d7d717;
-    border-radius: 8px;
+figure {
+    padding-top: 0px;
+}
+
+.topic-hover:hover {
+    background-color: #eeeeee91;
+}
+
+.flex-grid {
+    margin: auto 120px;
+}
+
+.grid-item {
+    padding-top: 0px;
 }
 
 .line {
@@ -30,31 +40,22 @@ a {
     width: 100%;
 }
 
-#englishContainer {
+#english-container {
     display: flow-root;
 }
 
-#storyText {
-    width: 60%;
+#story-text {
     white-space: pre;
-    /* CSS 2.0 */
     white-space: pre-wrap;
-    /* CSS 2.1 */
     white-space: pre-line;
-    /* CSS 3.0 */
     white-space: -pre-wrap;
-    /* Opera 4-6 */
     white-space: -o-pre-wrap;
-    /* Opera 7 */
     white-space: -moz-pre-wrap;
-    /* Mozilla */
     white-space: -hp-pre-wrap;
-    /* HP Printers */
     word-wrap: break-word;
-    /* IE 5+ */
 }
 
-#progressBar::-webkit-progress-value {
+#progress-bar::-webkit-progress-value {
     width: 100%;
     transition: width 0.7s ease;
 }
@@ -71,7 +72,7 @@ a {
     background-color: #00549F
 }
 
-.buttonPressed {
+.button-pressed {
     background-color: #00549F !important;
     color: white !important;
 }
@@ -90,39 +91,25 @@ pre {
     font-family: 'Barlow', sans-serif;
 }
 
-.correct {
-    color: green;
-}
-
-.incorrect {
-    color: red;
-}
-
-.flex-grid {
-    display: flex;
-    /*flex-wrap: wrap;*/
-    justify-content: center;
-    /*width: 50%;*/
-    margin: 20px 115px;
-}
-
-.grid-item {
-    flex: 1 1 calc(100% - 50px);
-    /*width: 30%;*/
-    margin: 10px;
-    border-radius: 10px;
-}
-
-.grid-item:nth-child(odd) {
-    flex: 0 0 50px;
-}
-
 .link {
     margin: 10px;
 }
 
-/*@media screen and (min-width: 1408px) {
+@media screen and (min-width: 1408px) {
     .container:not(.is-max-desktop):not(.is-max-widescreen) {
-        max-width: 1244px;
+        max-width: 1220px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .flex-grid:not(.is-max-desktop):not(.is-max-widescreen) {
+        margin: auto 20px
+    }
+}
+
+/*@media screen and (max-width: 768px) {
+    .lesson-list-img {
+        width: 20%;
+        height: auto;
     }
 }*/

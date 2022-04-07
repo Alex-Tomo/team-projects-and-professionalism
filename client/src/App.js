@@ -6,10 +6,11 @@ import Admin from "./pages/board-admin"
 import Tutor from "./pages/board-tutor"
 import Nav from "./components/layout/navbar"
 import Home from "./pages/home"
-import Topics from './components/lessons/Topics'
+import TopicList from './components/lessons/TopicList';
 import LessonList from './components/lessons/LessonList'
 import Questions from './components/lessons/questions/Questions'
 import CompletedLesson from './components/lessons/CompletedLesson'
+import ViewLesson from './components/lessons/ViewLesson';
 import MathQuestions from './components/lessons/questions/MathQuestions'
 import EnglishQuestions from './components/lessons/questions/EnglishQuestions'
 import VerbalQuestions from './components/lessons/questions/VerbalQuestions'
@@ -32,9 +33,10 @@ function App() {
                 <Route path="/tutor" element={<Tutor />} />
                 <Route path="/admin" element={<Admin />} />
                 <Route path='/management' element={<ManagementAdmin />} />
-                <Route path="/topics" element={<Topics />} />
+                <Route path="/topics" element={<TopicList />} />
                 <Route path="/questions" element={<Questions />} />
                 <Route path="/completedlesson" element={<CompletedLesson />} />
+                <Route path="/viewlesson" element={<ViewLesson />} />
                 <Route path="/completed" element={<CompletedLessonList />} />
                 <Route path="/math" element={<LessonList title="Math Test" type="math" />} />
                 <Route path="/english" element={<LessonList title="English Test" type="english" />} />

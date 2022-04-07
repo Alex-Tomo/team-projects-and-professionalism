@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "react-native-selectmultiple-button": "^0.1.105"
+    "react-native-selectmultiple-button": "^0.1.105",
+    "react-to-print": "^2.14.5"
   }
 }

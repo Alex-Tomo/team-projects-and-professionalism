@@ -7,7 +7,12 @@ class CompletedLessonList extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            completedLessons: []
+            completedLessons: [],
+
+            tempAnswer: null,
+            tempLessonId: null,
+            tempResult: null,
+            TempPotScore: null
         }
     }
 
@@ -69,8 +74,8 @@ class CompletedLessonList extends React.Component {
                                 </figure>
                             </div>
                             <div className="column is-pulled-left" style={{ margin: "auto", width: "50%", padding: "10px" }}>
-                                <h4 className="subtitle is-5 mb-0 has-text-weight-bold">{result.lesson.lesson_name}</h4>
-                                <p>Additional information</p>
+                                <h4 className="subtitle is-5 mb-0 has-text-weight-bold">Lesson Name: </h4>
+                                <h4 className="subtitle is-5 mb-0">{result.lesson.lesson_name}</h4>
                             </div>
                             <div className="column is-1 is-pulled-right hide-mobile" style={{ margin: "auto", width: "10%", padding: "10px" }}>
                                 <Link to="/completedlesson" state={{ lessonId: result.lesson_id, answers: result.answers, score: result.user_score, potentialScore: result.possible_score }}>

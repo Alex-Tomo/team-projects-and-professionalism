@@ -3,10 +3,6 @@ import axios from "axios"
 import authHeader from "../../services/auth-header"
 import { Link } from "react-router-dom";
 
-
-// note for alex: => looked at
-
-
 class LessonList extends React.Component {
     constructor(props) {
         super(props)
@@ -76,17 +72,22 @@ class LessonList extends React.Component {
                         <div className="columns">
                             <div className="column is-3">
                                 <figure className="image is-16by9">
-                                    <img src={this.imageGenerator()} alt="English" />
+                                    <img className="lesson-list-img" src={this.imageGenerator()} alt="English" />
                                 </figure>
                             </div>
                             <div className="column is-pulled-left" style={{ margin: "auto", width: "50%", padding: "10px" }}>
-                                <h4 className="subtitle is-5 mb-0 has-text-weight-bold">{result.lesson_name}</h4>
-                                <p>Additional information</p>
+                                <h4 className="subtitle is-5 mb-0 has-text-weight-bold">Lesson Name: </h4>
+                                <h4 className="subtitle is-5 mb-0">{result.lesson_name}</h4>
                             </div>
                             <div className="column is-1 is-pulled-right hide-mobile" style={{ margin: "auto", width: "10%", padding: "10px" }}>
                                 <Link to="/questions" state={{ questionArray: arr, type: this.props.type, lessonId: result.lesson_id }}>
-                                    <button className="button is-black ">
+                                    <button className="button is-info mb-3" style={{ backgroundColor: "rgb(0, 84, 159)" }}>
                                         Start
+                                    </button>
+                                </Link>
+                                <Link to="/viewlesson" state={{ lessonId: result.lesson_id, answers: result.answers, score: result.user_score, potentialScore: result.possible_score }}>
+                                    <button className="button is-black ">
+                                        View
                                     </button>
                                 </Link>
                             </div>

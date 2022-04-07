@@ -2,6 +2,7 @@ import React from "react"
 import axios from "axios"
 import authHeader from "../../../services/auth-header"
 import UserService from "../../../services/user.service"
+import { Link } from "react-router-dom"
 
 /**
  * Generates practice English questions from database
@@ -97,7 +98,9 @@ class EnglishQuestions extends React.Component {
         let answerArray = answerString.split(',')
 
         if (this.state.userAnswer.length < answerArray.length) {
-            alert("You need to input an answer")
+            this.setState({
+                error: "You need to select an answer."
+            })
             return
         }
 
@@ -116,6 +119,7 @@ class EnglishQuestions extends React.Component {
             await this.setState({
                 currentIndex: this.state.currentIndex + 1,
                 userAnswer: [],
+                error: ""
             })
         } else if (this.state.currentIndex === this.state.questionList.length - 1) {
             await this.setState({
@@ -140,7 +144,6 @@ class EnglishQuestions extends React.Component {
                 {
                     headers: authHeader()
                 }).then((result) => {
-                    console.log(result)
                 }).catch(e => {
                     console.log(e)
                 })
@@ -177,16 +180,30 @@ class EnglishQuestions extends React.Component {
         if (this.state.currentIndex === -1) {
             return (
                 <div>
-                    <h1>Loading Questions...</h1>
+                    <div className="spinner"></div>
+                    <div className="login-loading">Loading Questions</div>
                 </div>
             )
         }
 
         if (this.state.completed) {
             return (
-                <div>
-                    <h1>Test Completed</h1>
-                </div>
+                <div style={{ textAlign: "center", marginTop: "200px" }}>
+                    <div className="box is-shadowless">
+                        <div className="columns">
+                            <div className="column is-pulled-left" style={{ margin: "auto", width: "50%", padding: "10px" }}>
+                                <h4 className="title is-2 mb-3 has-text-weight-bold">Test Complete!</h4>
+                            </div>
+                        </div>
+                        <div>
+                            <Link className="is-danger" to="/completed">
+                                <button className="title is-4 button is-info mb-6" style={{ backgroundColor: "#00549F" }}>
+                                    Completed Tests
+                                </button>
+                            </Link>
+                        </div>
+                    </div>
+                </div >
             )
         }
 
@@ -196,11 +213,11 @@ class EnglishQuestions extends React.Component {
                     <div>
                         <div className="is-pulled-left p-4" style={{ width: "13%" }}>
                             <h3 className="subtitle is-5 mb-4" style={{ color: "#00549F", fontWeight: "bold" }}>
-                                Beginner
+                                Progress
                             </h3>
 
                             <progress
-                                id="progressBar"
+                                id="progress-bar"
                                 className="progress is-branding mt-0 mb-2"
                                 value={this.state.currentIndex}
                                 max={this.state.questionList.length - 1}
@@ -227,8 +244,8 @@ class EnglishQuestions extends React.Component {
                                     Question {this.state.currentIndex + 1}
                                 </h2>
 
-                                <div id="englishContainer">
-                                    <pre id="storyText" className="is-pulled-left mr-6">
+                                <div id="english-container">
+                                    <pre id="story-text" className="is-pulled-left mr-6">
                                         <h2>{title}</h2>
                                         <p style={{
                                             textAlign: "left",
@@ -261,6 +278,8 @@ class EnglishQuestions extends React.Component {
                                                 })
                                             }
                                         </div>
+
+                                        <p style={{ color: "red" }}>{this.state.error}</p>
 
                                         <div className="nextBtn">
                                             {

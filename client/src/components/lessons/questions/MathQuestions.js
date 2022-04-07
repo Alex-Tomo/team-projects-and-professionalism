@@ -62,7 +62,6 @@ class MathQuestions extends React.Component {
             params: { questionList: this.props.question }
         })
             .then(res => {
-                console.log(this.props.question);
                 let array = []
                 for (let i = 0; i < this.props.question.length; i++) {
                     for (let j = 0; j < this.props.question.length; j++) {
@@ -79,6 +78,15 @@ class MathQuestions extends React.Component {
             })
     }
 
+    handleChange(e) {
+        let arr = this.state.userAnswer
+        arr[e.target.id] = e.target.value
+        this.setState({
+            userAnswer: arr,
+            val: arr
+        })
+    }
+
     nextQuestionHandler = async () => {
         let answerString = this.state.questionList[this.state.currentIndex].answer
         let answerArray = answerString.split(',')
@@ -86,13 +94,17 @@ class MathQuestions extends React.Component {
         let answerLength = this.state.questionList[this.state.currentIndex].answer.split(',').length
 
         if (this.state.userAnswer.length < answerArray.length) {
-            alert("You need to input an answer")
+            this.setState({
+                error: "Field cannot be left empty"
+            })
             return
         }
 
         for (let i = 0; i < this.state.userAnswer.length; i++) {
-            if (this.state.userAnswer[i] === "") {
-                alert("You need to input an answer")
+            if (this.state.userAnswer[i] === "" || this.state.userAnswer[i] === undefined) {
+                this.setState({
+                    error: "Field cannot be left empty"
+                })
                 return
             }
         }
@@ -137,7 +149,8 @@ class MathQuestions extends React.Component {
             await this.setState({
                 currentIndex: this.state.currentIndex + 1,
                 userAnswer: [],
-                val: arr
+                val: arr,
+                error: ""
             })
         } else if (this.state.currentIndex === this.state.questionList.length - 1) {
             await this.setState({
@@ -161,7 +174,6 @@ class MathQuestions extends React.Component {
                 {
                     headers: authHeader()
                 }).then((result) => {
-                    console.log(result)
                 }).catch(e => {
                     console.log(e)
                 })
@@ -174,22 +186,12 @@ class MathQuestions extends React.Component {
         }
     }
 
-    handleChange(e) {
-        let arr = this.state.userAnswer
-        arr[e.target.id] = e.target.value
-        this.setState({
-            userAnswer: arr,
-            val: arr
-        })
-        console.log(this.state.userAnswer);
-    }
-
     displayAnswer = async (e, i, j, buttonsLength) => {
         for (let secondIndex = 0; secondIndex < buttonsLength; secondIndex++) {
-            document.getElementById(`${i}.${secondIndex}`).classList.remove("buttonPressed")
+            document.getElementById(`${i}.${secondIndex}`).classList.remove("button-pressed")
         }
 
-        document.getElementById(`${i}.${j}`).classList.add("buttonPressed")
+        document.getElementById(`${i}.${j}`).classList.add("button-pressed")
 
         let userAnswer = document.getElementById(`${i}.${j}`).innerText
 
@@ -220,12 +222,11 @@ class MathQuestions extends React.Component {
         if (this.state.currentIndex === -1) {
             return (
                 <div>
-                    <h1>Loading Questions...</h1>
+                    <div className="spinner"></div>
+                    <div className="login-loading">Loading Questions</div>
                 </div>
             )
         }
-
-        console.log(this.state.questionList[this.state.currentIndex]);
 
         if (this.state.questionList.length > 0 && this.state.currentIndex >= 0) {
             question = this.state.questionList[this.state.currentIndex].question
@@ -243,6 +244,7 @@ class MathQuestions extends React.Component {
                                 placeholder="Answer"
                                 value={this.state.val[Math.floor(i / 2)]}
                                 onChange={this.handleChange}
+                                autoComplete="off"
                             />
                         ))}
                     </div>)
@@ -289,9 +291,22 @@ class MathQuestions extends React.Component {
 
         if (this.state.completed) {
             return (
-                <div>
-                    <h1>Test Completed</h1>
-                </div>
+                <div style={{ textAlign: "center", marginTop: "200px" }}>
+                    <div className="box is-shadowless">
+                        <div className="columns">
+                            <div className="column is-pulled-left" style={{ margin: "auto", width: "50%", padding: "10px" }}>
+                                <h4 className="title is-2 mb-3 has-text-weight-bold">Test Complete!</h4>
+                            </div>
+                        </div>
+                        <div>
+                            <Link className="is-danger" to="/completed">
+                                <button className="title is-4 button is-info mb-6" style={{ backgroundColor: "#00549F" }}>
+                                    Completed Tests
+                                </button>
+                            </Link>
+                        </div>
+                    </div>
+                </div >
             )
         }
 
@@ -300,11 +315,11 @@ class MathQuestions extends React.Component {
                 <div>
                     <div className="is-pulled-left p-4" style={{ width: "13%" }}>
                         <h3 className="subtitle is-5 mb-4" style={{ color: "#00549F", fontWeight: "bold" }}>
-                            Beginner
+                            Progress
                         </h3>
 
                         <progress
-                            id="progressBar"
+                            id="progress-bar"
                             className="progress is-branding mt-0 mb-2"
                             value={this.state.currentIndex}
                             max={this.state.questionList.length - 1}
@@ -339,6 +354,8 @@ class MathQuestions extends React.Component {
                                         {question}
                                     </pre>
                                 </h3>
+
+                                <p style={{ color: "red" }}>{this.state.error}</p>
 
                                 <div className="nextBtn">
                                     {

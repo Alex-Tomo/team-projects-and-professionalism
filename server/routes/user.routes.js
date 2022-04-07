@@ -37,8 +37,6 @@ module.exports = function (app) {
 
     app.get('/api/lessons', [authJwt.verifyToken], controller.lessons)
 
-
-
     app.get('/api/mathslesson', [authJwt.verifyToken], controller.mathsLesson)
 
     app.get('/api/englishstory', [authJwt.verifyToken], controller.englishStory)
