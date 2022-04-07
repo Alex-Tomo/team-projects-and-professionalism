@@ -47,16 +47,13 @@ export default function ConditionalButtons(props) {
     } else if (userRole === "ROLE_TUTOR") {
         return (
             <div className="navbar-item center ">
-                <NavLink className="navbar-item gaps small" to="user">
+                <NavLink className="navbar-item gaps small nav-text" to="tutor">
                     <img className="mr-2" alt="dashboard" src={grid} />Dashboard
                 </NavLink>
-                <NavLink className="navbar-item gaps small" to="/math">
-                    <img className="mr-2" alt="practice" src={list} />Practice
+                <NavLink className="navbar-item gaps small nav-text" to="management">
+                    <img className="mr-2" alt="management" src={list} />Management
                 </NavLink>
-                <NavLink className="navbar-item gaps" to="/user">
-                    <img className="mr-2" alt="completed" src={completed} />Completed Tests
-                </NavLink>
-                <NavLink className="navbar-item gaps small" to="/user">
+                <NavLink className="navbar-item gaps small nav-text" to="tutor">
                     <img className="mr-2" alt="support" src={support} />Support
                 </NavLink>
             </div>

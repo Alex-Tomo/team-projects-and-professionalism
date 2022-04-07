@@ -68,6 +68,10 @@ class EditUserForm extends React.Component {
       this.props.showMessage("Email Cannot Contain Spaces!", "is-danger")
       return
     }
+    if (!this.state.email.trim().includes("@")) {
+      this.props.showMessage("Invalid Email Format!", "is-danger")
+      return
+    }
 
     if (this.state.role < 1 || this.state.role > 3) {
       this.props.showMessage("Invalid Role Selected!", "is-danger")
@@ -96,7 +100,7 @@ class EditUserForm extends React.Component {
         break;
     }
 
-    axios.post('http://localhost:8080/api/admin/edituser',
+    axios.post('https://kip-learning.herokuapp.com/api/admin/edituser',
   {
         id: this.state.id,
         username: (this.state.username === this.props.userDetails.username) ? null : this.state.username,

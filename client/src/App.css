@@ -3,6 +3,7 @@
 
 @import './css/admin.css';
 @import './css/questions.css';
+@import './css/statistics.css';
 
 
 /** @author Jordan Short - W18039155 Various Styles for Numerous Things*/
@@ -175,7 +176,7 @@ body {
     width: 60px;
     height: 60px;
     border-radius: 5px;
-    top: 25vh;
+    top: 29vh;
     right: 0;
     bottom: 0;
     left: 225px;

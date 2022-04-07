@@ -61,4 +61,10 @@ module.exports = function (app) {
     app.post('/api/admin/removeuser', [authJwt.verifyToken, authJwt.isTutorAdmin], controller.adminRemoveUser)
 
     app.post('/api/amin/changepassword', [authJwt.verifyToken, authJwt.isTutorAdmin], controller.adminChangePassword)
+
+    app.post('/api/statistics/adminstatistics', [authJwt.verifyToken, authJwt.isTutorAdmin], controller.getAdminStatistics)
+
+    app.post('/api/statistics/tutorstatistics', [authJwt.verifyToken, authJwt.isTutorAdmin], controller.getTutorStatistics)
+
+    app.post('/api/statistics/userstatistics', [authJwt.verifyToken], controller.getStudentStatistics)
 }

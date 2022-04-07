@@ -4,6 +4,7 @@ import UserService from "../../services/user.service"
 import authHeader from "../../services/auth-header"
 import { Link } from "react-router-dom"
 import ReactToPrint from "react-to-print"
+import Question1 from './questions/nonverbalreasoningimages/question_1.svg'
 
 class SaveLessonToPdf extends React.Component {
     constructor(props) {
@@ -128,88 +129,222 @@ class SaveLessonToPdf extends React.Component {
         const reactStringReplace = require('react-string-replace')
         let lesson = ""
 
-        lesson = this.state.lessons.map((res, i) => {
-            return (
-                <div style={{ textAlign: "center" }}>
-                    <div key={i} className="box is-shadowless">
-                        <div className="columns">
-                            <div className="column is-pulled-left" style={{ margin: "auto", width: "50%", padding: "10px" }}>
-                                <h4 className="subtitle is-5 mb-0 has-text-weight-bold is-underlined">Lesson Name: {res.lesson_name}</h4>
-                            </div>
-                        </div><br />
-                        <div>{
+        if (this.state.lessonType == "math") {
+            lesson = this.state.lessons.map((res, i) => {
+                return (
+                    <div style={{ textAlign: "center" }}>
+                        <div key={i} className="box is-shadowless">
+                            <div className="columns">
+                                <div className="column is-pulled-left" style={{ margin: "auto", width: "50%", padding: "10px" }}>
+                                    <h4 className="subtitle is-5 mb-0 has-text-weight-bold is-underlined">Lesson Name: {res.lesson_name}</h4>
+                                </div>
+                            </div><br />
+                            <div>{
 
-                            this.state.questionList.map((result, i) => {
-                                let question = result.question
+                                this.state.questionList.map((result, i) => {
+                                    let question = result.question
 
-                                if (result.question.includes("{?}")) {
-                                    question = (
-                                        <div className="pb-0">
-                                            {reactStringReplace(result.question, '{?}', (match, i) => {
+                                    if (result.question.includes("{?}")) {
+                                        question = (
+                                            <div className="pb-0">
+                                                {reactStringReplace(result.question, '{?}', (match, i) => {
+                                                    return (
+                                                        <input
+                                                            style={{ width: "100px", color: "white" }}
+                                                            className="input is-info mb-3"
+                                                            key={i}
+                                                            type="number"
+                                                            value=""
+                                                        />
+                                                    )
+                                                })}
+                                            </div>)
+                                    } else {
+                                        let questionString = result.question
+                                        let array = questionString.split("\n")
+                                        let subArray = []
+
+                                        for (let i = 0; i < array.length; i++) {
+                                            subArray.push(array[i].split(" "))
+                                        }
+
+                                        question = (
+                                            subArray.map((arr, i) => {
                                                 return (
-                                                    <input
-                                                        style={{ width: "100px", color: "white" }}
-                                                        className="input is-info mb-3"
-                                                        key={i}
-                                                        type="number"
-                                                        value=""
-                                                    />
-                                                )
-                                            })}
-                                        </div>)
-                                } else {
-                                    let questionString = result.question
-                                    let array = questionString.split("\n")
-                                    let subArray = []
-
-                                    for (let i = 0; i < array.length; i++) {
-                                        subArray.push(array[i].split(" "))
-                                    }
-
-                                    question = (
-                                        subArray.map((arr, i) => {
-                                            return (
-                                                <div key={i} style={{ display: "flex", marginBottom: "15px", width: "500px", margin: "auto" }}>
-                                                    <p>{i + 1})</p>
-                                                    {
-                                                        arr.map((word, j) => {
-                                                            return (
-                                                                <button
-                                                                    style={{ marginRight: "15px" }}
-                                                                    key={j}
-                                                                    className="button mb-3"
-                                                                    id={`${i}.${j}`}
-                                                                //disabled
-                                                                >{word}
-                                                                </button>
+                                                    <div key={i} style={{ display: "flex", marginBottom: "15px", width: "500px", margin: "auto" }}>
+                                                        <p>{i + 1})</p>
+                                                        {
+                                                            arr.map((word, j) => {
+                                                                return (
+                                                                    <button
+                                                                        style={{ marginRight: "15px" }}
+                                                                        key={j}
+                                                                        className="button mb-3"
+                                                                        id={`${i}.${j}`}
+                                                                    //disabled
+                                                                    >{word}
+                                                                    </button>
+                                                                )
+                                                            }
                                                             )
                                                         }
-                                                        )
-                                                    }
-                                                </div>
-                                            )
-                                        })
-                                    )
-                                }
+                                                    </div>
+                                                )
+                                            })
+                                        )
+                                    }
 
-                                return (
-                                    <div>
-                                        <pre
-                                            id="question-container"
-                                            className="pb-6"
-                                            style={{ letterSpacing: "2px", fontSize: "1em", wordSpacing: "5px" }}
-                                        >
-                                            {result.statement}
-                                            {question}
-                                        </pre>
-                                    </div>
-                                )
-                            })}
+                                    return (
+                                        <div>
+                                            <pre
+                                                id="question-container"
+                                                className="pb-6"
+                                                style={{ letterSpacing: "2px", fontSize: "1em", wordSpacing: "5px" }}
+                                            >
+                                                {result.statement}
+                                                {question}
+                                            </pre>
+                                        </div>
+                                    )
+                                })}
+                            </div>
                         </div>
-                    </div>
-                </div >
-            )
-        })
+                    </div >
+                )
+            })
+        }
+
+        if (this.state.lessonType == "english") {
+            if (this.state.questionList.length > 0 && this.state.lessons.length > 0) {
+                lesson = this.state.lessons.map((res, i) => {
+                    return (
+                        <div style={{ textAlign: "center" }}>
+                            <div key={i} className="box is-shadowless">
+                                <div className="columns">
+                                    <div className="column is-pulled-left" style={{ margin: "auto", width: "50%", padding: "10px" }}>
+                                        <h4 className="subtitle is-5 mb-0 has-text-weight-bold is-underlined">Lesson Name: {res.lesson_name}</h4>
+                                    </div>
+                                </div><br />
+                                <div>
+                                    <pre>{this.state.questionList[0].english_story.story}</pre>
+                                </div>
+                                <div>{
+                                    this.state.questionList.map((result, i) => {
+                                        let question = result.question
+                                        let answersList = []
+                                        //console.log(result.incorrect_answer_four);
+                                        //console.log(this.state.answerList[0].answers);
+
+                                        return (
+                                            <div>
+                                                <pre
+                                                    id="question-container"
+                                                    className="pb-5"
+                                                    style={{ letterSpacing: "2px", fontSize: "1em", wordSpacing: "5px" }}
+                                                >
+                                                    {question}
+                                                    <div>
+                                                        <textarea className="mt-2" rows="3" cols="90" style={{ resize: "none" }}></textarea>
+                                                    </div>
+                                                </pre>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                        </div >
+                    )
+                })
+            }
+        }
+
+        if (this.state.lessonType == "verbal_reasoning") {
+            let index = -1
+            let style = ""
+            if (this.state.questionList.length > 0 && this.state.lessons.length > 0) {
+                lesson = this.state.lessons.map((res, i) => {
+                    return (
+                        <div style={{ textAlign: "center" }}>
+                            <div key={i} className="box is-shadowless">
+                                <div className="columns">
+                                    <div className="column is-pulled-left" style={{ margin: "auto", width: "50%", padding: "10px" }}>
+                                        <h4 className="subtitle is-5 mb-0 has-text-weight-bold is-underlined">Lesson Name: {res.lesson_name}</h4>
+                                    </div>
+                                </div><br />
+                                <div>{
+                                    this.state.questionList.map((result, i) => {
+                                        let question = result.question
+
+                                        if (result.question.includes("{?}")) {
+                                            question = (
+                                                <div className="pb-0">
+                                                    {reactStringReplace(result.question, '{?}', (match, i) => {
+                                                        index++
+                                                        return (
+                                                            <input
+                                                                style={{ width: "100px", color: "white", backgroundColor: style[index] }}
+                                                                className="input is-info mb-3"
+                                                                key={i}
+                                                            />
+                                                        )
+                                                    })}
+                                                </div>)
+                                        }
+
+                                        return (
+                                            <div>
+                                                <pre
+                                                    id="question-container"
+                                                    className="pb-6"
+                                                    style={{ letterSpacing: "2px", fontSize: "1em", wordSpacing: "5px" }}
+                                                >
+                                                    {question}
+                                                </pre>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                        </div >
+                    )
+                })
+            }
+        }
+
+        if (this.state.lessonType == "non_verbal_reasoning") {
+            let index = -1
+            let style = ""
+            if (this.state.questionList.length > 0 && this.state.lessons.length > 0) {
+                lesson = this.state.lessons.map((res, i) => {
+                    return (
+                        <div style={{ textAlign: "center" }}>
+                            <div key={i} className="box is-shadowless">
+                                <div className="columns">
+                                    <div className="column is-pulled-left" style={{ margin: "auto", width: "50%", padding: "10px" }}>
+                                        <h4 className="subtitle is-5 mb-0 has-text-weight-bold is-underlined">Lesson Name: {res.lesson_name}</h4>
+                                    </div>
+                                </div><br />
+                                <div>{
+                                    this.state.questionList.map((result, i) => {
+                                        return (
+                                            <div>
+                                                <pre
+                                                    id="question-container"
+                                                    className="pb-0"
+                                                    style={{ letterSpacing: "2px", fontSize: "1em", wordSpacing: "5px" }}
+                                                >
+                                                    <img style={{ width: "50%" }} src={Question1} alt="Non-Verbal" />
+                                                </pre>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                        </div >
+                    )
+                })
+            }
+        }
 
 
         return (

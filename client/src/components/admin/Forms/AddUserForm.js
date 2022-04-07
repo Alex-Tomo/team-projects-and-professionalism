@@ -48,6 +48,10 @@ class AddUserForm extends React.Component {
       this.props.showMessage("Email Cannot Contain Spaces!", "is-danger")
       return
     }
+    if (!this.state.email.trim().includes("@")) {
+      this.props.showMessage("Invalid Email Format!", "is-danger")
+      return
+    }
 
     if ((this.state.password.length <= 7) || (this.state.password.length > 32)) {
       this.props.showMessage("Password Must Be Between 8 and 32 Characters!", "is-danger")
@@ -88,7 +92,7 @@ class AddUserForm extends React.Component {
         break;
     }
 
-    axios.post('http://localhost:8080/api/admin/adduser', {
+    axios.post('https://kip-learning.herokuapp.com/api/admin/adduser', {
           addedById: JSON.parse(localStorage.getItem('user')).id,
           addedByUsername: JSON.parse(localStorage.getItem('user')).username,
           username: this.state.username,

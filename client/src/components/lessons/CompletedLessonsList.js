@@ -21,7 +21,7 @@ class CompletedLessonList extends React.Component {
     }
 
     checkLessonType = () => {
-        axios.get('http://localhost:8080/api/completedlessons', {
+        axios.get('https://kip-learning.herokuapp.com/api/completedlessons', {
             headers: authHeader(),
             params: {
                 userId: JSON.parse(localStorage.getItem('user')).id
