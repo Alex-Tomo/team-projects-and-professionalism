@@ -28,13 +28,13 @@ class AuthService {
         return JSON.parse(localStorage.getItem("user"))
     }
 
-    passReset(username){
+    passReset(username) {
         return axios.post(API_URL + "password-recovery", {
             username
         })
     }
 
-    passChange(password, token){
+    passChange(password, token) {
         return axios.post(API_URL + "password-reset", {
             token,
             password

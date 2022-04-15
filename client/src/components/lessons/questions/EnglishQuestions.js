@@ -1,11 +1,11 @@
 import React from "react"
 import axios from "axios"
+import { Link } from "react-router-dom"
 import authHeader from "../../../services/auth-header"
 import UserService from "../../../services/user.service"
-import { Link } from "react-router-dom"
 
 /**
- * Generates practice English questions from database
+ * Generates English questions from the database
  *
  * @author Graham Stoves
  */
@@ -16,15 +16,16 @@ class EnglishQuestions extends React.Component {
         this.state = {
             content: "",
             loggedIn: false,
-            userAnswer: [],
             completed: false,
+            selectedAnswer: true,
             score: 0,
             currentIndex: -1,
             storyIndex: 0,
-            questionList: [],
+            lessonName: "",
             totalNumber: 0,
+            userAnswer: [],
+            questionList: [],
             storyList: [],
-            selectedAnswer: true,
             answerList: [],
             finalAnswer: []
         }
@@ -61,16 +62,17 @@ class EnglishQuestions extends React.Component {
             params: { questionList: this.props.question }
         })
             .then(res => {
-                let array = []
+                let questionDetails = []
                 for (let i = 0; i < res.data.length; i++) {
                     for (let j = 0; j < res.data.length; j++) {
-                        if (res.data[j].question_id === this.props.question[i]) {
-                            array.push(res.data[j])
+                        if (res.data[j].question_id == this.props.question[i]) {
+                            questionDetails.push(res.data[j])
                         }
                     }
                 }
                 this.setState({
-                    questionList: array,
+                    lessonName: this.props.lessonName,
+                    questionList: questionDetails,
                     answerList: res.data.map((answer) => ({
                         answers: [
                             answer.answer,
@@ -81,8 +83,15 @@ class EnglishQuestions extends React.Component {
                         ].sort(() => Math.random() - 0.5)
                     }))
                 })
-            }).catch(e => {
-                console.log("error: " + e)
+            }).catch(error => {
+                this.setState({
+                    content:
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString()
+                })
             })
     }
 
@@ -95,9 +104,10 @@ class EnglishQuestions extends React.Component {
     nextQuestionHandler = async () => {
         let answerLength = this.state.questionList[this.state.currentIndex].answer.split(',').length
         let answerString = this.state.questionList[this.state.currentIndex].answer
+        let userAnswer = this.state.userAnswer
         let answerArray = answerString.split(',')
 
-        if (this.state.userAnswer.length < answerArray.length) {
+        if (userAnswer.length < answerArray.length) {
             this.setState({
                 error: "You need to select an answer."
             })
@@ -107,9 +117,9 @@ class EnglishQuestions extends React.Component {
         this.setState({
             totalNumber: this.state.totalNumber + answerLength,
         })
-        this.state.finalAnswer.push(this.state.userAnswer)
+        this.state.finalAnswer.push(userAnswer)
 
-        if (this.state.userAnswer === this.state.questionList[this.state.currentIndex].answer) {
+        if (userAnswer == answerString) {
             this.setState({
                 score: this.state.score + 1
             })
@@ -144,22 +154,25 @@ class EnglishQuestions extends React.Component {
                 {
                     headers: authHeader()
                 }).then((result) => {
-                }).catch(e => {
-                    console.log(e)
+                }).catch(error => {
+                    this.setState({
+                        content:
+                            (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                            error.message ||
+                            error.toString()
+                    })
                 })
-
-            return (
-                <div>
-                    <p>Added</p>
-                </div>
-            )
         }
     }
 
     render() {
+        let lessonName = ""
         let title = ""
         let story = ""
         let question = ""
+        let currentIndex = ""
         let answersList = []
 
         if (!this.state.loggedIn) {
@@ -170,20 +183,22 @@ class EnglishQuestions extends React.Component {
             )
         }
 
-        if (this.state.questionList.length > 0 && this.state.currentIndex >= 0) {
-            title = this.state.questionList[this.state.currentIndex].english_story.title
-            story = this.state.questionList[this.state.currentIndex].english_story.story
-            question = this.state.questionList[this.state.currentIndex].question
-            answersList = this.state.answerList[this.state.currentIndex].answers
-        }
-
-        if (this.state.currentIndex === -1) {
+        if (currentIndex === -1) {
             return (
                 <div>
                     <div className="spinner"></div>
                     <div className="login-loading">Loading Questions</div>
                 </div>
             )
+        }
+
+        if (this.state.questionList.length > 0 && this.state.currentIndex >= 0) {
+            lessonName = this.state.lessonName
+            title = this.state.questionList[this.state.currentIndex].english_story.title
+            story = this.state.questionList[this.state.currentIndex].english_story.story
+            question = this.state.questionList[this.state.currentIndex].question
+            answersList = this.state.answerList[this.state.currentIndex].answers
+            currentIndex = this.state.currentIndex
         }
 
         if (this.state.completed) {
@@ -197,13 +212,11 @@ class EnglishQuestions extends React.Component {
                         </div>
                         <div>
                             <Link className="is-danger" to="/completed">
-                                <button className="title is-4 button is-info mb-6" style={{ backgroundColor: "#00549F" }}>
-                                    Completed Tests
-                                </button>
+                                <button className="title is-4 button is-info mb-6" style={{ backgroundColor: "#00549F" }}>Completed Tests</button>
                             </Link>
                         </div>
                     </div>
-                </div >
+                </div>
             )
         }
 
@@ -212,26 +225,22 @@ class EnglishQuestions extends React.Component {
                 <div className="top">
                     <div>
                         <div className="is-pulled-left p-4" style={{ width: "13%" }}>
-                            <h3 className="subtitle is-5 mb-4" style={{ color: "#00549F", fontWeight: "bold" }}>
-                                Progress
-                            </h3>
+                            <h3 className="subtitle is-5 mb-4" style={{ color: "#00549F", fontWeight: "bold" }}>Progress</h3>
 
                             <progress
                                 id="progress-bar"
                                 className="progress is-branding mt-0 mb-2"
-                                value={this.state.currentIndex}
+                                value={currentIndex}
                                 max={this.state.questionList.length - 1}
                             />
 
                             <div className="questionIndex is-pulled-right mr-3">
-                                {`${this.state.currentIndex + 1} of ${this.state.questionList.length}`}
+                                {`${currentIndex + 1} of ${this.state.questionList.length}`}
                             </div>
 
                         </div>
                         <section className="section is-small sub-home-background" style={{ marginLeft: "13%" }}>
-                            <h1 className="title is-2 has-text-weight-bold">
-                                English
-                            </h1>
+                            <h1 className="title is-2 has-text-weight-bold">{lessonName}</h1>
                         </section>
                     </div>
                 </div>
@@ -240,25 +249,15 @@ class EnglishQuestions extends React.Component {
                     <div className="card mt-5 mb-6">
                         <div className="card-content">
                             <div className="content">
-                                <h2 className="mb-4">
-                                    Question {this.state.currentIndex + 1}
-                                </h2>
-
+                                <h2 className="mb-4">Question {currentIndex + 1}</h2>
                                 <div id="english-container">
-                                    <pre id="story-text" className="is-pulled-left mr-6">
-                                        <h2>{title}</h2>
-                                        <p style={{
-                                            textAlign: "left",
-                                            whiteSpace: "pre-line"
-                                        }}>
-                                            {story}
-                                        </p>
-                                    </pre>
+                                    <div className="is-pulled-left">
+                                        <h2 style={{ textDecoration: "underline" }}>{title}</h2>
+                                        <pre id="story-text">{story}</pre>
+                                    </div>
 
                                     <div className="mb-6">
-                                        <h3 className="mt-0">
-                                            {question}
-                                        </h3>
+                                        <h3 className="mt-0">{question}</h3>
                                         <div>
                                             {
                                                 answersList.map((answer, i) => {
@@ -267,7 +266,7 @@ class EnglishQuestions extends React.Component {
                                                             <button
                                                                 id="answer"
                                                                 key={answer}
-                                                                className={"button mr-3 mb-3 is-outlined is-info"}
+                                                                className={"english-button button mr-3 mb-3 is-outlined is-info"}
                                                                 answer={answer}
                                                                 onClick={() => this.handleAnswer(answer)}>
                                                                 {answer}
@@ -283,20 +282,19 @@ class EnglishQuestions extends React.Component {
 
                                         <div className="nextBtn">
                                             {
-                                                this.state.currentIndex < this.state.questionList.length - 1 && (
+                                                currentIndex < this.state.questionList.length - 1 && (
                                                     <button
                                                         className="button is-outlined mb-3"
                                                         onClick={this.nextQuestionHandler}
                                                     >
                                                         Next Question
                                                     </button>
-                                                )
-                                            }
+                                                )}
                                         </div>
 
                                         <div className="finishBtn">
                                             {
-                                                this.state.currentIndex === this.state.questionList.length - 1 &&
+                                                currentIndex === this.state.questionList.length - 1 &&
                                                 <button
                                                     className="button is-info is-outlined"
                                                     onClick={this.nextQuestionHandler}

@@ -719,12 +719,7 @@ body {
     background-color: #FFFFFF;
 }
 
-/*.progress::-webkit-progress-value {
-    transition: width 0.5s ease;
-  }*/
-
 @media only screen and (min-width : 1024px) and (max-width : 2200px) {
-
     .mobile-ver {
         display: none;
     }

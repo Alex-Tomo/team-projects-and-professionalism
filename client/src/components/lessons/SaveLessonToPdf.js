@@ -1,15 +1,23 @@
 import React from "react"
 import axios from "axios"
-import UserService from "../../services/user.service"
-import authHeader from "../../services/auth-header"
 import { Link } from "react-router-dom"
 import ReactToPrint from "react-to-print"
-import Question1 from './questions/nonverbalreasoningimages/question_1.svg'
+import UserService from "../../services/user.service"
+import authHeader from "../../services/auth-header"
+
+/**
+ * Displays all the information from the user's completed lesson when 
+ * they click on view, and they can download it to PDF
+ *
+ * @author Graham Stoves
+ */
 
 class SaveLessonToPdf extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            content: "",
+            loggedIn: false,
             lessons: [],
             questionList: [],
             lessonType: "",
@@ -43,7 +51,7 @@ class SaveLessonToPdf extends React.Component {
     }
 
     getLesson = async () => {
-        await axios.get('http://localhost:8080/api/lessons', {
+        await axios.get('https://kip-learning.herokuapp.com/api/lessons', {
             headers: authHeader(),
             params: {
                 lesson_id: this.props.lessonId
@@ -52,8 +60,15 @@ class SaveLessonToPdf extends React.Component {
             this.setState({
                 lessons: res.data
             })
-        }).catch(e => {
-            console.log("error: " + e)
+        }).catch(error => {
+            this.setState({
+                content:
+                    (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString()
+            })
         })
 
         this.state.lessons.map((result, i) => {
@@ -80,16 +95,16 @@ class SaveLessonToPdf extends React.Component {
 
             switch (this.state.lessonType) {
                 case "math":
-                    url = "http://localhost:8080/api/mathslesson"
+                    url = "https://kip-learning.herokuapp.com/api/mathslesson"
                     break
                 case "english":
-                    url = "http://localhost:8080/api/englishlesson"
+                    url = "https://kip-learning.herokuapp.com/api/englishlesson"
                     break
                 case "verbal_reasoning":
-                    url = "http://localhost:8080/api/verballesson"
+                    url = "https://kip-learning.herokuapp.com/api/verballesson"
                     break
                 case "non_verbal_reasoning":
-                    url = "http://localhost:8080/api/nonverballesson"
+                    url = "https://kip-learning.herokuapp.com/api/nonverballesson"
                     break
                 default:
                     break
@@ -100,19 +115,26 @@ class SaveLessonToPdf extends React.Component {
                 params: { questionList: questionArray }
             })
                 .then(res => {
-                    let array = []
+                    let questionDetails = []
                     for (let i = 0; i < questionArray.length; i++) {
                         for (let j = 0; j < questionArray.length; j++) {
                             if (res.data[j].question_id === questionArray[i]) {
-                                array.push(res.data[j])
+                                questionDetails.push(res.data[j])
                             }
                         }
                     }
                     this.setState({
-                        questionList: array,
+                        questionList: questionDetails,
                     })
-                }).catch(e => {
-                    console.log("error: " + e)
+                }).catch(error => {
+                    this.setState({
+                        content:
+                            (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                            error.message ||
+                            error.toString()
+                    })
                 })
         }
     }
@@ -127,13 +149,14 @@ class SaveLessonToPdf extends React.Component {
 
     render() {
         const reactStringReplace = require('react-string-replace')
+        const images = this.importAll(require.context('./nonverbalreasoningimages', false, /\.(svg)$/))
         let lesson = ""
 
-        if (this.state.lessonType == "math") {
+        if (this.state.lessonType == "math" || this.state.lessonType == "verbal_reasoning") {
             lesson = this.state.lessons.map((res, i) => {
                 return (
-                    <div style={{ textAlign: "center" }}>
-                        <div key={i} className="box is-shadowless">
+                    <div key={i} style={{ marginLeft: "40px" }}>
+                        <div className="box is-shadowless">
                             <div className="columns">
                                 <div className="column is-pulled-left" style={{ margin: "auto", width: "50%", padding: "10px" }}>
                                     <h4 className="subtitle is-5 mb-0 has-text-weight-bold is-underlined">Lesson Name: {res.lesson_name}</h4>
@@ -146,15 +169,13 @@ class SaveLessonToPdf extends React.Component {
 
                                     if (result.question.includes("{?}")) {
                                         question = (
-                                            <div className="pb-0">
+                                            <div key={i} className="pb-0">
                                                 {reactStringReplace(result.question, '{?}', (match, i) => {
                                                     return (
                                                         <input
                                                             style={{ width: "100px", color: "white" }}
                                                             className="input is-info mb-3"
-                                                            key={i}
                                                             type="number"
-                                                            value=""
                                                         />
                                                     )
                                                 })}
@@ -171,27 +192,26 @@ class SaveLessonToPdf extends React.Component {
                                         question = (
                                             subArray.map((arr, i) => {
                                                 return (
-                                                    <div key={i} style={{ display: "flex", marginBottom: "15px", width: "500px", margin: "auto" }}>
+                                                    <div key={i} style={{
+                                                        display: "flex", marginBottom: "15px", width: "500px"
+                                                    }}>
                                                         <p>{i + 1})</p>
                                                         {
-                                                            arr.map((word, j) => {
+                                                            arr.map((number, j) => {
                                                                 return (
                                                                     <button
                                                                         style={{ marginRight: "15px" }}
                                                                         key={j}
                                                                         className="button mb-3"
                                                                         id={`${i}.${j}`}
-                                                                    //disabled
-                                                                    >{word}
+                                                                    >{number}
                                                                     </button>
                                                                 )
-                                                            }
-                                                            )
+                                                            })
                                                         }
                                                     </div>
                                                 )
-                                            })
-                                        )
+                                            }))
                                     }
 
                                     return (
@@ -202,13 +222,15 @@ class SaveLessonToPdf extends React.Component {
                                                 style={{ letterSpacing: "2px", fontSize: "1em", wordSpacing: "5px" }}
                                             >
                                                 {result.statement}
+                                                {result.example}
                                                 {question}
-                                            </pre>
-                                        </div>
+                                            </pre >
+                                        </div >
                                     )
-                                })}
-                            </div>
-                        </div>
+                                })
+                            }
+                            </div >
+                        </div >
                     </div >
                 )
             })
@@ -218,25 +240,22 @@ class SaveLessonToPdf extends React.Component {
             if (this.state.questionList.length > 0 && this.state.lessons.length > 0) {
                 lesson = this.state.lessons.map((res, i) => {
                     return (
-                        <div style={{ textAlign: "center" }}>
-                            <div key={i} className="box is-shadowless">
+                        <div key={i} style={{ marginLeft: "40px" }}>
+                            <div className="box is-shadowless">
                                 <div className="columns">
                                     <div className="column is-pulled-left" style={{ margin: "auto", width: "50%", padding: "10px" }}>
                                         <h4 className="subtitle is-5 mb-0 has-text-weight-bold is-underlined">Lesson Name: {res.lesson_name}</h4>
                                     </div>
                                 </div><br />
                                 <div>
-                                    <pre>{this.state.questionList[0].english_story.story}</pre>
-                                </div>
+                                    <h4 className="subtitle is-5 mt-5 mb-0 has-text-weight-bold is-underlined">{this.state.questionList[i].english_story.title}</h4>
+                                    <pre className="pl-0" style={{ width: "1000px", whiteSpace: "pre-wrap" }}>{this.state.questionList[i].english_story.story}</pre>
+                                </div >
                                 <div>{
-                                    this.state.questionList.map((result, i) => {
+                                    this.state.questionList.map((result, x) => {
                                         let question = result.question
-                                        let answersList = []
-                                        //console.log(result.incorrect_answer_four);
-                                        //console.log(this.state.answerList[0].answers);
-
                                         return (
-                                            <div>
+                                            <div key={x}>
                                                 <pre
                                                     id="question-container"
                                                     className="pb-5"
@@ -258,99 +277,46 @@ class SaveLessonToPdf extends React.Component {
             }
         }
 
-        if (this.state.lessonType == "verbal_reasoning") {
-            let index = -1
-            let style = ""
-            if (this.state.questionList.length > 0 && this.state.lessons.length > 0) {
-                lesson = this.state.lessons.map((res, i) => {
-                    return (
-                        <div style={{ textAlign: "center" }}>
-                            <div key={i} className="box is-shadowless">
-                                <div className="columns">
-                                    <div className="column is-pulled-left" style={{ margin: "auto", width: "50%", padding: "10px" }}>
-                                        <h4 className="subtitle is-5 mb-0 has-text-weight-bold is-underlined">Lesson Name: {res.lesson_name}</h4>
-                                    </div>
-                                </div><br />
-                                <div>{
-                                    this.state.questionList.map((result, i) => {
-                                        let question = result.question
-
-                                        if (result.question.includes("{?}")) {
-                                            question = (
-                                                <div className="pb-0">
-                                                    {reactStringReplace(result.question, '{?}', (match, i) => {
-                                                        index++
-                                                        return (
-                                                            <input
-                                                                style={{ width: "100px", color: "white", backgroundColor: style[index] }}
-                                                                className="input is-info mb-3"
-                                                                key={i}
-                                                            />
-                                                        )
-                                                    })}
-                                                </div>)
-                                        }
-
-                                        return (
-                                            <div>
-                                                <pre
-                                                    id="question-container"
-                                                    className="pb-6"
-                                                    style={{ letterSpacing: "2px", fontSize: "1em", wordSpacing: "5px" }}
-                                                >
-                                                    {question}
-                                                </pre>
-                                            </div>
-                                        )
-                                    })}
-                                </div>
-                            </div>
-                        </div >
-                    )
-                })
-            }
-        }
-
         if (this.state.lessonType == "non_verbal_reasoning") {
-            let index = -1
-            let style = ""
             if (this.state.questionList.length > 0 && this.state.lessons.length > 0) {
                 lesson = this.state.lessons.map((res, i) => {
                     return (
-                        <div style={{ textAlign: "center" }}>
-                            <div key={i} className="box is-shadowless">
+                        <div key={i} style={{ marginLeft: "40px" }}>
+                            <div className="box is-shadowless">
                                 <div className="columns">
                                     <div className="column is-pulled-left" style={{ margin: "auto", width: "50%", padding: "10px" }}>
                                         <h4 className="subtitle is-5 mb-0 has-text-weight-bold is-underlined">Lesson Name: {res.lesson_name}</h4>
                                     </div>
-                                </div><br />
+                                </div >
                                 <div>{
-                                    this.state.questionList.map((result, i) => {
+                                    this.state.questionList.map((result, x) => {
                                         return (
-                                            <div>
+                                            <div key={x}>
                                                 <pre
                                                     id="question-container"
-                                                    className="pb-0"
+                                                    className="pb-0 pt-6"
                                                     style={{ letterSpacing: "2px", fontSize: "1em", wordSpacing: "5px" }}
                                                 >
-                                                    <img style={{ width: "50%" }} src={Question1} alt="Non-Verbal" />
+                                                    <img style={{ width: "45%", marginBottom: "10px" }} src={images[result.filename]} alt="Non-Verbal" />
                                                 </pre>
+                                                <div>
+                                                    <textarea className="mt-2" rows="3" cols="7" style={{ resize: "none" }}></textarea>
+                                                </div>
                                             </div>
                                         )
                                     })}
                                 </div>
                             </div>
-                        </div >
+                        </div>
                     )
                 })
             }
         }
-
 
         return (
             <div ref={(response) => (this.componentRef = response)}>
                 {lesson}
-                <div style={{ textAlign: "center" }}>
+                < div style={{ textAlign: "center" }}>
                     <ReactToPrint
                         content={() => this.componentRef}
                         trigger={() =>

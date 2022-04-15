@@ -9,21 +9,21 @@ class UserService {
     getUserBoard() {
         return axios.get(API_URL + "user", { headers: authHeader() }).catch((err) => {
             AuthService.logout()
-            window.location.replace("https://kip-learning.herokuapp.com/login")
+            window.location.replace("https://kip-learning.herokuapp.com/api/login")
             console.log(err)
         })
     }
     getTutorBoard() {
         return axios.get(API_URL + "tutor", { headers: authHeader() }).catch((err) => {
             AuthService.logout()
-            window.location.replace("https://kip-learning.herokuapp.com/login")
+            window.location.replace("https://kip-learning.herokuapp.com/api/login")
             console.log(err)
         })
     }
     getAdminBoard() {
         return axios.get(API_URL + "admin", { headers: authHeader() }).catch((err) => {
             AuthService.logout()
-            window.location.replace("https://kip-learning.herokuapp.com/login")
+            window.location.replace("https://kip-learning.herokuapp.com/api/login")
             console.log(err)
         })
     }

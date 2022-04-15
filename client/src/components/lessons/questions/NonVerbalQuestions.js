@@ -1,23 +1,30 @@
 import React from "react"
 import axios from "axios"
+import { Link } from "react-router-dom"
 import authHeader from "../../../services/auth-header"
 import UserService from "../../../services/user.service"
-import { Link } from "react-router-dom"
+
+/**
+ * Generates Non-Verbal questions from the database
+ *
+ * @author Graham Stoves
+ */
 
 class NonVerbalQuestions extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            userAnswer: [],
             content: "",
             loggedIn: false,
             completed: false,
             score: 0,
             currentIndex: -1,
+            lessonName: "",
             totalNumber: 0,
-            finalAnswer: [],
+            userAnswer: [],
             questionList: [],
             results: [],
+            finalAnswer: [],
             val: ''
         }
         this.handleChange = this.handleChange.bind(this)
@@ -54,20 +61,27 @@ class NonVerbalQuestions extends React.Component {
             params: { questionList: this.props.question }
         })
             .then(res => {
-                let array = []
+                let questionDetails = []
                 for (let i = 0; i < res.data.length; i++) {
                     for (let j = 0; j < res.data.length; j++) {
-
                         if (res.data[j].question_id === this.props.question[i]) {
-                            array.push(res.data[j])
+                            questionDetails.push(res.data[j])
                         }
                     }
                 }
                 this.setState({
-                    questionList: array
+                    lessonName: this.props.lessonName,
+                    questionList: questionDetails
                 })
-            }).catch(e => {
-                console.log("error: " + e)
+            }).catch(error => {
+                this.setState({
+                    content:
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString()
+                })
             })
     }
 
@@ -102,23 +116,24 @@ class NonVerbalQuestions extends React.Component {
     nextQuestionHandler = async e => {
         let answerLength = this.state.questionList[this.state.currentIndex].answer.split(',').length
         let answerString = this.state.questionList[this.state.currentIndex].answer
+        let userAnswer = this.state.userAnswer
         let answerArray = answerString.split(',')
 
-        if (this.state.userAnswer.length < answerArray.length) {
+        if (userAnswer.length < answerArray.length) {
             this.setState({
                 error: "Field cannot be left empty"
             })
             return
         }
 
-        for (let i = 0; i < this.state.userAnswer.length; i++) {
-            if (this.state.userAnswer[i] === "") {
+        for (let i = 0; i < userAnswer.length; i++) {
+            if (userAnswer[i] === "") {
                 this.setState({
                     error: "Field cannot be left empty"
                 })
                 return
             }
-            if (this.state.userAnswer[i] === undefined) {
+            if (userAnswer[i] === undefined) {
                 this.setState({
                     error: "You can only type in letters."
                 })
@@ -129,9 +144,9 @@ class NonVerbalQuestions extends React.Component {
         this.setState({
             totalNumber: this.state.totalNumber + answerLength,
         })
-        this.state.finalAnswer.push(this.state.userAnswer)
+        this.state.finalAnswer.push(userAnswer)
 
-        if (this.state.userAnswer === this.state.questionList[this.state.currentIndex].answer) {
+        if (userAnswer.toLowerCase() === answerString.toLowerCase()) {
             this.setState({
                 score: this.state.score + 1
             })
@@ -167,31 +182,30 @@ class NonVerbalQuestions extends React.Component {
                 {
                     headers: authHeader()
                 }).then((result) => {
-                }).catch(e => {
-                    console.log(e)
+                }).catch(error => {
+                    this.setState({
+                        content:
+                            (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                            error.message ||
+                            error.toString()
+                    })
                 })
-
-            return (
-                <div>
-                    <p>Added</p>
-                </div>
-            )
         }
     }
 
     render() {
+        let lessonName = ""
         let filename = ""
-        const images = this.importAll(require.context('./nonverbalreasoningimages', false, /\.(svg)$/))
+        const images = this.importAll(require.context('../nonverbalreasoningimages', false, /\.(svg)$/))
 
         if (!this.state.loggedIn) {
             return (
-                <div>Not logged in</div>
+                <div>
+                    <h1>You need to be logged in to access this page.</h1>
+                </div>
             )
-        }
-
-        if (this.state.questionList.length > 0 && this.state.currentIndex >= 0) {
-
-            filename = this.state.questionList[this.state.currentIndex].filename
         }
 
         if (this.state.currentIndex === -1) {
@@ -201,6 +215,11 @@ class NonVerbalQuestions extends React.Component {
                     <div className="login-loading">Loading Questions</div>
                 </div>
             )
+        }
+
+        if (this.state.questionList.length > 0 && this.state.currentIndex >= 0) {
+            lessonName = this.state.lessonName
+            filename = this.state.questionList[this.state.currentIndex].filename
         }
 
         if (this.state.completed) {
@@ -214,24 +233,20 @@ class NonVerbalQuestions extends React.Component {
                         </div>
                         <div>
                             <Link className="is-danger" to="/completed">
-                                <button className="title is-4 button is-info mb-6" style={{ backgroundColor: "#00549F" }}>
-                                    Completed Tests
-                                </button>
+                                <button className="title is-4 button is-info mb-6" style={{ backgroundColor: "#00549F" }}>Completed Tests</button>
                             </Link>
                         </div>
                     </div>
-                </div >
+                </div>
             )
         }
 
         return (
             <div>
-                <div className="top">
+                <div>
                     <div>
                         <div className="is-pulled-left p-4" style={{ width: "13%" }}>
-                            <h3 className="subtitle is-5 mb-4" style={{ color: "#00549F", fontWeight: "bold" }}>
-                                Progress
-                            </h3>
+                            <h3 className="subtitle is-5 mb-4" style={{ color: "#00549F", fontWeight: "bold" }}>Progress</h3>
 
                             <progress
                                 id="progress-bar"
@@ -246,9 +261,7 @@ class NonVerbalQuestions extends React.Component {
 
                         </div>
                         <section className="section is-small sub-home-background" style={{ marginLeft: "13%" }}>
-                            <h1 className="title is-2 has-text-weight-bold">
-                                Non-Verbal Reasoning
-                            </h1>
+                            <h1 className="title is-2 has-text-weight-bold">{lessonName}</h1>
                         </section>
                     </div>
                 </div>
@@ -257,9 +270,7 @@ class NonVerbalQuestions extends React.Component {
                     <div className="card mt-5">
                         <div className="card-content">
                             <div className="content">
-                                <h2 className="mb-4">
-                                    Question {this.state.currentIndex + 1}
-                                </h2>
+                                <h2 className="mb-4">Question {this.state.currentIndex + 1}</h2>
 
                                 <img style={{ width: "70%" }} src={images[filename]} alt="Non-Verbal" />
 

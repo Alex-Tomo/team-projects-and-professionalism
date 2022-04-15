@@ -16,6 +16,7 @@
         "react-router-dom": "^6.2.1",
         "react-scripts": "5.0.0",
         "react-string-replace": "^0.4.4",
+        "react-to-print": "^2.14.6",
         "react-validation": "^3.0.7",
         "reaptcha": "^1.11.0",
         "validator": "^13.7.0",

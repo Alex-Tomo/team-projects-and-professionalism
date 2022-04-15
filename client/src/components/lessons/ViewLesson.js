@@ -2,6 +2,12 @@ import React from "react"
 import SaveLessonToPdf from "./SaveLessonToPdf"
 import { GetFullLesson } from './GetFullLesson'
 
+/**
+ * Returns the lessons with the parameters lessonId
+ *
+ * @author Graham Stoves
+ */
+
 class ViewLesson extends React.Component {
     constructor(props) {
         super(props)

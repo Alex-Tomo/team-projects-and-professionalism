@@ -1,13 +1,15 @@
 import React from "react"
+import { GetQuestions } from "./GetQuestions"
 import EnglishQuestions from "./EnglishQuestions"
 import MathQuestions from "./MathQuestions"
-import { GetQuestions } from "./GetQuestions"
 import VerbalQuestions from "./VerbalQuestions"
 import NonVerbalQuestions from "./NonVerbalQuestions"
 
-
-// note for alex: => looked at
-
+/**
+ * Returns the questions depending on what the lesson type is when user clicks on start
+ *
+ * @author Graham Stoves
+ */
 
 class Questions extends React.Component {
     constructor(props) {
@@ -18,21 +20,20 @@ class Questions extends React.Component {
         }
     }
 
-    getQuestionsAndType = async (questionDetails) => {
+    getQuestionDetails = async (questionDetails) => {
         let questions = ""
         switch (questionDetails.type) {
             case "math":
-                questions = <MathQuestions question={questionDetails.questionArray} lessonId={questionDetails.lessonId} />
+                questions = <MathQuestions question={questionDetails.questionArray} lessonId={questionDetails.lessonId} lessonName={questionDetails.lessonName} />
                 break
             case "english":
-                questions = <EnglishQuestions question={questionDetails.questionArray} lessonId={questionDetails.lessonId} />
+                questions = <EnglishQuestions question={questionDetails.questionArray} lessonId={questionDetails.lessonId} lessonName={questionDetails.lessonName} />
                 break
             case "verbal_reasoning":
-                questions = <VerbalQuestions question={questionDetails.questionArray} lessonId={questionDetails.lessonId} />
+                questions = <VerbalQuestions question={questionDetails.questionArray} lessonId={questionDetails.lessonId} lessonName={questionDetails.lessonName} />
                 break
             case "non_verbal_reasoning":
-                questions = <NonVerbalQuestions question={questionDetails.questionArray} lessonId={questionDetails.lessonId} />
-
+                questions = <NonVerbalQuestions question={questionDetails.questionArray} lessonId={questionDetails.lessonId} lessonName={questionDetails.lessonName} />
                 break
             default:
                 await this.setState({
@@ -54,7 +55,7 @@ class Questions extends React.Component {
                 <GetQuestions
                     props={this.props}
                     flag={this.state.flag}
-                    getQuestionsAndType={(questionDetails) => this.getQuestionsAndType(questionDetails)}
+                    getQuestionDetails={(questionDetails) => this.getQuestionDetails(questionDetails)}
                 />
             </div>
         )

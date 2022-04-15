@@ -12,7 +12,7 @@ class BoardUser extends Component {
     }
     logout() {
         AuthService.logout()
-        window.location.href = "http://localhost:3000/"
+        window.location.href = "http://localhost:3000"
     }
 
     componentDidMount() {

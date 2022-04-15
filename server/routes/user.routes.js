@@ -35,6 +35,7 @@ module.exports = function (app) {
     //Tutors and admins can see this route
     app.get('/api/test/tutor', [authJwt.verifyToken, authJwt.isTutorAdmin], controller.tutorBoard)
 
+    //Lesson routes:
     app.get('/api/lessons', [authJwt.verifyToken], controller.lessons)
 
     app.get('/api/mathslesson', [authJwt.verifyToken], controller.mathsLesson)

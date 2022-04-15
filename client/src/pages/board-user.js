@@ -7,19 +7,22 @@ class BoardUser extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            content: ""
+            content: "",
+            loggedIn: false
         }
     }
+
     logout() {
         AuthService.logout()
-        window.location.href = "http://localhost:3000/"
+        window.location.href = "http://localhost:3000"
     }
 
     componentDidMount() {
         UserService.getUserBoard().then(
             (response) => {
                 this.setState({
-                    content: response.data
+                    content: response.data,
+                    loggedIn: true
                 })
             },
             (error) => {
@@ -34,7 +37,14 @@ class BoardUser extends Component {
             }
         )
     }
+
     render() {
+        if (!this.state.loggedIn) {
+            return (
+                <div>You need to be logged in to see this page</div>
+            )
+        }
+
         const username = JSON.parse(localStorage.getItem('user')).username;
         return (
             <div>

@@ -9,7 +9,7 @@ import Home from "./pages/home"
 import TopicList from './components/lessons/TopicList';
 import LessonList from './components/lessons/LessonList'
 import Questions from './components/lessons/questions/Questions'
-import CompletedLesson from './components/lessons/CompletedLesson'
+import ViewCompletedLesson from './components/lessons/ViewCompletedLesson'
 import ViewLesson from './components/lessons/ViewLesson';
 import MathQuestions from './components/lessons/questions/MathQuestions'
 import EnglishQuestions from './components/lessons/questions/EnglishQuestions'
@@ -35,7 +35,7 @@ function App() {
                 <Route path='/management' element={<ManagementAdmin />} />
                 <Route path="/topics" element={<TopicList />} />
                 <Route path="/questions" element={<Questions />} />
-                <Route path="/completedlesson" element={<CompletedLesson />} />
+                <Route path="/completedlesson" element={<ViewCompletedLesson />} />
                 <Route path="/viewlesson" element={<ViewLesson />} />
                 <Route path="/completed" element={<CompletedLessonList />} />
                 <Route path="/math" element={<LessonList title="Math Test" type="math" />} />
@@ -47,8 +47,8 @@ function App() {
                 <Route path="/verbalquestions" element={<VerbalQuestions />} />
                 <Route path="/nonverbalquestions" element={<NonVerbalQuestions />} />
                 <Route path="/*" element={<h1>404 Not Found</h1>} />
-            </Routes>
-        </BrowserRouter>
+            </Routes >
+        </BrowserRouter >
     );
 }
 

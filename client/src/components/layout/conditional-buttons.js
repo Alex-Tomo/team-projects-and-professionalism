@@ -39,9 +39,6 @@ export default function ConditionalButtons(props) {
                 <NavLink className="navbar-item gaps nav-text" to="/completed">
                     <img className="mr-2" alt="completed" src={completed} />Completed Tests
                 </NavLink>
-                <NavLink className="navbar-item gaps small nav-text" to="/user">
-                    <img className="mr-2" alt="support" src={support} />Support
-                </NavLink>
             </div>
         )
     } else if (userRole === "ROLE_TUTOR") {

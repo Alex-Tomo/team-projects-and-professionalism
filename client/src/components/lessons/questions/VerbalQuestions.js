@@ -1,11 +1,11 @@
 import React from "react"
 import axios from "axios"
+import { Link } from "react-router-dom"
 import authHeader from "../../../services/auth-header"
 import UserService from "../../../services/user.service"
-import { Link } from "react-router-dom"
 
 /**
- * Generates practice verbal reasoning questions from database
+ * Generates Verbal Reasoning questions from database
  *
  * @author Graham Stoves
  */
@@ -16,14 +16,16 @@ class VerbalQuestions extends React.Component {
         this.state = {
             content: "",
             loggedIn: false,
-            userAnswer: [],
             completed: false,
             score: 0,
             currentIndex: -1,
-            questionList: [],
+            lessonName: "",
             totalNumber: 0,
-            finalAnswer: [],
+            userAnswer: [],
+            questionList: [],
+            answerList: [],
             results: [],
+            finalAnswer: [],
             val: [""]
         }
         this.handleChange = this.handleChange.bind(this)
@@ -62,68 +64,77 @@ class VerbalQuestions extends React.Component {
             params: { questionList: this.props.question }
         })
             .then(res => {
-                let array = []
+                let questionDetails = []
                 for (let i = 0; i < res.data.length; i++) {
                     for (let j = 0; j < res.data.length; j++) {
 
                         if (res.data[j].question_id === this.props.question[i]) {
-                            array.push(res.data[j])
+                            questionDetails.push(res.data[j])
                         }
                     }
                 }
                 this.setState({
-                    questionList: array,
+                    lessonName: this.props.lessonName,
+                    questionList: questionDetails
                 })
-            }).catch(e => {
-                console.log("error: " + e)
+            }).catch(error => {
+                this.setState({
+                    content:
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString()
+                })
             })
     }
 
     handleChange(e) {
         const numbers = /\d+/g
         const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/g
-        const foundNumber = e.target.value.match(numbers);
-        const foundSpecialChar = e.target.value.match(specialChars);
+        const foundNumber = e.target.value.match(numbers)
+        const foundSpecialChar = e.target.value.match(specialChars)
+        let userAnswer = this.state.userAnswer
 
         if (foundNumber != null || foundSpecialChar != null) {
             this.setState({
-                error: "You can only type in letters."
+                error: "You can only type in letters.",
             })
             return
         }
 
-        let arr = this.state.userAnswer
-        arr[e.target.id] = e.target.value
+        userAnswer[e.target.id] = e.target.value
         this.setState({
-            userAnswer: arr,
+            userAnswer: userAnswer,
             error: "",
-            val: arr
+            val: userAnswer
         })
     }
 
     nextQuestionHandler = async () => {
         let answerString = this.state.questionList[this.state.currentIndex].answer
         let answerArray = answerString.split(',')
-        let arr = this.state.val
+        let inputValue = this.state.val
+        let userAnswer = this.state.userAnswer
         let answerLength = this.state.questionList[this.state.currentIndex].answer.split(',').length
 
-        if (this.state.userAnswer.length < answerArray.length) {
+        if (userAnswer.length < answerArray.length) {
             this.setState({
                 error: "Field cannot be left empty"
             })
             return
         }
 
-        for (let i = 0; i < this.state.userAnswer.length; i++) {
-            if (this.state.userAnswer[i] === "") {
+        for (let i = 0; i < userAnswer.length; i++) {
+            if (userAnswer[i] === "") {
                 this.setState({
                     error: "Field cannot be left empty"
                 })
                 return
             }
-            if (this.state.userAnswer[i] === undefined) {
+            if (userAnswer[i] === undefined) {
                 this.setState({
-                    error: "You can only type in letters."
+                    error: "Field cannot be left empty"
                 })
                 return
             }
@@ -133,15 +144,14 @@ class VerbalQuestions extends React.Component {
             totalNumber: this.state.totalNumber + answerLength,
         })
 
-        for (let i = 0; i < arr.length; i++) {
-            this.state.finalAnswer.push(arr[i])
-            if (arr[i] === answerArray[i]) {
+        for (let i = 0; i < inputValue.length; i++) {
+            this.state.finalAnswer.push(inputValue[i])
+            if (inputValue[i] === answerArray[i]) {
                 await this.setState({
-                    score: this.state.score + 1,
-
+                    score: this.state.score + 1
                 })
             }
-            arr[i] = ""
+            inputValue[i] = ""
         }
 
         if (this.state.currentIndex !== this.state.questionList.length - 1) {
@@ -149,7 +159,7 @@ class VerbalQuestions extends React.Component {
                 currentIndex: this.state.currentIndex + 1,
                 userAnswer: [],
                 error: "",
-                val: arr
+                val: inputValue
             })
         } else if (this.state.currentIndex === this.state.questionList.length - 1) {
             await this.setState({
@@ -174,32 +184,73 @@ class VerbalQuestions extends React.Component {
                 {
                     headers: authHeader()
                 }).then((result) => {
-                }).catch(e => {
-                    console.log(e)
+                }).catch(error => {
+                    this.setState({
+                        content:
+                            (error.response &&
+                                error.response.data &&
+                                error.response.data.message) ||
+                            error.message ||
+                            error.toString()
+                    })
                 })
-
-            return (
-                <div>
-                    <p>Added</p>
-                </div>
-            )
         }
     }
 
     render() {
-        let question = ""
         const reactStringReplace = require('react-string-replace')
+        let lessonName = ""
+        let question = ""
+        let example = ""
+        let type = ""
+        let margRight = ""
+        let instruction = ""
+        let classStyle = ""
+        let answersList = []
+        let currentIndex = ""
+
+        if (!this.state.loggedIn) {
+            return (
+                <div>
+                    <h1>You need to be logged in to access this page.</h1>
+                </div>
+            )
+        }
+
+        if (this.state.currentIndex === -1) {
+            return (
+                <div>
+                    <div className="spinner"></div>
+                    <div className="login-loading">Loading Questions</div>
+                </div>
+            )
+        }
 
         if (this.state.questionList.length > 0 && this.state.currentIndex >= 0) {
             question = this.state.questionList[this.state.currentIndex].question
+            example = this.state.questionList[this.state.currentIndex].example
+            type = this.state.questionList[this.state.currentIndex].type
+            lessonName = this.state.lessonName
 
-            if (this.state.questionList[this.state.currentIndex].question.includes("{?}")) {
+            if (question.includes("{?}")) {
+                if (type == 2) {
+                    instruction = (
+                        <div>
+                            <h6>Write the letter in the input box (e.g. a,b,c)</h6>
+                        </div>
+                    )
+                    classStyle = "input is-info mb-3"
+                    margRight = "150px"
+                } else {
+                    classStyle = "input is-info ml-3 mb-3 mr-3"
+                }
+
                 question = (
                     <div className="pb-0 mb-4">
-                        {reactStringReplace(this.state.questionList[this.state.currentIndex].question, '{?}', (match, i) => (
+                        {reactStringReplace(question, '{?}', (match, i) => (
                             <input
-                                style={{ width: "100px" }}
-                                className="input is-info ml-3 mb-3"
+                                style={{ width: "100px", marginRight: margRight }}
+                                className={classStyle}
                                 key={i}
                                 id={Math.floor(i / 2)}
                                 placeholder="Answer"
@@ -213,15 +264,6 @@ class VerbalQuestions extends React.Component {
             }
         }
 
-        if (this.state.currentIndex === -1) {
-            return (
-                <div>
-                    <div className="spinner"></div>
-                    <div className="login-loading">Loading Questions</div>
-                </div>
-            )
-        }
-
         if (this.state.completed) {
             return (
                 <div style={{ textAlign: "center", marginTop: "200px" }}>
@@ -233,41 +275,35 @@ class VerbalQuestions extends React.Component {
                         </div>
                         <div>
                             <Link className="is-danger" to="/completed">
-                                <button className="title is-4 button is-info mb-6" style={{ backgroundColor: "#00549F" }}>
-                                    Completed Tests
-                                </button>
+                                <button className="title is-4 button is-info mb-6" style={{ backgroundColor: "#00549F" }}>Completed Tests</button>
                             </Link>
                         </div>
                     </div>
-                </div >
+                </div>
             )
         }
 
         return (
             <div>
-                <div className="top">
+                <div>
                     <div>
                         <div className="is-pulled-left p-4" style={{ width: "13%" }}>
-                            <h3 className="subtitle is-5 mb-4" style={{ color: "#00549F", fontWeight: "bold" }}>
-                                Progress
-                            </h3>
+                            <h3 className="subtitle is-5 mb-4" style={{ color: "#00549F", fontWeight: "bold" }}>Progress</h3>
 
                             <progress
                                 id="progress-bar"
                                 className="progress is-branding mt-0 mb-2"
-                                value={this.state.currentIndex}
+                                value={currentIndex}
                                 max={this.state.questionList.length - 1}
                             />
 
                             <div className="questionIndex is-pulled-right mr-3">
-                                {`${this.state.currentIndex + 1} of ${this.state.questionList.length}`}
+                                {`${currentIndex + 1} of ${this.state.questionList.length}`}
                             </div>
 
                         </div>
                         <section className="section is-small sub-home-background" style={{ marginLeft: "13%" }}>
-                            <h1 className="title is-2 has-text-weight-bold">
-                                Verbal Reasoning
-                            </h1>
+                            <h1 className="title is-2 has-text-weight-bold">{lessonName}</h1>
                         </section>
                     </div>
                 </div>
@@ -276,10 +312,16 @@ class VerbalQuestions extends React.Component {
                     <div className="card mt-5">
                         <div className="card-content">
                             <div className="content">
-                                <h2 className="mb-4">Question {this.state.currentIndex + 1}</h2>
-
-                                <h3 className="mt-0">
-                                    <pre>
+                                <h2 className="mb-4">Question {currentIndex + 1}</h2>
+                                <h3>
+                                    <pre
+                                        id="question-container"
+                                        className="is-pulled-left pt-0"
+                                    >
+                                        {example}
+                                    </pre>
+                                    <pre className="pt-0 pl-0">
+                                        {instruction}
                                         {question}
                                     </pre>
                                 </h3>
@@ -299,7 +341,6 @@ class VerbalQuestions extends React.Component {
                                     }
                                 </div>
 
-                                {/* TODO - Why is there an === then button? *Alex */}
                                 <div className="finishBtn">
                                     {
                                         this.state.currentIndex === this.state.questionList.length - 1 &&
