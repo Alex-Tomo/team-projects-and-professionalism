@@ -161,6 +161,8 @@ class Completed extends React.Component {
         let index = -1
         let style = []
         let display = ""
+        let lessonName = ""
+        let questionNumber = 0
         const images = this.importAll(require.context('./nonverbalreasoningimages', false, /\.(svg)$/))
 
         if (!this.state.loggedIn) {
@@ -183,6 +185,7 @@ class Completed extends React.Component {
         if (this.state.lessonType == "math" || this.state.lessonType == "verbal_reasoning") {
             if (this.state.questionList.length > 0 && this.state.lessons.length > 0) {
                 lesson = this.state.lessons.map((res, i) => {
+                    lessonName = res.lesson_name
                     return (
                         <div style={{ marginLeft: "40px" }}>
                             <div key={i} className="box is-shadowless">
@@ -201,10 +204,9 @@ class Completed extends React.Component {
                                         let specialChar = []
                                         let margBott = ""
                                         let displayBoolean = false
-
-                                        if (result.question_type == 8) {
+                                        if (result.question_type == 5 && result.answer.includes("/")) {
                                             specialChar = result.answer.split("/")
-                                        } else if (result.question_type == 9) {
+                                        } else if (result.question_type == 5 && result.answer.includes(":")) {
                                             specialChar = result.answer.split(":")
                                         } else {
                                             specialChar = result.answer.split(",")
@@ -228,6 +230,7 @@ class Completed extends React.Component {
                                         }
 
                                         if (result.question.includes("{?}")) {
+                                            questionNumber++
                                             question = (
                                                 <div key={i} className="pb-0">
                                                     {reactStringReplace(result.question, '{?}', (match, i) => {
@@ -250,6 +253,8 @@ class Completed extends React.Component {
                                             for (let i = 0; i < questionArray.length; i++) {
                                                 questionSubArray.push(questionArray[i].split(" "))
                                             }
+
+                                            questionNumber++
 
                                             question = (
                                                 questionSubArray.map((arr, i) => {
@@ -291,9 +296,11 @@ class Completed extends React.Component {
                                                 <pre
                                                     id="question-container"
                                                     className="pb-0"
-                                                    style={{ letterSpacing: "2px", fontSize: "1em", wordSpacing: "5px", paddingTop: "0px", marginBottom: margBott }}
+                                                    style={{ marginBottom: margBott }}
                                                 >
+                                                    <h3 className="subtitle is-6 has-text-weight-bold mb-2">Question {questionNumber})</h3>
                                                     {result.statement}
+                                                    {result.example}
                                                     {question}
                                                 </pre>
                                                 <p style={{ marginBottom: "70px", display: display }}>Correct answer/answers: {result.answer.toLowerCase()}</p>
@@ -312,6 +319,7 @@ class Completed extends React.Component {
         if (this.state.lessonType == "english") {
             if (this.state.questionList.length > 0 && this.state.lessons.length > 0 && this.state.answerList.length > 0) {
                 lesson = this.state.lessons.map((res, i) => {
+                    lessonName = res.lesson_name
                     return (
                         <div style={{ marginLeft: "40px" }}>
                             <div key={i} className="box is-shadowless">
@@ -329,6 +337,7 @@ class Completed extends React.Component {
                                 </div >
                                 <div>{
                                     this.state.questionList.map((result, i) => {
+                                        questionNumber++
                                         let answersList = this.state.answerList[i].answers
                                         let answer = this.state.answers.userAnswers
 
@@ -370,6 +379,7 @@ class Completed extends React.Component {
                                         return (
                                             <div>
                                                 <h4 id="question-container" className="subtitle is-5 mt-6 mb-4 pb-0 pl-0">
+                                                    <h3 className="subtitle is-6 has-text-weight-bold mb-2">Question {questionNumber})</h3>
                                                     {result.question}
                                                 </h4>
                                                 {answer}
@@ -388,6 +398,7 @@ class Completed extends React.Component {
         if (this.state.lessonType == "non_verbal_reasoning") {
             if (this.state.questionList.length > 0 && this.state.lessons.length > 0) {
                 lesson = this.state.lessons.map((res, i) => {
+                    lessonName = res.lesson_name
                     return (
                         <div style={{ marginLeft: "40px" }}>
                             <div key={i} className="box is-shadowless">
@@ -401,6 +412,7 @@ class Completed extends React.Component {
                                 </div>
                                 <div>{
                                     this.state.questionList.map((result, i) => {
+                                        questionNumber++
                                         let answer = this.state.answers.userAnswers
                                         let array = result.answer.split(",")
 
@@ -427,7 +439,8 @@ class Completed extends React.Component {
                                                     className="pb-0 pt-6"
                                                     style={{ letterSpacing: "2px", fontSize: "1em", wordSpacing: "5px" }}
                                                 >
-                                                    <img style={{ width: "45%", marginBottom: "10px" }} src={images[result.filename]} alt="Non-Verbal" />
+                                                    <h3 className="subtitle is-6 has-text-weight-bold mb-2">Question {questionNumber})</h3>
+                                                    <img className="non-verbal-image" src={images[result.filename]} alt="Non-Verbal" />
                                                 </pre>
                                                 <div className="has-text-centered">
                                                     {answer}
@@ -444,95 +457,26 @@ class Completed extends React.Component {
             }
         }
 
-        if (this.state.lessonType == "verbal_reasoning") {
-            if (this.state.questionList.length > 0 && this.state.lessons.length > 0) {
-                lesson = this.state.lessons.map((res, i) => {
-                    return (
-                        <div style={{ textAlign: "center" }}>
-                            <div key={i} className="box is-shadowless">
-                                <div className="columns">
-                                    <div className="column is-pulled-left" style={{ margin: "auto", width: "50%", padding: "10px" }}>
-                                        <h4 className="subtitle is-5 mb-0 has-text-weight-bold is-underlined">Lesson Name: {res.lesson_name}</h4>
-                                    </div>
-                                </div>
-                                <div>
-                                    <h4 className="subtitle is-5 mb-0 has-text-weight-bold">Your Score: {this.props.score} out of {this.props.potentialScore}</h4>
-                                </div><br />
-                                <div>{
-                                    this.state.questionList.map((result, i) => {
-                                        let question = result.question
-                                        let answer = this.state.answers.userAnswers
-                                        let array = result.answer.split(",")
-
-
-
-                                        for (let x = 0; x < array.length; x++) {
-                                            if (this.state.answers.userAnswers[index + x + 1] == array[x]) {
-                                                console.log(this.state.answers.userAnswers[index]);
-                                                style.push("#1AA260")
-                                            } else {
-                                                style.push("#EA4335")
-                                            }
-                                        }
-
-                                        if (result.question.includes("{?}")) {
-                                            question = (
-                                                <div className="pb-0">
-                                                    {reactStringReplace(result.question, '{?}', (match, i) => {
-                                                        index++
-                                                        return (
-                                                            <input
-                                                                style={{ width: "100px", color: "white", backgroundColor: style[index] }}
-                                                                className="input is-info mb-3"
-                                                                key={i}
-                                                                type="number"
-                                                                defaultValue={answer[index]}
-                                                            />
-                                                        )
-                                                    })}
-                                                </div>)
-                                        }
-
-                                        return (
-                                            <div>
-                                                <pre
-                                                    id="question-container"
-                                                    className="pb-0"
-                                                    style={{ letterSpacing: "2px", fontSize: "1em", wordSpacing: "5px" }}
-                                                >
-                                                    {result.statement}
-                                                    {question}
-                                                </pre>
-                                                <p className="pb-6">Correct answer/answers: {result.answer}</p>
-                                            </div>
-                                        )
-                                    })}
-                                </div>
-                            </div>
-                        </div>
-                    )
-                })
-            }
-        }
-
-
         return (
             <div ref={(response) => (this.componentRef = response)}>
                 {lesson}
                 < div style={{ textAlign: "center" }}>
                     <ReactToPrint
+                        documentTitle={lessonName}
                         content={() => this.componentRef}
                         trigger={() =>
-                            <button className="button is-outline mb-3">Download to PDF</button>
+                            <div className="hide-button">
+                                <button className="button is-outline mb-3">Download to PDF</button>
+                            </div>
                         }
                     />
-                    <div>
-                        <Link className="is-danger" to="/completed">
+                    <Link className="is-danger" to="/completed">
+                        <div className="hide-button">
                             <button className="button is-info" style={{ backgroundColor: "#00549F" }}>
                                 Back to Completed
                             </button>
-                        </Link>
-                    </div>
+                        </div>
+                    </Link>
                 </div>
             </div>
         )

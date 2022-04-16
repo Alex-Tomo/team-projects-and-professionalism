@@ -198,6 +198,7 @@ class NonVerbalQuestions extends React.Component {
     render() {
         let lessonName = ""
         let filename = ""
+        let currentIndex = ""
         const images = this.importAll(require.context('../nonverbalreasoningimages', false, /\.(svg)$/))
 
         if (!this.state.loggedIn) {
@@ -220,6 +221,7 @@ class NonVerbalQuestions extends React.Component {
         if (this.state.questionList.length > 0 && this.state.currentIndex >= 0) {
             lessonName = this.state.lessonName
             filename = this.state.questionList[this.state.currentIndex].filename
+            currentIndex = this.state.currentIndex
         }
 
         if (this.state.completed) {
@@ -227,7 +229,7 @@ class NonVerbalQuestions extends React.Component {
                 <div style={{ textAlign: "center", marginTop: "200px" }}>
                     <div className="box is-shadowless">
                         <div className="columns">
-                            <div className="column is-pulled-left" style={{ margin: "auto", width: "50%", padding: "10px" }}>
+                            <div className="column" style={{ margin: "auto", width: "50%", padding: "10px" }}>
                                 <h4 className="title is-2 mb-3 has-text-weight-bold">Test Complete!</h4>
                             </div>
                         </div>
@@ -243,40 +245,58 @@ class NonVerbalQuestions extends React.Component {
 
         return (
             <div>
-                <div>
-                    <div>
-                        <div className="is-pulled-left p-4" style={{ width: "13%" }}>
-                            <h3 className="subtitle is-5 mb-4" style={{ color: "#00549F", fontWeight: "bold" }}>Progress</h3>
+                <div className="progress-desktop-view">
+                    <div className="is-pulled-left p-4" style={{ width: "13%" }}>
+                        <h3 className="subtitle is-5 mb-4" style={{ color: "#00549F", fontWeight: "bold" }}>Progress</h3>
 
-                            <progress
-                                id="progress-bar"
-                                className="progress is-branding mt-0 mb-2"
-                                value={this.state.currentIndex}
-                                max={this.state.questionList.length - 1}
-                            />
+                        <progress
+                            id="progress-bar"
+                            className="progress is-branding mt-0 mb-2"
+                            value={currentIndex}
+                            max={this.state.questionList.length - 1}
+                        />
 
-                            <div className="questionIndex is-pulled-right mr-3">
-                                {`${this.state.currentIndex + 1} of ${this.state.questionList.length}`}
-                            </div>
-
+                        <div className="questionIndex is-pulled-right mr-3">
+                            {`${currentIndex + 1} of ${this.state.questionList.length}`}
                         </div>
-                        <section className="section is-small sub-home-background" style={{ marginLeft: "13%" }}>
-                            <h1 className="title is-2 has-text-weight-bold">{lessonName}</h1>
-                        </section>
+                    </div>
+                    <section className="section is-small sub-home-background" style={{ marginLeft: "13%" }}>
+                        <h1 className="title is-2 has-text-weight-bold">{lessonName}</h1>
+                    </section>
+                </div>
+
+                <div className="progress-mobile-view">
+                    <section className="section is-small sub-home-background">
+                        <h1 className="title is-2 has-text-weight-bold">{lessonName}</h1>
+                    </section>
+                    <div className="pt-6 pl-6 pr-6 pb-4">
+                        <h3 className="subtitle is-5 mb-4" style={{ color: "#00549F", fontWeight: "bold" }}>Progress</h3>
+
+                        <progress
+                            id="progress-bar"
+                            className="progress is-branding mt-0 mb-2"
+                            value={currentIndex}
+                            max={this.state.questionList.length - 1}
+                        />
+
+                        <div className="questionIndex is-pulled-right mr-3">
+                            {`${currentIndex + 1} of ${this.state.questionList.length}`}
+                        </div>
                     </div>
                 </div>
 
+
                 <div className="container">
-                    <div className="card mt-5">
+                    <div className="card mt-5 mb-6 main-question-container">
                         <div className="card-content">
                             <div className="content">
                                 <h2 className="mb-4">Question {this.state.currentIndex + 1}</h2>
 
-                                <img style={{ width: "70%" }} src={images[filename]} alt="Non-Verbal" />
+                                <img className="non-verbal-image-question" src={images[filename]} alt="Non-Verbal" />
 
                                 <input
                                     style={{ width: "150px", height: "100px", fontSize: "25px" }}
-                                    className="input is-info ml-6"
+                                    className="input is-info ml-6 non-verbal-input"
                                     placeholder="Answer"
                                     value={this.state.val}
                                     onChange={this.handleChange}

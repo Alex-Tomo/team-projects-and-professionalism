@@ -127,7 +127,7 @@ class MathQuestions extends React.Component {
         let newUserAnswer = []
         let lengthDoubled = []
 
-        if (questionType == 8 || questionType == 9) {
+        if (questionType == 5) {
             answerLength = answerLength * 2
             if (userAnswer.length < answerLength) {
                 this.setState({
@@ -136,10 +136,10 @@ class MathQuestions extends React.Component {
                 return
             } else {
                 let userAnswerString = this.state.userAnswer.toString()
-                if (questionType == 8 && answerString.includes('/')) {
+                if (questionType == 5 && answerString.includes('/')) {
                     replaceSlash = userAnswerString.replace(',', '/')
                     newUserAnswer = replaceSlash.split(" ")
-                } else if (questionType == 9 && answerString.includes(':')) {
+                } else if (questionType == 5 && answerString.includes(':')) {
                     replaceColon = userAnswerString.replace(',', ':')
                     newUserAnswer = replaceColon.split(" ")
                 }
@@ -167,8 +167,6 @@ class MathQuestions extends React.Component {
             case 1:
             case 2:
             case 3:
-            case 4:
-            case 6:
                 for (let i = 0; i < inputValue.length; i++) {
                     this.state.finalAnswer.push(inputValue[i])
                     if (inputValue[i] == answerArray[i]) {
@@ -182,7 +180,7 @@ class MathQuestions extends React.Component {
                     totalNumber: this.state.totalNumber + answerLength,
                 })
                 break
-            case 5:
+            case 4:
                 if (userAnswer !== null) {
                     for (let i = 0; i < answerArray.length; i++) {
                         this.state.finalAnswer.push(userAnswer[i])
@@ -197,7 +195,7 @@ class MathQuestions extends React.Component {
                     totalNumber: this.state.totalNumber + answerLength,
                 })
                 break
-            case 8:
+            case 5:
                 for (let i = 0; i < newUserAnswer.length; i++) {
                     if (newUserAnswer[i] == answerArray[i]) {
                         await this.setState({
@@ -333,7 +331,7 @@ class MathQuestions extends React.Component {
                 )
             }
 
-            if (questionType == 5) {
+            if (questionType == 4) {
                 let questionString = this.state.questionList[this.state.currentIndex].question
                 let questionArray = questionString.split("\n")
                 let questionSubArray = []
@@ -367,7 +365,7 @@ class MathQuestions extends React.Component {
                 <div style={{ textAlign: "center", marginTop: "200px" }}>
                     <div className="box is-shadowless">
                         <div className="columns">
-                            <div className="column is-pulled-left" style={{ margin: "auto", width: "50%", padding: "10px" }}>
+                            <div className="column" style={{ margin: "auto", width: "50%", padding: "10px" }}>
                                 <h4 className="title is-2 mb-3 has-text-weight-bold">Test Complete!</h4>
                             </div>
                         </div>
@@ -383,7 +381,7 @@ class MathQuestions extends React.Component {
 
         return (
             <div>
-                <div>
+                <div className="progress-desktop-view">
                     <div className="is-pulled-left p-4" style={{ width: "13%" }}>
                         <h3 className="subtitle is-5 mb-4" style={{ color: "#00549F", fontWeight: "bold" }}>Progress</h3>
 
@@ -397,18 +395,37 @@ class MathQuestions extends React.Component {
                         <div className="questionIndex is-pulled-right mr-3">
                             {`${currentIndex + 1} of ${this.state.questionList.length}`}
                         </div>
-
                     </div>
                     <section className="section is-small sub-home-background" style={{ marginLeft: "13%" }}>
                         <h1 className="title is-2 has-text-weight-bold">{lessonName}</h1>
                     </section>
                 </div>
 
+                <div className="progress-mobile-view">
+                    <section className="section is-small sub-home-background">
+                        <h1 className="title is-2 has-text-weight-bold">{lessonName}</h1>
+                    </section>
+                    <div className="pt-6 pl-6 pr-6 pb-4">
+                        <h3 className="subtitle is-5 mb-4" style={{ color: "#00549F", fontWeight: "bold" }}>Progress</h3>
+
+                        <progress
+                            id="progress-bar"
+                            className="progress is-branding mt-0 mb-2"
+                            value={currentIndex}
+                            max={this.state.questionList.length - 1}
+                        />
+
+                        <div className="questionIndex is-pulled-right mr-3">
+                            {`${currentIndex + 1} of ${this.state.questionList.length}`}
+                        </div>
+                    </div>
+                </div>
+
                 <div className="container">
-                    <div className="card mt-5">
+                    <div className="card mt-5 main-question-container">
                         <div className="card-content">
                             <div className="content">
-                                <h2 className="mb-6">Question {currentIndex + 1}</h2>
+                                <h2 className="mb-3">Question {currentIndex + 1}</h2>
                                 <h3>
                                     <pre
                                         id="question-container"

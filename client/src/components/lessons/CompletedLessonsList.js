@@ -161,7 +161,7 @@ class CompletedLessonList extends React.Component {
 
         return (
             <div>
-                <section className="section is-medium sub-home-background" style={{ padding: "90px" }}>
+                <section className="section is-medium sub-home-background lessons-banner">
                     <h1 className="dashboard heading">Completed Tests</h1>
                     <h2 className="dashboard sub-heading mb-4">View your completed tests.</h2>
                     <Link className="is-danger" style={{ marginLeft: "75px" }} to="/topics">

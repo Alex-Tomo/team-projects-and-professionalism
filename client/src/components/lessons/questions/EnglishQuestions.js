@@ -206,7 +206,7 @@ class EnglishQuestions extends React.Component {
                 <div style={{ textAlign: "center", marginTop: "200px" }}>
                     <div className="box is-shadowless">
                         <div className="columns">
-                            <div className="column is-pulled-left" style={{ margin: "auto", width: "50%", padding: "10px" }}>
+                            <div className="column" style={{ margin: "auto", width: "50%", padding: "10px" }}>
                                 <h4 className="title is-2 mb-3 has-text-weight-bold">Test Complete!</h4>
                             </div>
                         </div>
@@ -222,31 +222,48 @@ class EnglishQuestions extends React.Component {
 
         return (
             <div>
-                <div className="top">
-                    <div>
-                        <div className="is-pulled-left p-4" style={{ width: "13%" }}>
-                            <h3 className="subtitle is-5 mb-4" style={{ color: "#00549F", fontWeight: "bold" }}>Progress</h3>
+                <div className="progress-desktop-view">
+                    <div className="is-pulled-left p-4" style={{ width: "13%" }}>
+                        <h3 className="subtitle is-5 mb-4" style={{ color: "#00549F", fontWeight: "bold" }}>Progress</h3>
 
-                            <progress
-                                id="progress-bar"
-                                className="progress is-branding mt-0 mb-2"
-                                value={currentIndex}
-                                max={this.state.questionList.length - 1}
-                            />
+                        <progress
+                            id="progress-bar"
+                            className="progress is-branding mt-0 mb-2"
+                            value={currentIndex}
+                            max={this.state.questionList.length - 1}
+                        />
 
-                            <div className="questionIndex is-pulled-right mr-3">
-                                {`${currentIndex + 1} of ${this.state.questionList.length}`}
-                            </div>
-
+                        <div className="questionIndex is-pulled-right mr-3">
+                            {`${currentIndex + 1} of ${this.state.questionList.length}`}
                         </div>
-                        <section className="section is-small sub-home-background" style={{ marginLeft: "13%" }}>
-                            <h1 className="title is-2 has-text-weight-bold">{lessonName}</h1>
-                        </section>
+                    </div>
+                    <section className="section is-small sub-home-background" style={{ marginLeft: "13%" }}>
+                        <h1 className="title is-2 has-text-weight-bold">{lessonName}</h1>
+                    </section>
+                </div>
+
+                <div className="progress-mobile-view">
+                    <section className="section is-small sub-home-background">
+                        <h1 className="title is-2 has-text-weight-bold">{lessonName}</h1>
+                    </section>
+                    <div className="pt-6 pl-6 pr-6 pb-4">
+                        <h3 className="subtitle is-5 mb-4" style={{ color: "#00549F", fontWeight: "bold" }}>Progress</h3>
+
+                        <progress
+                            id="progress-bar"
+                            className="progress is-branding mt-0 mb-2"
+                            value={currentIndex}
+                            max={this.state.questionList.length - 1}
+                        />
+
+                        <div className="questionIndex is-pulled-right mr-3">
+                            {`${currentIndex + 1} of ${this.state.questionList.length}`}
+                        </div>
                     </div>
                 </div>
 
                 <div className="container">
-                    <div className="card mt-5 mb-6">
+                    <div className="card mt-5 mb-6 main-question-container">
                         <div className="card-content">
                             <div className="content">
                                 <h2 className="mb-4">Question {currentIndex + 1}</h2>

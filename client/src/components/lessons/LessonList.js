@@ -16,7 +16,9 @@ class LessonList extends React.Component {
         this.state = {
             content: "",
             loggedIn: false,
-            lessons: []
+            loaded: [],
+            lessons: [],
+            images: []
         }
     }
 
@@ -39,12 +41,20 @@ class LessonList extends React.Component {
                 })
             }
         ).then(() => {
-            this.checkLessonType()
+            this.checkLessonType().then(() => {
+                let arr = []
+                let imageArr = []
+                this.state.lessons.forEach(() => {
+                    arr.push(false)
+                    imageArr.push(this.imageGenerator())
+                })
+                this.setState({ loaded: arr, images: imageArr })
+            })
         })
     }
 
-    checkLessonType = () => {
-        axios.get('https://kip-learning.herokuapp.com/api/lessons', {
+    checkLessonType = async () => {
+        await axios.get('https://kip-learning.herokuapp.com/api/lessons', {
             headers: authHeader(),
             params: {
                 type: this.props.type
@@ -121,6 +131,35 @@ class LessonList extends React.Component {
             )
         }
 
+        if (this.state.loaded.length > 0 && this.state.loaded.includes(false)) {
+            return (
+                <div>
+                    <div className="spinner"></div>
+                    <div className="login-loading">Loading Lessons</div>
+
+                    {
+                        this.state.lessons.map((lesson, i) => {
+                            return (
+                                <div>
+                                    <img
+                                        className="lesson-list-img"
+                                        src={this.state.images[i]}
+                                        style={{ display: 'none' }}
+                                        onLoad={() => {
+                                            let arr = this.state.loaded
+                                            arr[i] = true
+                                            this.setState({ loaded: arr })
+                                        }}
+                                        alt="English"
+                                    />
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+            )
+        }
+
         if (this.state.lessons.length > 0) {
             lesson = this.state.lessons.map((result, i) => {
                 let questionsToArray = []
@@ -132,10 +171,20 @@ class LessonList extends React.Component {
 
                 return (
                     <div key={i} className="box is-shadowless mb-4 lesson-container" style={{ marginBottom: "100px" }}>
+                        {this.state.loaded ? null :
+                            <div>
+                                <div className="spinner"></div>
+                                <div className="login-loading">Loading Topics</div>
+                            </div>
+                        }
                         <div className="columns">
                             <div className="column is-3 lesson-image-container">
                                 <figure className="image is-16by9">
-                                    <img className="lesson-list-img" src={this.imageGenerator()} alt="English" />
+                                    <img
+                                        className="lesson-list-img"
+                                        src={this.state.images[i]}
+                                        alt="English"
+                                    />
                                 </figure>
                             </div>
                             <div style={{ display: "contents" }}>
@@ -154,23 +203,23 @@ class LessonList extends React.Component {
                                     </div>
                                 </div>
                                 <div className="mobile-buttons-container" style={{ display: "none" }}>
-                                    <Link to="/questions" state={{ questionArray: questionList, type: this.props.type, lesson_id: result.lesson_id, lesson_name: result.lesson_name }}>
+                                    <Link to="/questions" state={{ questionArray: questionList, type: this.props.type, lessonId: result.lesson_id, lessonName: result.lesson_name }}>
                                         <button className="button is-info mr-5" style={{ backgroundColor: "rgb(0, 84, 159)" }}>Start</button>
                                     </Link>
-                                    <Link to="/viewlesson" state={{ lessonId: result.lessonId, answers: result.answers, score: result.user_score, potentialScore: result.possible_score }}>
+                                    <Link to="/viewlesson" state={{ lessonId: result.lesson_id, answers: result.answers, score: result.user_score, potentialScore: result.possible_score }}>
                                         <button className="button is-black ">View</button>
                                     </Link>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div >
                 )
             })
         }
 
         return (
             <div>
-                <section className="section is-medium sub-home-background" style={{ padding: "90px" }}>
+                <section className="section is-medium sub-home-background lessons-banner">
                     <h1 className="dashboard heading">{this.props.title}</h1>
                     <h2 className="dashboard sub-heading mb-4">Practice these tests.</h2>
                     <Link className="is-danger" style={{ marginLeft: "75px" }} to="/topics">
@@ -185,7 +234,7 @@ class LessonList extends React.Component {
                 <div className="container mt-5 lesson-list-container">
                     {lesson}
                 </div>
-            </div>
+            </div >
         )
     }
 }

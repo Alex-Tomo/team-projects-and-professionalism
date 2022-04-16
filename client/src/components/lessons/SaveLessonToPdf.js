@@ -151,9 +151,20 @@ class SaveLessonToPdf extends React.Component {
         const reactStringReplace = require('react-string-replace')
         const images = this.importAll(require.context('./nonverbalreasoningimages', false, /\.(svg)$/))
         let lesson = ""
+        let lessonName = ""
+        let questionNumber = 0
+
+        if (!this.state.loggedIn) {
+            return (
+                <div>
+                    <h1>You need to be logged in to access this page.</h1>
+                </div>
+            )
+        }
 
         if (this.state.lessonType == "math" || this.state.lessonType == "verbal_reasoning") {
             lesson = this.state.lessons.map((res, i) => {
+                lessonName = res.lesson_name
                 return (
                     <div key={i} style={{ marginLeft: "40px" }}>
                         <div className="box is-shadowless">
@@ -162,12 +173,12 @@ class SaveLessonToPdf extends React.Component {
                                     <h4 className="subtitle is-5 mb-0 has-text-weight-bold is-underlined">Lesson Name: {res.lesson_name}</h4>
                                 </div>
                             </div><br />
-                            <div>{
-
+                            <div className="print-container" style={{ margin: "0", padding: "0" }}>{
                                 this.state.questionList.map((result, i) => {
                                     let question = result.question
 
                                     if (result.question.includes("{?}")) {
+                                        questionNumber++
                                         question = (
                                             <div key={i} className="pb-0">
                                                 {reactStringReplace(result.question, '{?}', (match, i) => {
@@ -188,13 +199,12 @@ class SaveLessonToPdf extends React.Component {
                                         for (let i = 0; i < array.length; i++) {
                                             subArray.push(array[i].split(" "))
                                         }
+                                        questionNumber++
 
                                         question = (
                                             subArray.map((arr, i) => {
                                                 return (
-                                                    <div key={i} style={{
-                                                        display: "flex", marginBottom: "15px", width: "500px"
-                                                    }}>
+                                                    <div key={i} style={{ display: "flex", marginBottom: "15px", width: "500px" }}>
                                                         <p>{i + 1})</p>
                                                         {
                                                             arr.map((number, j) => {
@@ -217,14 +227,14 @@ class SaveLessonToPdf extends React.Component {
                                     return (
                                         <div>
                                             <pre
-                                                id="question-container"
                                                 className="pb-6"
-                                                style={{ letterSpacing: "2px", fontSize: "1em", wordSpacing: "5px" }}
+                                                id="question-container"
                                             >
+                                                <h3 className="subtitle is-6 has-text-weight-bold mb-2">Question {questionNumber})</h3>
                                                 {result.statement}
                                                 {result.example}
                                                 {question}
-                                            </pre >
+                                            </pre>
                                         </div >
                                     )
                                 })
@@ -239,6 +249,7 @@ class SaveLessonToPdf extends React.Component {
         if (this.state.lessonType == "english") {
             if (this.state.questionList.length > 0 && this.state.lessons.length > 0) {
                 lesson = this.state.lessons.map((res, i) => {
+                    lessonName = res.lesson_name
                     return (
                         <div key={i} style={{ marginLeft: "40px" }}>
                             <div className="box is-shadowless">
@@ -253,6 +264,7 @@ class SaveLessonToPdf extends React.Component {
                                 </div >
                                 <div>{
                                     this.state.questionList.map((result, x) => {
+                                        questionNumber++
                                         let question = result.question
                                         return (
                                             <div key={x}>
@@ -261,6 +273,7 @@ class SaveLessonToPdf extends React.Component {
                                                     className="pb-5"
                                                     style={{ letterSpacing: "2px", fontSize: "1em", wordSpacing: "5px" }}
                                                 >
+                                                    <h3 className="subtitle is-6 has-text-weight-bold mb-2">Question {questionNumber})</h3>
                                                     {question}
                                                     <div>
                                                         <textarea className="mt-2" rows="3" cols="90" style={{ resize: "none" }}></textarea>
@@ -280,6 +293,7 @@ class SaveLessonToPdf extends React.Component {
         if (this.state.lessonType == "non_verbal_reasoning") {
             if (this.state.questionList.length > 0 && this.state.lessons.length > 0) {
                 lesson = this.state.lessons.map((res, i) => {
+                    lessonName = res.lesson_name
                     return (
                         <div key={i} style={{ marginLeft: "40px" }}>
                             <div className="box is-shadowless">
@@ -290,17 +304,13 @@ class SaveLessonToPdf extends React.Component {
                                 </div >
                                 <div>{
                                     this.state.questionList.map((result, x) => {
+                                        questionNumber++
                                         return (
                                             <div key={x}>
-                                                <pre
-                                                    id="question-container"
-                                                    className="pb-0 pt-6"
-                                                    style={{ letterSpacing: "2px", fontSize: "1em", wordSpacing: "5px" }}
-                                                >
-                                                    <img style={{ width: "45%", marginBottom: "10px" }} src={images[result.filename]} alt="Non-Verbal" />
-                                                </pre>
+                                                <h3 className="subtitle is-6 has-text-weight-bold mb-2">Question {questionNumber})</h3>
+                                                <img className="non-verbal-image" src={images[result.filename]} alt="Non-Verbal" />
                                                 <div>
-                                                    <textarea className="mt-2" rows="3" cols="7" style={{ resize: "none" }}></textarea>
+                                                    <textarea className="mb-5 mt-1" rows="3" cols="7" style={{ resize: "none" }}></textarea>
                                                 </div>
                                             </div>
                                         )
@@ -316,20 +326,23 @@ class SaveLessonToPdf extends React.Component {
         return (
             <div ref={(response) => (this.componentRef = response)}>
                 {lesson}
-                < div style={{ textAlign: "center" }}>
+                <div style={{ textAlign: "center", marginBottom: "100px" }}>
                     <ReactToPrint
+                        documentTitle={lessonName}
                         content={() => this.componentRef}
                         trigger={() =>
-                            <button className="button is-outline mb-3">Download to PDF</button>
+                            <div className="hide-button">
+                                <button className="button is-outline mb-3 ">Download to PDF</button>
+                            </div>
                         }
                     />
-                    <div>
-                        <Link className="is-danger" to="/topics">
+                    <Link className="is-danger" to="/topics">
+                        <div className="hide-button">
                             <button className="button is-info" style={{ backgroundColor: "#00549F" }}>
                                 Back to Tests
                             </button>
-                        </Link>
-                    </div>
+                        </div>
+                    </Link>
                 </div>
             </div>
         )
