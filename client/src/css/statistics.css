@@ -1,3 +1,8 @@
+/**
+ * Stlying for the statistics 
+ * @author Titas Sriubas, W19001588
+ */
+
 .statistics-container {
   width: 80%;
   margin: 20px auto auto auto;
@@ -14,7 +19,7 @@
   padding: 2px;
   margin-bottom: 35px;
   width: 60px;
-  border-radius: 5px;
+  border-radius: 8px;
 }
 
 .statistics-grid-container {
@@ -53,6 +58,10 @@
 .statistic-three:hover {
   background-color: #FCFCFC;
 }
+
+/**
+* Responsive styling
+*/
 
 @media only screen and (max-width: 768px) {
   .statistics-grid-container {

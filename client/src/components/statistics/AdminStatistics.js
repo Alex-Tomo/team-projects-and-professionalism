@@ -9,8 +9,7 @@ import MyStudentsChart from "./charts/MyStudentsChart"
 
 /**
  * The Statistics Page - shows statistics for all users
- *
- * @author Alex Thompson, W19007452
+ * @author Titas Sriubas, W19001588
  */
 
 class AdminStatistics extends React.Component {

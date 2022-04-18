@@ -1,6 +1,11 @@
 import {Line} from "react-chartjs-2";
 import React from "react";
 
+/**
+ * Answer Chart
+ * @author Titas Sriubas, W19001588
+ */
+
 const AnswersChart = (props) => {
   const options = {
     responsive: true,

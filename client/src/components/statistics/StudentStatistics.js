@@ -10,8 +10,7 @@ import MyStudentsChart from "./charts/MyStudentsChart";
 
 /**
  * The Statistics Page
- *
- * @author Alex Thompson, W19007452
+ * @author Titas Sriubas, W19001588
  */
 
 class StudentStatistics extends React.Component {

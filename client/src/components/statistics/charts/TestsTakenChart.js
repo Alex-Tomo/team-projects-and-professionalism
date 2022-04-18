@@ -1,6 +1,11 @@
 import {Pie} from "react-chartjs-2";
 import React from "react";
 
+/**
+ * Chart of tests taken
+ * @author Titas Sriubas, W19001588
+ */
+
 const TestsTakenChart = (props) => {
   const options = {
     responsive: true,

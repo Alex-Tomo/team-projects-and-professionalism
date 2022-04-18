@@ -1,6 +1,11 @@
 import {Bar} from "react-chartjs-2";
 import React from "react";
 
+/**
+ * Student chart
+ * @author Titas Sriubas, W19001588
+ */
+
 const MyStudentsChart = (props) => {
 
   const options = {
@@ -20,7 +25,7 @@ const MyStudentsChart = (props) => {
     labels: ["Math", "English", "Verbal", "Non Verbal"],
     datasets: [
       {
-        label: "Acutal Score",
+        label: "Actual Score",
         data: [
           (props.myStudents.lessons[0].actual_score !== null) ? props.myStudents.lessons[0].actual_score : 0,
           (props.myStudents.lessons[1].actual_score !== null) ? props.myStudents.lessons[1].actual_score : 0,
