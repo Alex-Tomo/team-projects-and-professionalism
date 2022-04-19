@@ -5,7 +5,7 @@ A learning platform undertaken on behalf of Kip McGrath. A student project for t
 The live application can be viewed [***here.***](https://kipmcgrath.netlify.app/)  
 
 ## Setup
-The project contains two directories `/client` & `/server`. The server directory does not to be ran locally as this is hosted separately, however this does contain the source code for the api in the event it needs to be evaluated.
+The project contains two directories `/client` & `/server`. The server directory does not need to be ran locally as this is hosted separately, however this does contain the source code for the api in the event it needs to be evaluated.
 
 To run the client locally enter the following commands into your terminal or powershell:
 
