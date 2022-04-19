@@ -94,7 +94,7 @@ class LoginForm extends Component {
         }
 
         return (
-            <div className="container is-max-desktop login-box-size">
+            <div className="container login-box login-box-size">
                 <form
                     onSubmit={this.handleLogin}
                     ref={(c) => {
@@ -111,7 +111,7 @@ class LoginForm extends Component {
                             <div className="has-text-centered has-text-weight-bold has-text-danger fade-in" role="alert">{this.state.message}</div>
                         </div>
                     )}
-                    <div className="field">
+                    <div className="field field-size">
                         <label className="label">Username</label>
                         <div className="control">
                             <input
@@ -125,7 +125,7 @@ class LoginForm extends Component {
                         </div>
                     </div>
 
-                    <div className="field">
+                    <div className="field field-size">
                         <label className="label">Password</label>
                         <div className="control">
                             <input

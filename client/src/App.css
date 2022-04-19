@@ -133,6 +133,28 @@ body {
     color: #505050;
 }
 
+@media only screen and (max-width: 600px) {
+    .dashboard {
+        margin-left: 0px;
+    }
+    
+    .dashboard.heading {
+        font-weight: bold;
+        font-size: 46px;
+        line-height: 57px;
+        color: #004888;
+    }
+    
+    .dashboard.sub-heading {
+        font-family: Barlow;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 22px;
+        color: #505050;
+    }
+}
+
 .hero-button-sol {
     background-color: #ffffff;
     border-radius: 8px;
@@ -420,9 +442,18 @@ body {
     color: #004888;
 }
 
-.login-box-size {
-    margin-top: 90px;
-}
+    .login-box-size {
+        margin-top: 90px;
+    }
+    
+    @media only screen and (max-width: 600px) {
+    .login-box {
+        width: 100% !important;
+    }
+    }
+    .field-size {
+        width: 100%;
+    }
 
 .navbar-item.small {
     width: 150px;
@@ -719,7 +750,7 @@ body {
     background-color: #FFFFFF;
 }
 
-@media only screen and (min-width : 1024px) and (max-width : 2200px) {
+@media only screen and (min-width : 1024px) and (max-width : 3840px) {
     .mobile-ver {
         display: none;
     }

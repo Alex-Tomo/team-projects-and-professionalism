@@ -4,7 +4,7 @@ import AuthService from "../../services/auth.service"
 export default function LogButtons(props) {
     function logout() {
         AuthService.logout()
-        window.location.href = "http://localhost:3000/"
+        window.location.href = "https://kipmcgrath.netlify.app/"
     }
     let visible = false
     if (AuthService.getCurrentUser()) {
