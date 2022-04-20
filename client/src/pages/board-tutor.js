@@ -7,7 +7,8 @@ class BoardTutor extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            content: ""
+            content: "",
+            username: ""
         }
     }
 
@@ -17,11 +18,14 @@ class BoardTutor extends Component {
     }
 
     componentDidMount() {
+        if(localStorage.getItem('user')){
+        this.setState({
+            username: JSON.parse(localStorage.getItem('user')).username
+        })
+    }
         UserService.getTutorBoard().then(
             (response) => {
-                this.setState({
-                    content: response.data
-                })
+
             },
             (error) => {
                 this.setState({
@@ -36,7 +40,7 @@ class BoardTutor extends Component {
         )
     }
     render() {
-        const username = JSON.parse(localStorage.getItem('user')).username;
+        const username = this.state.username
         return (
             <div>
                 <section className="section is-medium sub-home-background">

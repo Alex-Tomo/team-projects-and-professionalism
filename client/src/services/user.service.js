@@ -8,23 +8,26 @@ class UserService {
     }
     getUserBoard() {
         return axios.get(API_URL + "user", { headers: authHeader() }).catch((err) => {
-            AuthService.logout()
-            window.location.replace("https://kipmcgrath.netlify.app/login")
-            console.log(err)
+            if(!localStorage.getItem('user') || err.response.status === 401){
+                AuthService.logout()
+                window.location.replace("https://kipmcgrath.netlify.app/login")
+            }
         })
     }
     getTutorBoard() {
         return axios.get(API_URL + "tutor", { headers: authHeader() }).catch((err) => {
-            AuthService.logout()
-            window.location.replace("https://kipmcgrath.netlify.app/login")
-            console.log(err)
+            if(!localStorage.getItem('user') || err.response.status === 401){
+                AuthService.logout()
+                window.location.replace("https://kipmcgrath.netlify.app/login")
+            }
         })
     }
     getAdminBoard() {
         return axios.get(API_URL + "admin", { headers: authHeader() }).catch((err) => {
-            AuthService.logout()
-            window.location.replace("https://kipmcgrath.netlify.app/login")
-            console.log(err)
+            if(!localStorage.getItem('user') || err.response.status === 401){
+                    AuthService.logout()
+                    window.location.replace("https://kipmcgrath.netlify.app/login")
+                }
         })
     }
 }

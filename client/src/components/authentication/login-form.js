@@ -58,14 +58,15 @@ class LoginForm extends Component {
         })
         await AuthService.login(this.state.username, this.state.password).then(
             () => {
+                
                 const userRole = AuthService.getCurrentUser().roles[0]
                 let roleservice =
                     userRole === "ROLE_ADMIN"
-                        ? (this.props.navigate("/admin"), this.setState({ loading: false }), window.location.reload())
+                        ? (this.props.navigate("/admin"), this.setState({ loading: false }), window.location.reload(true))
                         : userRole === "ROLE_USER"
-                            ? (this.props.navigate("/user"), this.setState({ loading: false }), window.location.reload())
+                            ? (this.props.navigate("/user"), this.setState({ loading: false }), window.location.reload(true))
                             : userRole === "ROLE_TUTOR"
-                                ? (this.props.navigate("/tutor"), this.setState({ loading: false }), window.location.reload())
+                                ? (this.props.navigate("/tutor"), this.setState({ loading: false }), window.location.reload(true))
                                 : (this.props.navigate("/404"), this.setState({ loading: false }))
                 return roleservice
             },
