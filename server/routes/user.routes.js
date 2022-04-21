@@ -10,52 +10,62 @@
  * @author Jordan Short, Alex Thompson
  */
 
-const { authJwt } = require('../functionality')
+const { authJwt, verifySignUp } = require('../functionality')
 const controller = require("../controllers/user.controller");
 
- // Sets and allows headers instead of using cors to just allow all.
- module.exports = function (app) {
-   app.use(function (req, res, next) {
-     res.header(
-       'Access-Control-Allow-Headers',
-       'Authorization, Origin, Content-Type, Accept'
-     )
-     next()
-   })
+// Sets and allows headers instead of using cors to just allow all.
+module.exports = function (app) {
+    app.use(function (req, res, next) {
+        res.header(
+            'Access-Control-Allow-Headers',
+            'Authorization, Origin, Content-Type, Accept'
+        )
+        next()
+    })
 
-   //Everyone can see this route including non-signed in account
-   app.get('/api/test/all', controller.allAccess)
+    //Everyone can see this route including non-signed in account
+    app.get('/api/test/all', controller.allAccess)
 
-   //Everyone logged in can see this route
-   app.get('/api/test/user', [authJwt.verifyToken], controller.userBoard)
+    //Everyone logged in can see this route
+    app.get('/api/test/user', [authJwt.verifyToken], controller.userBoard)
 
-   //Only admins can see this route
-   app.get('/api/test/admin', [authJwt.verifyToken, authJwt.isAdmin], controller.adminBoard)
+    //Only admins can see this route
+    app.get('/api/test/admin', [authJwt.verifyToken, authJwt.isAdmin], controller.adminBoard)
 
-   //Tutors and admins can see this route
-   app.get('/api/test/tutor', [authJwt.verifyToken, authJwt.isTutorAdmin], controller.tutorBoard)
+    //Tutors and admins can see this route
+    app.get('/api/test/tutor', [authJwt.verifyToken, authJwt.isTutorAdmin], controller.tutorBoard)
 
-   //Test route for lessons can be removed
-   app.get('/api/test/lessons', [authJwt.verifyToken], controller.lessons)
+    //Lesson routes:
+    app.get('/api/lessons', [authJwt.verifyToken], controller.lessons)
 
+    app.get('/api/mathslesson', [authJwt.verifyToken], controller.mathsLesson)
 
- app.get('/api/mathslesson', [authJwt.verifyToken], controller.mathsLesson)
+    app.get('/api/englishstory', [authJwt.verifyToken], controller.englishStory)
 
- app.get('/api/englishstory', [authJwt.verifyToken], controller.englishStory)
+    app.get('/api/englishlesson', [authJwt.verifyToken], controller.englishLesson)
 
- app.get('/api/englishlesson', [authJwt.verifyToken], controller.englishLesson)
+    app.get('/api/verballesson', [authJwt.verifyToken], controller.verbalLesson)
 
- app.get('/api/verballesson', [authJwt.verifyToken], controller.verbalLesson)
+    app.get('/api/nonverballesson', [authJwt.verifyToken], controller.nonVerbalLesson)
 
- // app.get('/api/nonverballesson', [authJwt.verifyToken], controller.nonVerbalLesson)
+    app.get('/api/completedlessons', [authJwt.verifyToken], controller.completedLessons)
 
+    app.post('/api/userlessons', [authJwt.verifyToken], controller.userLessons)
 
+    // Admin related content
+    app.post('/api/admin/users', [authJwt.verifyToken, authJwt.isTutorAdmin], controller.adminUsers)
 
- app.post('/api/admin/users', [authJwt.verifyToken, authJwt.isAdmin], controller.adminUsers)
+    app.post('/api/admin/adduser', [verifySignUp.checkRolesExisted, verifySignUp.checkDuplicateUsernameOrEmail, authJwt.verifyToken, authJwt.isTutorAdmin], controller.adminAddUser)
 
-   app.post('/api/admin/adduser', [authJwt.verifyToken, authJwt.isAdmin], controller.adminAddUser)
+    app.post('/api/admin/edituser', [verifySignUp.checkRolesExisted, verifySignUp.checkDuplicateUsernameOrEmail, authJwt.verifyToken, authJwt.isTutorAdmin], controller.adminEditUser)
 
-   app.post('/api/admin/edituser', [authJwt.verifyToken, authJwt.isAdmin], controller.adminEditUser)
+    app.post('/api/admin/removeuser', [authJwt.verifyToken, authJwt.isTutorAdmin], controller.adminRemoveUser)
 
-   app.post('/api/admin/removeuser', [authJwt.verifyToken, authJwt.isAdmin], controller.adminRemoveUser)
- }
+    app.post('/api/amin/changepassword', [authJwt.verifyToken, authJwt.isTutorAdmin], controller.adminChangePassword)
+
+    app.post('/api/statistics/adminstatistics', [authJwt.verifyToken, authJwt.isTutorAdmin], controller.getAdminStatistics)
+
+    app.post('/api/statistics/tutorstatistics', [authJwt.verifyToken, authJwt.isTutorAdmin], controller.getTutorStatistics)
+
+    app.post('/api/statistics/userstatistics', [authJwt.verifyToken], controller.getStudentStatistics)
+}

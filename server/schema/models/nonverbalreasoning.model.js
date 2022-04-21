@@ -12,8 +12,8 @@ module.exports = (sequelize, Sequelize) => {
         question_id: {
             type: Sequelize.INTEGER
         },
-        question: {
-            type: Sequelize.BLOB
+        filename: {
+            type: Sequelize.TEXT
         },
         answer: {
             type: Sequelize.TEXT

@@ -2,58 +2,136 @@ import React, { Component } from "react"
 import { Link, Outlet } from "react-router-dom"
 import ConButtons from "./conditional-buttons"
 import LogButtons from "./login-logout-buttons"
+import logo from "../../images/kip_logo.png"
 
 class NavBar extends Component {
-    render() {
-        return (
-            <>
-                <nav
-                    className="navbar is-light"
-                    role="navigation"
-                    aria-label="main navigation"
-                >
-                    <div className="navbar-brand">
-                        <div className="navbar-item">
-                            <img
-                                width="112"
-                                height="28"
-                                src="https://www.kipmcgrath.co.uk/svg/logo-horizontal-blue-7e1bed4723.svg"
-                                alt="kip mcgrath navigation logo"
-                            />
-                        </div>
-                        <div
-                            role="button"
-                            className="navbar-burger"
-                            aria-label="menu"
-                            aria-expanded="false"
-                            data-target="navbarBasicExample"
-                        >
-                            <span aria-hidden="true"></span>
-                            <span aria-hidden="true"></span>
-                            <span aria-hidden="true"></span>
-                        </div>
-                    </div>
-
-                    <div id="navbarBasicExample" className="navbar-menu">
-                        <div className="navbar-start">
-                            <Link className="navbar-item" to="/">
-                                Home
-                            </Link>
-                            <ConButtons route="/admin" name="Admin" />
-                        </div>
-
-                        <div className="navbar-end">
-                            <div className="navbar-item">
-                                <div className="buttons">
-                                    <LogButtons />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-                <Outlet />
-            </>
-        )
+  constructor(props) {
+    super(props)
+    this.state = {
+      logged: false,
+      showMenu: false
     }
+  }
+
+  componentDidMount() {
+    if(localStorage.getItem('user')){
+      this.setState({logged: true})
+    }
+  }
+
+  showMenu = () => {
+
+    this.setState({showMenu: !this.state.showMenu})
+
+
+    
+  }
+  render() {
+    let mobileNavElement = document.getElementById("nav-hamburger")
+    let isLogged = this.state.logged
+    if(mobileNavElement){
+    if(this.state.showMenu === true){
+      mobileNavElement.classList.add("is-active")
+    }if(this.state.showMenu === false){
+      mobileNavElement.classList.remove("is-active")
+    }
+  }
+    return (
+      <>
+        <nav
+          className="navbar is-white shaddow-nav"
+          role="navigation"
+          aria-label="main navigation"
+          id="nav"
+        >
+          <div className="navbar-brand">
+            <div className="brand-marg">
+            <Link to="/"><img className="height"
+                width="205"
+                height="53"
+                src={logo}
+                alt="kip mcgrath navigation logo"
+              />
+              </Link>
+            </div>
+            <div
+              role="button"
+              id="nav-hamburger"
+              className="navbar-burger"
+              aria-label="menu"
+              aria-expanded="true"
+              data-target="navbarBasicExample"
+              onClick={this.showMenu}
+            >
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </div>
+          </div>
+          <div>
+            {this.state.showMenu && !isLogged ? <ul className="has-text-centered mobile-nav-items fade-in">
+              
+              <li onClick={this.showMenu} className="mobile-nav-item">
+              <Link className="navbar-item nav-text" to="/">
+                Home
+              </Link>
+              </li>
+              <li onClick={this.showMenu} className="mobile-nav-item">
+              <a className="navbar-item nav-text" href="#2">
+                About Us
+              </a>
+              </li>
+              <li onClick={this.showMenu} className="mobile-nav-item">
+              <a className="navbar-item nav-text" href="#3">
+                Learning
+              </a>
+              </li>
+              <li onClick={this.showMenu} className="mobile-nav-item">
+              <a className="navbar-item nav-text" href="#4">
+                Work With Us
+              </a>
+              </li>
+              <li onClick={this.showMenu}>
+              <LogButtons />
+              <br></br>
+              </li>
+            </ul>: this.state.showMenu && isLogged ? <div className="mobile-dash mobile-nav-items fade-in" onClick={this.showMenu}><ConButtons />
+                  <div className="login-button-nav">
+                  <LogButtons />
+                  </div>
+                  <br></br>
+            </div>: null}
+
+            </div>
+
+          <div className="navbar-menu">
+            {!isLogged ? (<div className="navbar-item center">
+              <Link className="navbar-item nav-text" to="/">
+                Home
+              </Link>
+              <a className="navbar-item nav-text" href="#about">
+                About Us
+              </a>
+              <a className="navbar-item nav-text" href="#support">
+                Learning
+              </a>
+              <a className="navbar-item nav-text" href="#contact">
+                Work With Us
+              </a>
+            </div>) : (<ConButtons />)}
+
+            <div className="navbar-end">
+              <div className="navbar-item">
+                <div className="buttons">
+                  <LogButtons />
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <Outlet />
+      </>
+    )
+  }
 }
 export default NavBar

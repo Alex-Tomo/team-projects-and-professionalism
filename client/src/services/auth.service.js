@@ -1,14 +1,14 @@
 import axios from "axios"
-const API_URL = "http://localhost:8080/api/auth/"
+const API_URL = "https://kip-learning.herokuapp.com/api/auth/"
 class AuthService {
-    login(username, password) {
-        return axios
+   async login(username, password) {
+        return await axios
             .post(API_URL + "signin", {
                 username,
                 password
             })
             .then((response) => {
-                if (response.data.accessToken) {
+                if (response.data.accessToken) { 
                     localStorage.setItem("user", JSON.stringify(response.data))
                 }
                 return response.data
@@ -26,6 +26,19 @@ class AuthService {
     }
     getCurrentUser() {
         return JSON.parse(localStorage.getItem("user"))
+    }
+
+    passReset(username) {
+        return axios.post(API_URL + "password-recovery", {
+            username
+        })
+    }
+
+    passChange(password, token) {
+        return axios.post(API_URL + "password-reset", {
+            token,
+            password
+        })
     }
 }
 export default new AuthService()

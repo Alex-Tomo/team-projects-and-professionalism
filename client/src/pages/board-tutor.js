@@ -1,25 +1,31 @@
 import React, { Component } from "react"
 import UserService from "../services/user.service"
 import AuthService from "../services/auth.service"
+import TutorStatistics from "../components/statistics/TutorStatistics";
 
 class BoardTutor extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            content: ""
+            content: "",
+            username: ""
         }
     }
+
     logout() {
         AuthService.logout()
-        window.location.href = "http://localhost:3000/"
+        window.location.href = "http://localhost:3000"
     }
 
     componentDidMount() {
+        if(localStorage.getItem('user')){
+        this.setState({
+            username: JSON.parse(localStorage.getItem('user')).username
+        })
+    }
         UserService.getTutorBoard().then(
             (response) => {
-                this.setState({
-                    content: response.data
-                })
+
             },
             (error) => {
                 this.setState({
@@ -34,11 +40,14 @@ class BoardTutor extends Component {
         )
     }
     render() {
+        const username = this.state.username
         return (
             <div>
-                <header className="container has-text-centered">
-                    <h3>{this.state.content}</h3>
-                </header>
+                <section className="section is-medium sub-home-background">
+                    <h1 className="dashboard heading">Welcome Back, {username}!</h1>
+                    <h2 className="dashboard sub-heading">The tutors dashboard.</h2>
+                </section>
+                <TutorStatistics />
             </div>
         )
     }

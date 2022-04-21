@@ -1,0 +1,289 @@
+/** @author Graham Stoves - w19025672 for the generating questions component(s)*/
+
+.login-box-size {
+    width: 500px !important;
+}
+
+a {
+    color: black;
+}
+
+.topic-img {
+    border-radius: 20px;
+}
+
+figure {
+    padding-top: 0px;
+}
+
+.topic-hover {
+    margin: 5px;
+}
+
+.topic-hover:hover {
+    background-color: #eeeeee91;
+    border-radius: 20px;
+}
+
+.flex-grid {
+    margin: auto 120px;
+}
+
+.grid-item {
+    padding-top: 0px;
+}
+
+.buttons-container {
+    display: contents;
+}
+
+.lesson-name-container {
+    margin: auto;
+    width: 100%;
+    padding: 10px;
+}
+
+.lesson-container {
+    border: 2px solid #F2F2F2;
+    border-radius: 8px;
+}
+
+.lesson-list-buttons {
+    margin: auto;
+    width: 10%;
+    padding: 10px;
+}
+
+.lesson-list-img {
+    border-radius: 10px;
+}
+
+.line {
+    border: solid 2px black;
+    background-color: black;
+    border-radius: 10px;
+    width: 57px;
+    margin-top: 0;
+}
+
+#question-container {
+    width: 100%;
+    white-space: pre;
+    white-space: pre-wrap;
+    white-space: pre-line;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -hp-pre-wrap;
+    word-wrap: break-word;
+    padding-left: 0px;
+    letter-spacing: 1px;
+    font-size: 0.9em;
+    word-spacing: 5px;
+}
+
+#english-container {
+    display: flow-root;
+}
+
+#verbal-container {
+    padding: 0px
+}
+
+#story-text {
+    white-space: pre;
+    white-space: pre-wrap;
+    white-space: pre-line;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -hp-pre-wrap;
+    padding: 0 20px 0 0;
+    width: 600px;
+    font-size: 1em;
+    word-wrap: break-word;
+}
+
+#progress-bar::-webkit-progress-value {
+    width: 100%;
+    transition: width 0.7s ease;
+}
+
+.progress.is-branding::-webkit-progress-value {
+    background-color: #00549F
+}
+
+.progress.is-branding::-moz-progress-bar {
+    background-color: #00549F
+}
+
+.progress.is-branding::-ms-fill {
+    background-color: #00549F
+}
+
+.button-pressed {
+    background-color: #00549F !important;
+    color: white !important;
+}
+
+.button {
+    background-color: white;
+}
+
+.vertical {
+    border-left: 2px solid #F2F2F2;
+    height: 25px;
+}
+
+pre {
+    background-color: white;
+    font-family: 'Barlow', sans-serif;
+}
+
+.link {
+    margin: 10px;
+}
+
+.non-verbal-image-question {
+    width: 70%;
+}
+
+.non-verbal-image {
+    width: 45%;
+    margin-bottom: 10px;
+}
+
+.progress-mobile-view {
+    display: none;
+}
+
+.lessons-banner {
+    padding: 90px !important;
+}
+
+@media print {
+    pre {
+        page-break-inside: avoid;
+    }
+
+    .hide-button {
+        display: none;
+    }
+
+    .non-verbal-image {
+        width: 90%;
+    }
+}
+
+@page {
+    size: A4 portrait;
+    margin: 15mm 15mm;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+
+@media screen and (max-width: 769px) {
+    .lesson-list-container {
+        margin: 0 70px;
+    }
+
+    .lesson-container {
+        margin-top: 30px;
+        padding: 10px 20px 40px 20px;
+        text-align: center;
+    }
+
+    .lesson-list-img {
+        width: 20%;
+        height: auto;
+    }
+
+    .buttons-container {
+        display: none;
+    }
+
+    .mobile-buttons-container {
+        display: block !important;
+    }
+
+    .lesson-list-buttons {
+        margin: auto;
+        width: 10%;
+        padding: 0px;
+        float: none !important;
+    }
+
+    .lessons-banner {
+        padding: 3rem 1.5rem !important;
+    }
+}
+
+@media screen and (max-width: 860px) {
+    .progress-desktop-view {
+        display: none;
+    }
+
+    .progress-mobile-view {
+        display: block;
+    }
+
+    .non-verbal-image-question {
+        width: auto;
+    }
+
+    .non-verbal-input {
+        margin-left: 0px !important;
+        width: 120px !important;
+        height: 50px !important;
+        font-size: 20px !important;
+    }
+
+}
+
+@media screen and (max-width: 1024px) {
+    .lesson-list-container {
+        margin: 0 50px;
+    }
+
+    .lesson-container {
+        padding-right: 50px;
+    }
+
+    .main-question-container {
+        width: 90%;
+        margin: auto;
+    }
+
+    .verbal-pre {
+        white-space: pre;
+        white-space: pre-wrap;
+        white-space: pre-line;
+    }
+}
+
+@media screen and (max-width: 1164px) {
+    #story-text {
+        width: auto;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .flex-grid:not(.is-max-desktop):not(.is-max-widescreen) {
+        margin: auto 20px
+    }
+}
+
+@media screen and (min-width: 1408px) {
+    .container:not(.is-max-desktop):not(.is-max-widescreen) {
+        max-width: 1220px;
+    }
+}

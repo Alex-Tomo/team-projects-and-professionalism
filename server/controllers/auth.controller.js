@@ -9,6 +9,7 @@
  */
  const db = require('../schema')
  const config = require('../config/auth-key.config')
+ const email = require('../functionality/pass-recovery')
  const User = db.user
  const Role = db.role
  
@@ -20,8 +21,6 @@
  // Signup
  exports.signup = (req, res) => {
    // Creates user and adds to database
-   console.log(req.body)
-
    User.create({
      username: req.body.username,
      email: req.body.email,
@@ -54,6 +53,14 @@
  
  // Signin
  exports.signin = (req, res) => {
+  let usernamePassed = req.body.username
+  let passwordPassed = req.body.password
+  let userRegex = /^[a-zA-Z0-9](_(?!(\.|_))|\.(?!(_|\.))|[a-zA-Z0-9]){6,30}[a-zA-Z0-9]$/
+
+    if(userRegex.test(usernamePassed) === false || userRegex.test(passwordPassed) === false){
+      return res.status(404).send({ message: `Username and password must only contain characters, numbers, minimum length of 8, maximum length of 32` })
+    }
+
    User.findOne({
      where: {
        username: req.body.username
@@ -99,3 +106,50 @@
        res.status(500).send({ message: err.message })
      })
  } 
+
+ exports.passwordRecovery =  (req, res) => {
+  let usernamePassed = req.body.username
+  let userRegex = /^[a-zA-Z0-9](_(?!(\.|_))|\.(?!(_|\.))|[a-zA-Z0-9]){6,30}[a-zA-Z0-9]$/
+
+    if(userRegex.test(usernamePassed) === false){
+      return res.status(404).send({ message: `Username must only contain characters, numbers, minimum length of 8, maximum length of 32` })
+    }
+  User.findOne({
+    where: {
+      username: req.body.username
+    }
+  }).then(user => {
+    if(user){
+      const token = jwt.sign({ id: user.id }, config.secret, {
+        expiresIn: 900
+      })
+      email.sendEmail(user.email, token, user.username)
+    }
+  })
+  res.send("If the username provided is correct you will recieve a password reset email within 5 - 10 minutes.")
+ }
+
+ exports.passwordReset = (req, res) => {
+  let passwordPassed = req.body.password
+  let userRegex = /^[a-zA-Z0-9](_(?!(\.|_))|\.(?!(_|\.))|[a-zA-Z0-9]){6,30}[a-zA-Z0-9]$/
+
+    if(userRegex.test(passwordPassed) === false){
+      return res.status(404).send({ message: `Password must only contain characters, numbers, minimum length of 8, maximum length of 32` })
+    }
+
+   let token = req.body.token;
+   jwt.verify(token, config.secret, (err, decoded) => {
+    if (err) {
+      return res.status(401).send({
+        message: 'Email expired. Please request another password reset email.'
+      })
+    }else{
+        User.update({ password: bcrypt.hashSync(req.body.password, 8) }, {
+          where: {
+            id: decoded.id
+          }
+        });
+    }
+  })
+   res.send("Password Successfully Changed.")
+ }

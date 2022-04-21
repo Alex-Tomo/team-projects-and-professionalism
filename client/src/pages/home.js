@@ -1,41 +1,42 @@
 import React, { Component } from "react"
-import UserService from "../services/user.service"
+import {Navigate} from 'react-router-dom';
+import HomeDesktop from "../components/home/home-desktop";
+import MobileDesktop from "../components/home/home-mobile"
+
 export default class Home extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            content: ""
-        }
+  constructor(props) {
+    super(props)
+    this.state = {
+      content: ""
     }
-    componentDidMount() {
-        UserService.getPublicContent().then(
-            (response) => {
-                this.setState({
-                    content: response.data
-                })
-            },
-            (error) => {
-                this.setState({
-                    content:
-                        (error.response && error.response.data) ||
-                        error.message ||
-                        error.toString()
-                })
-            }
-        )
+  }
+
+  render() {
+    if(localStorage.getItem("user")){
+      let loggedIn = JSON.parse(localStorage.getItem("user"))
+      switch(loggedIn.roles[0]){
+        case 'ROLE_ADMIN':
+          return <Navigate  to="/admin" />
+        case 'ROLE_TUTOR':
+          return <Navigate  to="/tutor" />
+        case 'ROLE_USER':
+          return <Navigate  to="/user" />
+        default:
+          console.warn("Failed to redirect. Contact administrator.")
+          return <Navigate  to="/" />
+      }
     }
-    render() {
-        return (
-            <div>
-                <section className="hero is-large is-info">
-                    <div className="hero-body">
-                        <p className="title">Kip McGrath Learning Platform</p>
-                        <p className="subtitle">
-                            Where we definately don't steal childrens data.
-                        </p>
-                    </div>
-                </section>
-            </div>
-        )
-    }
+    return (
+    <div>
+      <div className="mobile-ver">
+        <MobileDesktop />
+      </div>
+
+      <div className="desktop-ver">
+      <HomeDesktop />
+      </div>
+
+      </div>
+    )
+  }
 }

@@ -12,11 +12,17 @@ module.exports = (sequelize, Sequelize) => {
         question_id: {
             type: Sequelize.INTEGER
         },
+        example: {
+            type: Sequelize.TEXT
+        },
         question: {
             type: Sequelize.TEXT
         },
         answer: {
             type: Sequelize.TEXT
+        },
+        type: {
+            type: Sequelize.INTEGER
         }
     })
 }

@@ -1,0 +1,6 @@
+{
+    "dependencies": {
+        "react-chartjs-2": "^4.0.1",
+        "react-to-print": "^2.14.5"
+    }
+}
