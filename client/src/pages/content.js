@@ -24,9 +24,26 @@ class Content extends Component{
     //this.handleSearch = this.handleSearch.bind(this)
   }
 
-  logout() {
-    AuthService.logout()
-    window.location.href = "http://localhost:3000/"
+
+componentDidMount() {
+  UserService.getUserBoard()
+      .then((response) => {
+          this.setState({
+              content: response.data,
+              loggedIn: true
+          })
+      },
+          (error) => {
+              this.setState({
+                  content:
+                      (error.response &&
+                          error.response.data &&
+                          error.response.data.message) ||
+                      error.message ||
+                      error.toString()
+              })
+          }
+      )
 }
 
 
@@ -43,6 +60,14 @@ class Content extends Component{
     }) 
   }
     render(){
+
+      if (!this.state.loggedIn) {
+        return (
+            <div>
+                <h1>You need to be logged in to access this page.</h1>
+            </div>
+        )
+    }
       return(
       <>
         <div>
