@@ -21,6 +21,9 @@ export default function ConditionalButtons(props) {
                 <NavLink className="navbar-item gaps small nav-text" to="management">
                     <img className="mr-2" alt="management" src={list} />Management
                 </NavLink>
+                <NavLink className="navbar-item gaps small nav-text" to="content">
+                    <img className="mr-2" alt="management" src={list} />Content
+                </NavLink>
                 <NavLink className="navbar-item gaps small nav-text" to="admin">
                     <img className="mr-2" alt="support" src={support} />Support
                 </NavLink>

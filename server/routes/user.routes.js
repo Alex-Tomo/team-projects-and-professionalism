@@ -52,6 +52,30 @@ module.exports = function (app) {
 
     app.post('/api/userlessons', [authJwt.verifyToken], controller.userLessons)
 
+    app.get('/api/mathslesson/add', [authJwt.verifyToken], controller.addMaths)
+
+    app.get('/api/englishstory/add', [authJwt.verifyToken], controller.addStory)
+
+    app.get('/api/englishlesson/add', [authJwt.verifyToken], controller.addEnglish)
+
+    app.get('/api/verballesson/add', [authJwt.verifyToken], controller.addVerbal)
+
+    app.get('/api/nonverballesson/add', [authJwt.verifyToken], controller.addNonVerbal)
+
+     app.get('/api/questions', [authJwt.verifyToken], controller.getAllQuestions)
+
+     app.get('/api/questions/remove', [authJwt.verifyToken], controller.questionsRemove)
+
+     app.get('/api/englishstory/remove', [authJwt.verifyToken], controller.storyRemove)
+
+     app.get('/api/lessons/remove', [authJwt.verifyToken], controller.lessonsRemove)
+
+     app.get('/api/lessons/all', [authJwt.verifyToken], controller.getAllLessons)
+     
+     app.get('/api/lessons/add', [authJwt.verifyToken], controller.addLesson)
+
+     app.get('/api/lessons/edit', [authJwt.verifyToken], controller.editLesson)
+
     // Admin related content
     app.post('/api/admin/users', [authJwt.verifyToken, authJwt.isTutorAdmin], controller.adminUsers)
 

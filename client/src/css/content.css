@@ -1,0 +1,120 @@
+
+.info-body{
+    padding: 60px 100px 60px;
+
+    background-color: #E5ECFF;
+}
+
+.content-header{
+    padding: 30px 100px 30px;
+    
+}
+.content-body{
+    padding:60px;
+    min-height: 400px;
+}
+.subheader{
+    padding-top:7px;
+    padding-left: 10px;
+}
+.info-grid-container{
+    display: grid;
+    column-gap: 10px;
+    grid-template-columns: auto auto auto;
+    margin: 20px;
+}
+#inputarea::placeholder{
+font-weight: 400;
+  color: black;
+  opacity: 1;
+ 
+}
+
+#inputLesson::placeholder{
+  font-weight: 400;
+  color: black;
+  opacity: 1;
+}
+
+#inputarea{
+  min-height: 400px;
+}
+
+.content-table-search-container {
+  margin-left: 20px;
+}
+
+.content-table-button-container {
+  margin-left: 20px;
+}
+#contentModal{
+
+  width: auto;
+  margin: 1%;
+  word-wrap: break-word;
+}
+
+pre{
+
+  max-width:auto;
+  background-color: rgba(26, 16, 77, 0);
+}
+
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
+  .question-checkbox{
+      margin: 10px;
+  }
+
+  .template-container{
+    border-bottom:rgba(26, 16, 77, 0.342) solid 2px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+  }
+
+  .add-question{
+        padding: 5px;
+  }
+
+  .modal-card-foot{
+
+    margin:0;
+  }
+
+  .modal{width: 100%;}
+/*#add-button {
+    width: 100%;
+    height: 50px;
+    background-color: rgb(255, 255, 255);
+    border: 0px;
+    padding: 0px;
+    
+    
+}*/
+
+#button-container{
+    width: 100%;
+    height: 100%;
+    border: 0px;
+    margin: 0%;
+    padding-top: 5px;
+    border-bottom:rgba(26, 16, 77, 0.342) solid 2px;
+}
+
+.dropdown-content{
+    width: 100%;
+    height: 100%;
+    padding:0;
+    margin: 0%;
+}
+
+

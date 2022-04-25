@@ -93,7 +93,31 @@ exports.lessons = (req, res) => {
             })
     }
 }
-
+exports.getAllLessons = (req, res) => {
+    db.lessons.findAll()
+        .then(r => {
+            res.send(r)
+        }).catch(e => {
+            res.send(e)
+        })
+  }
+  
+  
+  exports.addLesson= (req, res) => {
+    db.lessons.create({
+      lesson_id: parseInt(req.query.lesson_id),
+      lesson_name: req.query.lesson_name,
+      question_list: req.query.question_list,
+      lesson_type: req.query.lesson_type,
+    })
+    .then(r => {
+        res.send(r)
+    }).catch(e => {
+        res.send(e)
+    })
+  
+    console.log(req.query)
+  }
 //Gets the maths questions
 exports.mathsLesson = (req, res) => {
     if (req.query.questionList !== undefined) {
@@ -204,6 +228,250 @@ exports.completedLessons = (req, res) => {
             res.status(500).send("Error: " + error)
         })
 }
+
+exports.addEnglish= async (req, res) => {
+
+    let max = await db.questions.max('question_id')
+       max = max + 1
+      
+       await db.questions.create({
+           question_id: max,
+           question_type: "english"
+           
+       }).then(() => 
+       {db.english.create({
+        question_id: max,
+        question: req.query.question,
+        answer: req.query.answer,
+        incorrect_answer_one: req.query.incorrect_answer_one,
+        incorrect_answer_two: req.query.incorrect_answer_two,
+        incorrect_answer_three: req.query.incorrect_answer_three,
+        incorrect_answer_four: req.query.incorrect_answer_four,
+        story_id: req.query.story_id
+      })
+      .then(r => {
+          res.send(r)
+      }).catch(e => {
+          res.send(e)
+      })})
+    
+      console.log(req.query)
+  }
+  
+  exports.addStory= (req, res) => {
+    db.englishStory.create({
+      title: req.query.title,
+      story: req.query.story,
+    })
+    .then(r => {
+        res.send(r)
+    }).catch(e => {
+        res.send(e)
+    })
+  
+    console.log(req.query)
+  }
+  
+  exports.addMaths= async (req, res) => {
+  
+    let max = await db.questions.max('question_id')
+       max = max + 1
+      
+       await db.questions.create({
+           question_id: max,
+           question_type: "math"
+           
+       }).then(() => 
+       {db.math.create({
+        question_id: max,
+        statement: req.query.statement,
+        question: req.query.question,
+        answer: req.query.answer,
+        question_type: req.query.question_type,
+      })
+      .then(r => {
+          res.send(r)
+      }).catch(e => {
+          res.send(e)
+      })})
+    
+      console.log(req.query)
+  }
+  
+  exports.addNonVerbal= async (req, res) => { 
+    let max = await db.questions.max('question_id')
+       max = max + 1
+      
+       await db.questions.create({
+           question_id: max,
+           question_type: "none_verbal_reasoning"
+           
+       }).then(() => 
+       {db.nonVerbalReasoning.create({
+        question_id: max,
+        filename: req.query.filename,
+        answer: req.query.answer,
+      })
+      .then(r => {
+          res.send(r)
+      }).catch(e => {
+          res.send(e)
+      })})
+    
+      console.log(req.query)
+  }
+  
+  
+  exports.addVerbal= async (req, res) => { 
+    let max = await db.questions.max('question_id')
+       max = max + 1
+      
+       await db.questions.create({
+           question_id: max,
+           question_type: "verbal_reasoning"
+           
+       }).then(() => 
+       {db.verbalReasoning.create({
+        question_id: max,
+        question: req.query.question,
+        example: req.query.example,
+        answer: req.query.answer,
+        type: req.query.type
+      })
+      .then(r => {
+          res.send(r)
+      }).catch(e => {
+          res.send(e)
+      })})
+    
+      console.log(req.query)
+  }
+
+  exports.addNonVerbal= async (req, res) => { 
+    let max = await db.questions.max('question_id')
+       max = max + 1
+      
+       await db.questions.create({
+           question_id: max,
+           question_type: "none_verbal_reasoning"
+           
+       }).then(() => 
+       {db.nonVerbalReasoning.create({
+        question_id: max,
+        filename: req.query.filename,
+        answer: req.query.answer,
+      })
+      .then(r => {
+          res.send(r)
+      }).catch(e => {
+          res.send(e)
+      })})
+    
+      console.log(req.query)
+  }
+
+  exports.editLesson= (req, res) => {
+    db.lessons.update({
+ 
+    
+      lesson_name: req.query.lesson_name,
+      question_list: req.query.question_list,
+    },
+        {
+            where: {
+                lesson_id: req.query.lesson_id
+            }
+    })
+    .then(r => {
+        res.send(r)
+    }).catch(e => {
+        res.send(e)
+    })
+  
+    console.log(req.query)
+  }
+  
+  
+  
+  exports.getAllQuestions = (req, res) => {
+    db.questions.findAll({
+      include: [{
+        model: db.math,
+        required: false,
+      },
+      {
+        model: db.english,
+        required: false,
+      },
+      {
+        model: db.verbalReasoning,
+        required: false,
+      },
+      {
+        model: db.nonVerbalReasoning,
+        required: false,
+      }]
+    })
+      .then(r => {
+        res.send(r)
+      })
+      .catch(e => {
+        console.log(e)
+      })
+  }
+  
+  exports.questionsRemove = (req, res) => {
+    db.questions.update({
+        question_type: (req.query.question_type)
+    },
+        {
+            where: {
+                question_id: req.query.question_id
+            }
+        }).then(r => {
+            res.send(r)
+        }).catch(e => {
+            res.send(e)
+        })
+      
+        console.log(req.query)
+}
+
+exports.storyRemove = (req, res) => {
+    db.englishStory.update({
+        title: (req.query.title)
+    },
+        {
+            where: {
+                story_id: req.query.story_id
+            }
+        }).then(r => {
+            res.send(r)
+        }).catch(e => {
+            res.send(e)
+        })
+      
+        console.log(req.query)
+}
+
+exports.lessonsRemove = (req, res) => {
+    db.lessons.update({
+        lesson_type: (req.query.lesson_type)
+    },
+        {
+            where: {
+                lesson_id: req.query.lesson_id
+            }
+        }).then(r => {
+            res.send(r)
+        }).catch(e => {
+            res.send(e)
+        })
+      
+        console.log(req.query)
+    }
+  
+  
 
 // Get all the users for the admin section (Account management)
 exports.adminUsers = (req, res) => {

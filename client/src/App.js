@@ -16,6 +16,7 @@ import EnglishQuestions from './components/lessons/questions/EnglishQuestions'
 import VerbalQuestions from './components/lessons/questions/VerbalQuestions'
 import NonVerbalQuestions from './components/lessons/questions/NonVerbalQuestions'
 import ManagementAdmin from "./pages/management-admin"
+import Content from "./pages/content"
 import PasswordRecovery from "./pages/password-recovery"
 import PasswordReset from "./pages/password-reset"
 import CompletedLessonList from './components/lessons/CompletedLessonsList';
@@ -33,6 +34,7 @@ function App() {
                 <Route path="/tutor" element={<Tutor />} />
                 <Route path="/admin" element={<Admin />} />
                 <Route path='/management' element={<ManagementAdmin />} />
+                <Route path='/content' element={<Content />} />
                 <Route path="/topics" element={<TopicList />} />
                 <Route path="/questions" element={<Questions />} />
                 <Route path="/completedlesson" element={<ViewCompletedLesson />} />
