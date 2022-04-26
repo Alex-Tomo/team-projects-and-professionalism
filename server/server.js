@@ -15,7 +15,7 @@ const db = require('./schema')
 const app = express()
 
 const optionsCors = {
-    origin: 'http://localhost:3000'
+    origin: 'https://kipmcgrath.netlify.app'
 }
 
 db.sequelize.sync()

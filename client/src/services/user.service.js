@@ -10,7 +10,7 @@ class UserService {
         return axios.get(API_URL + "user", { headers: authHeader() }).catch((err) => {
             if(!localStorage.getItem('user') || err.response.status === 401){
                 AuthService.logout()
-                window.location.replace("https://kip-learning.herokuapp.com/api/login")
+                window.location.replace("https://kipmcgrath.netlify.app/login")
             }
         })
     }
@@ -18,7 +18,7 @@ class UserService {
         return axios.get(API_URL + "tutor", { headers: authHeader() }).catch((err) => {
             if(!localStorage.getItem('user') || err.response.status === 401){
                 AuthService.logout()
-                window.location.replace("https://kip-learning.herokuapp.com/api/login")
+                window.location.replace("https://kipmcgrath.netlify.app/login")
             }
         })
     }
@@ -26,7 +26,7 @@ class UserService {
         return axios.get(API_URL + "admin", { headers: authHeader() }).catch((err) => {
             if(!localStorage.getItem('user') || err.response.status === 401){
                     AuthService.logout()
-                    window.location.replace("https://kip-learning.herokuapp.com/api/login")
+                    window.location.replace("https://kipmcgrath.netlify.app/login")
                 }
         })
     }

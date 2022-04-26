@@ -4,7 +4,8 @@
   "description": "Learning platform for Kip McGrath tutoring.",
   "main": "server.js",
   "scripts": {
-    "test": "jest --detectOpenHandles"
+    "test": "jest --detectOpenHandles",
+    "start": "node app"
   },
   "keywords": [
     "learning",
@@ -17,7 +18,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
-    "express": "^4.17.3",
+    "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3",
     "nodemailer": "^6.7.2",
