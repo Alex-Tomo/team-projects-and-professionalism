@@ -31,6 +31,7 @@ class EnglishQuestions extends React.Component {
         }
     }
 
+    //Only displays the content if the user is logged in using the user service
     componentDidMount() {
         UserService.getUserBoard()
             .then((response) => {
@@ -56,11 +57,13 @@ class EnglishQuestions extends React.Component {
             })
     }
 
+    //Gets all english questions from the database, depending on what the lesson id is
     getQuestions = async () => {
         await axios.get('https://kip-learning.herokuapp.com/api/englishlesson', {
             headers: authHeader(),
             params: { questionList: this.props.question }
         })
+            //Pushes all the results into the question list
             .then(res => {
                 let questionDetails = []
                 for (let i = 0; i < res.data.length; i++) {
@@ -80,7 +83,7 @@ class EnglishQuestions extends React.Component {
                             answer.incorrect_answer_two,
                             answer.incorrect_answer_three,
                             answer.incorrect_answer_four
-                        ].sort(() => Math.random() - 0.5)
+                        ].sort(() => Math.random() - 0.5) //Randomises the options that the user clicks on
                     }))
                 })
             }).catch(error => {
@@ -101,6 +104,7 @@ class EnglishQuestions extends React.Component {
         })
     }
 
+    //Function which handles the next question click, checking answer has correct input
     nextQuestionHandler = async () => {
         let answerLength = this.state.questionList[this.state.currentIndex].answer.split(',').length
         let answerString = this.state.questionList[this.state.currentIndex].answer
@@ -114,17 +118,20 @@ class EnglishQuestions extends React.Component {
             return
         }
 
+        //Tallies up the total max number of points the user can get
         this.setState({
             totalNumber: this.state.totalNumber + answerLength,
         })
         this.state.finalAnswer.push(userAnswer)
 
+        //If the users answer is the same as the answer in database they get a point
         if (userAnswer == answerString) {
             this.setState({
                 score: this.state.score + 1
             })
         }
 
+        //Checks whether there are any more questions, if there isn't, post the lesson data to the user lessons table
         if (this.state.currentIndex !== this.state.questionList.length - 1) {
             await this.setState({
                 currentIndex: this.state.currentIndex + 1,

@@ -20,6 +20,7 @@ class CompletedLessonList extends React.Component {
         }
     }
 
+    //Only displays the content if the user is logged in using the user service
     componentDidMount() {
         UserService.getUserBoard().then(
             (response) => {
@@ -43,11 +44,12 @@ class CompletedLessonList extends React.Component {
         })
     }
 
+    //Gets the completed lesson depeneding on the user that is logged in
     checkLessonType = () => {
         axios.get('https://kip-learning.herokuapp.com/api/completedlessons', {
             headers: authHeader(),
             params: {
-                userId: JSON.parse(localStorage.getItem('user')).id
+                userId: JSON.parse(localStorage.getItem('user')).id //Uses local starage to get the users id to pass through as a parameter
             }
         }).then(res => {
             this.setState({
@@ -65,6 +67,7 @@ class CompletedLessonList extends React.Component {
         })
     }
 
+    //Imports the images from the folder
     importAll = (r) => {
         let images = {}
         r.keys().forEach((item, index) => {
@@ -73,6 +76,7 @@ class CompletedLessonList extends React.Component {
         return images
     }
 
+    //Generates a random image between 1 and 3 to display for each lesson
     imageGenerator = (imageType) => {
         const images = this.importAll(require.context('./topic-images', false, /\.(jpg)$/))
         let number = Math.floor(Math.random() * 2) + 1

@@ -31,6 +31,7 @@ class VerbalQuestions extends React.Component {
         this.handleChange = this.handleChange.bind(this)
     }
 
+    //Only displays the content if the user is logged in using the user service
     componentDidMount() {
         UserService.getUserBoard()
             .then((response) => {
@@ -58,11 +59,13 @@ class VerbalQuestions extends React.Component {
             })
     }
 
+    //Function which handles the next question click, checking answer has correct input
     getQuestions = async () => {
         await axios.get('https://kip-learning.herokuapp.com/api/verballesson', {
             headers: authHeader(),
             params: { questionList: this.props.question }
         })
+            //Pushes all the results into the question list
             .then(res => {
                 let questionDetails = []
                 for (let i = 0; i < res.data.length; i++) {
@@ -89,6 +92,7 @@ class VerbalQuestions extends React.Component {
             })
     }
 
+    //Checks the input as the user types and only allows them to type 1 letter
     handleChange(e) {
         const numbers = /\d+/g
         const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/g
@@ -111,6 +115,7 @@ class VerbalQuestions extends React.Component {
         })
     }
 
+    //Function which handles the next question click, checking answer has correct input
     nextQuestionHandler = async () => {
         let answerString = this.state.questionList[this.state.currentIndex].answer
         let answerArray = answerString.split(',')
@@ -140,10 +145,12 @@ class VerbalQuestions extends React.Component {
             }
         }
 
+        //Tallies up the total max number of points the user can get
         this.setState({
             totalNumber: this.state.totalNumber + answerLength,
         })
 
+        //If the users answer is the same as the answer in database they get a point
         for (let i = 0; i < inputValue.length; i++) {
             this.state.finalAnswer.push(inputValue[i])
             if (inputValue[i] === answerArray[i]) {
@@ -154,6 +161,7 @@ class VerbalQuestions extends React.Component {
             inputValue[i] = ""
         }
 
+        //Checks whether there are any more questions, if there isn't, post the lesson data to the user lessons table
         if (this.state.currentIndex !== this.state.questionList.length - 1) {
             await this.setState({
                 currentIndex: this.state.currentIndex + 1,

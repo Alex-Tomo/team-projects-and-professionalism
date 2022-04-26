@@ -22,6 +22,7 @@ class LessonList extends React.Component {
         }
     }
 
+    //Only displays the content if the user is logged in using the user service
     componentDidMount() {
         UserService.getUserBoard().then(
             (response) => {
@@ -41,6 +42,7 @@ class LessonList extends React.Component {
                 })
             }
         ).then(() => {
+            //Checks that the images are loaded before loading the full page
             this.checkLessonType().then(() => {
                 let arr = []
                 let imageArr = []
@@ -53,6 +55,7 @@ class LessonList extends React.Component {
         })
     }
 
+    //Gets the lesson depending on what the lesson type is that is passed through as a prop
     checkLessonType = async () => {
         await axios.get('https://kip-learning.herokuapp.com/api/lessons', {
             headers: authHeader(),
@@ -75,6 +78,7 @@ class LessonList extends React.Component {
         })
     }
 
+    //Imports all the images from a folder
     importAll = (r) => {
         let images = {}
         r.keys().forEach((item, index) => {
@@ -83,6 +87,7 @@ class LessonList extends React.Component {
         return images
     }
 
+    //Generates a random image between 1 and 3 to display for each lesson
     imageGenerator = () => {
         const images = this.importAll(require.context('./topic-images', false, /\.(jpg)$/))
         let number = Math.floor(Math.random() * 2) + 1
@@ -150,7 +155,7 @@ class LessonList extends React.Component {
                                             arr[i] = true
                                             this.setState({ loaded: arr })
                                         }}
-                                        alt="English"
+                                        alt="Lesson List Image"
                                     />
                                 </div>
                             )

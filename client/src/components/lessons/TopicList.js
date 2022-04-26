@@ -25,6 +25,8 @@ class TopicList extends React.Component {
             loadedImg4: false
         }
     }
+
+    //Only displays the content if the user is logged in using the user service
     componentDidMount() {
         UserService.getUserBoard()
             .then((response) => {
