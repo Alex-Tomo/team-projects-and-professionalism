@@ -1,5 +1,12 @@
 import React from "react"
 
+/**
+ * The change password modal,
+ * pops up when the user clicks the change password button
+ *
+ * @author Alex Thompson, W19007452
+ */
+
 class ChangePasswordModal extends React.Component {
   render() {
     return (

@@ -46,6 +46,9 @@ class EditUserForm extends React.Component {
         this.setState({ role: event.target.value })
     }
 
+    /*
+     * Check all the input fields are valid, if so update the users details
+     */
     updateUser = () => {
         if (this.state.username.trim() === "") {
             this.props.showMessage("Username Cannot Be Empty!", "is-danger")

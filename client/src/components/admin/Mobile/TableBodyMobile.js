@@ -1,5 +1,11 @@
 import React from 'react'
-import TableRowMobile from "./TableRowMobile";
+import TableRowMobile from "./TableRowMobile"
+
+/**
+ * Mobile view for each table rows content
+ *
+ * @author Alex Thompson, W19007452
+ */
 
 class TableBodyMobile extends React.Component {
   render() {

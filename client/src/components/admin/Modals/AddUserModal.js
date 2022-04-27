@@ -1,5 +1,11 @@
 import React from "react"
-import AddUserForm from "../Forms/AddUserForm";
+import AddUserForm from "../Forms/AddUserForm"
+
+/**
+ * The add user modal, pops up when the user clicks the add button
+ *
+ * @author Alex Thompson, W19007452
+ */
 
 class AddUserModal extends React.Component {
   render() {

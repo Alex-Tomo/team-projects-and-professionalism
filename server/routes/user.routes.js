@@ -52,7 +52,7 @@ module.exports = function (app) {
 
     app.post('/api/userlessons', [authJwt.verifyToken], controller.userLessons)
 
-    // Admin related content
+    // Admin related routes
     app.post('/api/admin/users', [authJwt.verifyToken, authJwt.isTutorAdmin], controller.adminUsers)
 
     app.post('/api/admin/adduser', [verifySignUp.checkRolesExisted, verifySignUp.checkDuplicateUsernameOrEmail, authJwt.verifyToken, authJwt.isTutorAdmin], controller.adminAddUser)
@@ -63,6 +63,7 @@ module.exports = function (app) {
 
     app.post('/api/amin/changepassword', [authJwt.verifyToken, authJwt.isTutorAdmin], controller.adminChangePassword)
 
+    // Statistics related routes
     app.post('/api/statistics/adminstatistics', [authJwt.verifyToken, authJwt.isTutorAdmin], controller.getAdminStatistics)
 
     app.post('/api/statistics/tutorstatistics', [authJwt.verifyToken, authJwt.isTutorAdmin], controller.getTutorStatistics)

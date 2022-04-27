@@ -31,6 +31,9 @@ class ChangePasswordForm extends React.Component {
         }
     }
 
+    /*
+     * Check the input fields are valid then update the users password
+     */
     changePassword = () => {
         if ((this.state.password.length <= 7) || (this.state.password.length > 32)) {
             this.props.showMessage("Password Must Be Between 8 and 32 Characters!", "is-danger")

@@ -1,5 +1,13 @@
 import React from "react"
 
+/**
+ * Display the page buttons and currently active button
+ * Also enables and disables the next and prev buttons
+ * as needed.
+ *
+ * @author Alex Thompson, W19007452
+ */
+
 class PageButtons extends React.Component {
   render() {
     let buttons = ""

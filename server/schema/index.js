@@ -8,7 +8,6 @@
  * @author Jordan Short, Alex Thompson
  */
 const config = require('../config/db.conf.js')
-const temp_function = require('./temp_insert')
 
 const Sequelize = require('sequelize')
 const sequelize = new Sequelize(
@@ -77,9 +76,6 @@ db.user_added_by.belongsTo(db.user, { foreignKey: 'added_by' })
 
 db.user_lessons.belongsTo(db.lessons, { foreignKey: 'lesson_id' })
 db.user.hasMany(db.user_lessons, { foreignKey: 'user_id' })
-
-// ONLY UNCOMMENT THIS IF WE DROP THE DATABASE
-// temp_function(db).then(r => console.log("success")).catch(e => console.log(e))
 
 // Role oulines.
 db.ROLES = ['user', 'admin', 'tutor']

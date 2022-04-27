@@ -1,5 +1,13 @@
 import React from 'react'
 
+/**
+ * A mobile view for the remove user forms,
+ * this is needed as the form changes from a table
+ * to a section
+ *
+ * @author Alex Thompson, W19007452
+ */
+
 class RemoveUserFormMobile extends React.Component {
   render() {
     let rows = ""
@@ -14,25 +22,25 @@ class RemoveUserFormMobile extends React.Component {
 
         return (
           <div key={i}>
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "start", width: "100%", margin: " 20px auto", backgroundColor: "#E4E4E4", borderRadius: "8px"}}>
-              <div style={{textAlign: "start", marginTop: "10px", marginLeft: "20px"}}>
-                <p  style={{color: "#004888", fontWeight: "bold"}}>Username</p>
+            <div className="mobile-remove-user">
+              <div className="mobile-remove-user-div">
+                <p className="mobile-remove-user-div-p">Username</p>
                 <p>{result.username}</p>
               </div>
-              <div style={{textAlign: "start", marginTop: "10px", marginLeft: "20px"}}>
-                <p  style={{color: "#004888", fontWeight: "bold"}}>Email</p>
+              <div className="mobile-remove-user-div">
+                <p className="mobile-remove-user-div-p">Email</p>
                 <p>{result.email}</p>
               </div>
-              <div style={{textAlign: "start", marginTop: "10px", marginLeft: "20px"}}>
-                <p  style={{color: "#004888", fontWeight: "bold"}}>Role</p>
+              <div className="mobile-remove-user-div">
+                <p className="mobile-remove-user-div-p">Role</p>
                 <p>{result.roles[0].name}</p>
               </div>
-              <div style={{textAlign: "start", marginTop: "10px", marginLeft: "20px"}}>
-                <p  style={{color: "#004888", fontWeight: "bold"}}>Date Added</p>
+              <div className="mobile-remove-user-div">
+                <p className="mobile-remove-user-div-p">Date Added</p>
                 <p>{result.createdAt.toString().split('T')[0]}</p>
               </div>
-              <div style={{textAlign: "start", marginTop: "10px", marginLeft: "20px", marginBottom: "10px"}}>
-                <p style={{color: "#004888", fontWeight: "bold"}}>Added By</p>
+              <div className="mobile-remove-user-div">
+                <p className="mobile-remove-user-div-p">Added By</p>
                 <p>{addedBy}</p>
               </div>
             </div>
@@ -45,7 +53,9 @@ class RemoveUserFormMobile extends React.Component {
     return (
       <div>
         <div className="modal-admin">
-          <h4 className="title modal-title">Are you sure you want to remove {(this.props.userDetails.length > 1) ? "these users?" : "this user?"} </h4>
+          <h4 className="title modal-title">
+            Are you sure you want to remove {(this.props.userDetails.length > 1) ? "these users?" : "this user?"}
+          </h4>
         </div>
 
         <hr className="admin-modal-hr" />

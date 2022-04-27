@@ -1,5 +1,10 @@
 import React from "react"
-import RemoveUserForm from "../Forms/RemoveUserForm"
+
+/**
+ * The remove user modal, pops up when the user clicks the remove button
+ *
+ * @author Alex Thompson, W19007452
+ */
 
 class RemoveUserModal extends React.Component {
   render() {

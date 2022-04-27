@@ -228,6 +228,7 @@ exports.adminUsers = (req, res) => {
         })
 }
 
+// Handle adding a new user to the database
 exports.adminAddUser = (req, res) => {
     db.user.create({
         username: req.body.username,
@@ -268,6 +269,7 @@ exports.adminAddUser = (req, res) => {
         })
 }
 
+// Handle updating a users details in the database
 exports.adminEditUser = (req, res) => {
     if ((req.body.username !== null) && (req.body.email !== null)) {
         db.user.update({
@@ -331,6 +333,7 @@ exports.adminEditUser = (req, res) => {
     res.status(200).send({ updated: true })
 }
 
+// Handles removing a user or multiple users from the database
 exports.adminRemoveUser = (req, res) => {
     let ids = req.body.id.split(',')
 
@@ -350,6 +353,7 @@ exports.adminRemoveUser = (req, res) => {
     })
 }
 
+// Update the users password in the database
 exports.adminChangePassword = (req, res) => {
     db.user.update({
         password: bcrypt.hashSync(req.body.password, 8)

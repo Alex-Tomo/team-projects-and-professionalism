@@ -341,6 +341,68 @@ tbody tr td {
   padding-left: 10px;
 }
 
+.mobile-remove-user {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+  margin: 20px auto;
+  background-color: #E4E4E4;
+  border-radius: 8px;
+}
+
+.mobile-remove-user-div {
+  text-align: start;
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.mobile-remove-user-div-p {
+  color: #004888;
+  font-weight: bold;
+}
+
+.mobile-row-container {
+  border: 1px solid black;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.mobile-row-subcontainer {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 90%;
+  margin: 20px auto;
+}
+
+.mobile-row-subcontainer-span {
+  margin-left: 10px;
+  font-weight: bold;
+}
+
+.mobile-row-subcontainer-div {
+  text-align: start;
+  margin-top: 10px;
+}
+
+.mobile-row-subcontainer-div-p {
+  color: #004888;
+  font-weight: bold;
+}
+
+.mobile-row-buttons-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.mobile-row-buttons {
+  width: 90%;
+  margin: 5px auto;
+  border-radius: 8px;
+}
+
 @media only screen and (max-width: 768px) {
   .users-table-options {
     flex-direction: column;

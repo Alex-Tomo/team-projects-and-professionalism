@@ -1,8 +1,7 @@
 import React from "react"
-import axios from "axios"
-import authHeader from "../../../services/auth-header"
 
 /**
+ * The remove user modal, displays details of users to be removed
  *
  * @author Alex Thompson, W19007452
  */
@@ -32,7 +31,9 @@ class RemoveUserForm extends React.Component {
     return (
         <div>
           <div className="modal-admin">
-            <h4 className="title modal-title">Are you sure you want to remove {(this.props.userDetails.length > 1) ? "these users?" : "this user?"} </h4>
+            <h4 className="title modal-title">
+              Are you sure you want to remove {(this.props.userDetails.length > 1) ? "these users?" : "this user?"}
+            </h4>
           </div>
 
           <hr className="admin-modal-hr" />

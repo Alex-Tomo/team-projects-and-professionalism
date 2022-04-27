@@ -1,5 +1,11 @@
 import React from "react"
 
+/**
+ * The edit user modal, pops up when the user clicks the edit button
+ *
+ * @author Alex Thompson, W19007452
+ */
+
 class EditUserModal extends React.Component {
   render() {
     return (

@@ -1,5 +1,11 @@
-import Checkbox from "../Elements/Checkbox"
 import React from "react"
+import Checkbox from "../Elements/Checkbox"
+
+/**
+ * Mobile view for each table row
+ *
+ * @author Alex Thompson, W19007452
+ */
 
 class TableRowMobile extends React.Component {
   render() {
@@ -10,41 +16,40 @@ class TableRowMobile extends React.Component {
     }
 
     return (
-        <div key={this.props.result.id} style={{border: "1px solid black", borderRadius: "8px", marginBottom: "20px"}}>
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "start", width: "90%", margin: " 20px auto"}}>
+        <div key={this.props.result.id} className="mobile-row-container">
+          <div className="mobile-row-subcontainer">
             <div>
               <Checkbox
                 id={this.props.result.id}
                 handleChange={this.props.handleChange}
                 isChecked={this.props.isCheck.includes(this.props.result.id)}
               />
-              <span style={{marginLeft: "10px", fontWeight: "bold"}}>Select Account</span>
+              <span className="mobile-row-subcontainer-span">Select Account</span>
             </div>
-            <div style={{textAlign: "start", marginTop: "10px"}}>
-              <p  style={{color: "#004888", fontWeight: "bold"}}>Username</p>
+            <div className="mobile-row-subcontainer-div">
+              <p className="mobile-row-subcontainer-div-p">Username</p>
               <p>{this.props.result.username}</p>
             </div>
-            <div style={{textAlign: "start", marginTop: "10px"}}>
-              <p  style={{color: "#004888", fontWeight: "bold"}}>Email</p>
+            <div className="mobile-row-subcontainer-div">
+              <p className="mobile-row-subcontainer-div-p">Email</p>
               <p>{this.props.result.email}</p>
             </div>
-            <div style={{textAlign: "start", marginTop: "10px"}}>
-              <p  style={{color: "#004888", fontWeight: "bold"}}>Role</p>
+            <div className="mobile-row-subcontainer-div">
+              <p className="mobile-row-subcontainer-div-p">Role</p>
               <p>{this.props.result.roles[0].name}</p>
             </div>
-            <div style={{textAlign: "start", marginTop: "10px"}}>
-              <p  style={{color: "#004888", fontWeight: "bold"}}>Date Added</p>
+            <div className="mobile-row-subcontainer-div">
+              <p className="mobile-row-subcontainer-div-p">Date Added</p>
               <p>{this.props.result.createdAt.toString().split('T')[0]}</p>
             </div>
-            <div style={{textAlign: "start", marginTop: "10px"}}>
-              <p style={{color: "#004888", fontWeight: "bold"}}>Added By</p>
+            <div className="mobile-row-subcontainer-div">
+              <p className="mobile-row-subcontainer-div-p">Added By</p>
               <p>{addedBy}</p>
             </div>
           </div>
-          <div style={{ display: "flex", flexDirection: "column", marginBottom: "20px"}}>
+          <div className="mobile-row-buttons-container">
             <button
-              style={{width: "90%", margin: "5px auto", borderRadius: "8px"}}
-              className="button admin-option-button"
+              className="button admin-option-button mobile-row-buttons"
               onMouseDown={() => {
                 this.props.editUser(null, this.props.result.id)
               }}
@@ -52,8 +57,7 @@ class TableRowMobile extends React.Component {
               Edit
             </button>
             <button
-              style={{width: "90%", margin: "5px auto", borderRadius: "8px"}}
-              className="button admin-option-button"
+              className="button admin-option-button mobile-row-buttons"
               onMouseDown={() => {
                 this.props.changePassword(null, this.props.result.id)
               }}
@@ -61,8 +65,7 @@ class TableRowMobile extends React.Component {
               Change Password
             </button>
             <button
-              style={{width: "90%", margin: "5px auto", borderRadius: "8px"}}
-              className="button is-danger admin-option-button remove-button"
+              className="button is-danger admin-option-button remove-button mobile-row-buttons"
               onMouseDown={() => {
                 this.props.removeUserModal(null, [this.props.result.id])
               }}
@@ -70,7 +73,6 @@ class TableRowMobile extends React.Component {
               Remove
             </button>
           </div>
-
         </div>
     )
   }

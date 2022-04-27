@@ -8,7 +8,6 @@ import authHeader from "../../../services/auth-header"
  * @author Alex Thompson, W19007452
  */
 
-
 class AddUserForm extends React.Component {
     constructor(props) {
         super(props)
@@ -22,10 +21,17 @@ class AddUserForm extends React.Component {
         }
     }
 
+    /*
+     * updates the roles state when the user selects a different option
+     */
     handleChange = (event) => {
         this.setState({ role: event.target.value })
     }
 
+    /*
+     * Checks the input fields are valid, if so add a new user to the database
+     * if not return a valid error notification
+     */
     addUser = () => {
         if (this.state.username.trim() === "") {
             this.props.showMessage("Username Cannot Be Empty!", "is-danger")
