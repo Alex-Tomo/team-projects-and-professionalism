@@ -2,6 +2,14 @@ import React from 'react'
 import AuthService from "../../services/auth.service"
 import Reaptcha from 'reaptcha';
 
+/**
+ * Password recovery email request form component,
+ * contains error handling and client side form 
+ * validation.
+ *
+ * @author Jordan Short, W18039155
+ */
+
 class PassRecoverForm extends React.Component {
     constructor(props) {
         super(props)
@@ -16,6 +24,12 @@ class PassRecoverForm extends React.Component {
         }
       }
 
+/**
+ * Checks to ensure that the google
+ * reCaptcha has been successfully completed
+ * then enables the submit form button.
+ *
+ */
       onVerify = recaptchaResponse => {
         this.setState({
           verified: true
@@ -24,7 +38,9 @@ class PassRecoverForm extends React.Component {
         element.classList.remove("sign-btn-disabled");
         element.classList.add("sign-btn");
       };
-
+/**
+ * Hides for upon submit.
+ */
       onFormHiding = () => {
           this.setState({ hideForm: true, btnMessage: "Email Sent"})
           var element = document.getElementById("submit-btn");
@@ -43,6 +59,12 @@ onChangeUsername(e) {
         }
     }
 
+    /**
+     * Triggered on submit, takes username
+     * from state and then passes into authservice
+     * password reset function.
+     * 
+     */
 
       handleLogin(e) {
         e.preventDefault()

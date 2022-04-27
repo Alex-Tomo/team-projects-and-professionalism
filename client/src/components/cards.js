@@ -1,6 +1,12 @@
 import React from 'react'
 import Check from '../images/check.svg'
 
+/**
+ * All homepage cards and their layouts.
+ * 
+ * @author Jordan Short, W18039155
+ */
+
 export default class cards extends React.Component {
     render() {
         let cardHead = 'card-header card-size-head'

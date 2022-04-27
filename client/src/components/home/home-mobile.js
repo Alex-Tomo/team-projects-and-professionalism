@@ -8,6 +8,12 @@ import Support from '../../images/contact-support.svg'
 import Hat from '../../images/contact-hat.svg'
 import Graham from '../../images/graham.png'
 
+/**
+ * Mobile version of the homepage.
+ * 
+ * @author Jordan Short, W18039155
+ */
+
 export default class HomeMobile extends Component {
   constructor(props) {
     super(props)

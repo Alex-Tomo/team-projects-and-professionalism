@@ -5,6 +5,14 @@ import list from "../../images/list.svg"
 import completed from "../../images/completed.svg"
 import support from "../../images/support.svg"
 
+/**
+ * Conditional buttons for the nav bar.
+ * This will be changed based on the users
+ * access rights.
+ * 
+ * @author Jordan Short, W18039155
+ */
+
 export default function ConditionalButtons(props) {
     let userRole
     if (AuthService.getCurrentUser()) {
@@ -42,6 +50,7 @@ export default function ConditionalButtons(props) {
             </div>
         )
     } else if (userRole === "ROLE_TUTOR") {
+        //Tutor Pages here
         return (
             <div className="navbar-item center ">
                 <NavLink className="navbar-item gaps small nav-text" to="tutor">

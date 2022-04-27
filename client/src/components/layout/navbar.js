@@ -4,6 +4,15 @@ import ConButtons from "./conditional-buttons"
 import LogButtons from "./login-logout-buttons"
 import logo from "../../images/kip_logo.png"
 
+/**
+ * Mobile and desktop nav bar and standard
+ * items. Includes all the logic for the mobile menu
+ * and instantiates conditional and log buttons when
+ * needed.
+ * 
+ * @author Jordan Short, W18039155
+ */
+
 class NavBar extends Component {
   constructor(props) {
     super(props)

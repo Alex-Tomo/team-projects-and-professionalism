@@ -27,6 +27,7 @@ class SaveLessonToPdf extends React.Component {
         }
     }
 
+    //Only displays the content if the user is logged in using the user service
     componentDidMount() {
         UserService.getUserBoard()
             .then((response) => {
@@ -50,6 +51,7 @@ class SaveLessonToPdf extends React.Component {
             })
     }
 
+    //Gets a lesson depending on what the lesson id is
     getLesson = async () => {
         await axios.get('https://kip-learning.herokuapp.com/api/lessons', {
             headers: authHeader(),
@@ -70,7 +72,7 @@ class SaveLessonToPdf extends React.Component {
                     error.toString()
             })
         })
-
+        //The question list and lesson type are set
         this.state.lessons.map((result, i) => {
             <div key={i}></div>
             this.setState({
@@ -84,6 +86,7 @@ class SaveLessonToPdf extends React.Component {
         })
     }
 
+    //Depending on what the lesson type is, the URL will change to get the correct lesson from the api
     getQuestions = async () => {
         if (this.state.questionValue.length > 0) {
             let questionArray = []
@@ -109,11 +112,12 @@ class SaveLessonToPdf extends React.Component {
                 default:
                     break
             }
-
+            //URL is passed through depending on lesson type and the question list for that lesson is set
             await axios.get(url, {
                 headers: authHeader(),
                 params: { questionList: questionArray }
             })
+                //Pushes all the results into the question list
                 .then(res => {
                     let questionDetails = []
                     for (let i = 0; i < questionArray.length; i++) {
@@ -139,6 +143,7 @@ class SaveLessonToPdf extends React.Component {
         }
     }
 
+    //Imports the images from the folder
     importAll = (r) => {
         let images = {}
         r.keys().forEach((item, index) => {

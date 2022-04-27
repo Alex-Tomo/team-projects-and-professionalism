@@ -32,6 +32,7 @@ class MathQuestions extends React.Component {
         this.handleChange = this.handleChange.bind(this)
     }
 
+    //Only displays the content if the user is logged in using the user service
     componentDidMount() {
         UserService.getUserBoard()
             .then((response) => {
@@ -57,11 +58,13 @@ class MathQuestions extends React.Component {
             })
     }
 
+    //Gets all the maths questions from the database, depending on what the lesson id is
     getQuestions = async () => {
         await axios.get('https://kip-learning.herokuapp.com/api/mathslesson', {
             headers: authHeader(),
             params: { questionList: this.props.question, lesson_id: this.props.lesson_id }
         })
+            //Pushes all the results into the question list
             .then(res => {
                 let questionDetails = []
                 for (let i = 0; i < this.props.question.length; i++) {
@@ -96,6 +99,7 @@ class MathQuestions extends React.Component {
         })
     }
 
+    //Function that allows the user to select 1 button button from each row
     buttonSelected = async (e, i, j, buttonsLength) => {
         for (let x = 0; x < buttonsLength; x++) {
             document.getElementById(`${i}.${x}`).classList.remove("button-pressed")
@@ -115,6 +119,7 @@ class MathQuestions extends React.Component {
         })
     }
 
+    //Function which handles the next question click, checking answer has correct input
     nextQuestionHandler = async () => {
         let answerLength = this.state.questionList[this.state.currentIndex].answer.split(',').length
         let answerString = this.state.questionList[this.state.currentIndex].answer
@@ -127,6 +132,7 @@ class MathQuestions extends React.Component {
         let newUserAnswer = []
         let lengthDoubled = []
 
+        //If the question includes a / or :, replace these with a space so input validation can be done
         if (questionType == 5) {
             answerLength = answerLength * 2
             if (userAnswer.length < answerLength) {
@@ -163,6 +169,7 @@ class MathQuestions extends React.Component {
             }
         }
 
+        //This switch checks the users answer against answer in database depending on what question type it is. Will add 1 point to the score for each input they get right.
         switch (questionType) {
             case 1:
             case 2:
@@ -230,6 +237,7 @@ class MathQuestions extends React.Component {
                 break
         }
 
+        //Checks whether there are any more questions, if there isn't, post the lesson data to the user lessons table
         if (this.state.currentIndex !== this.state.questionList.length - 1) {
             await this.setState({
                 currentIndex: this.state.currentIndex + 1,
@@ -304,6 +312,7 @@ class MathQuestions extends React.Component {
             questionType = this.state.questionList[this.state.currentIndex].question_type
             currentIndex = this.state.currentIndex
 
+            //If the question inclues {?}, replace this with an input box so the user can type in the answer
             if (question.includes("{?}")) {
                 question = (
                     <div className="pb-0 mb-4">
@@ -331,6 +340,7 @@ class MathQuestions extends React.Component {
                 )
             }
 
+            //If the question type is 4, it includes buttons which need to be split onto a new line
             if (questionType == 4) {
                 let questionString = this.state.questionList[this.state.currentIndex].question
                 let questionArray = questionString.split("\n")

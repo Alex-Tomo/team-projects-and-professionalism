@@ -15,6 +15,13 @@ const required = (value) => {
     }
 }
 
+/**
+ * Login form component, contains error handling
+ * and client side form validation.
+ *
+ * @author Jordan Short, W18039155
+ */
+
 class LoginForm extends Component {
     constructor(props) {
         super(props)
@@ -30,6 +37,12 @@ class LoginForm extends Component {
         }
     }
 
+/**
+ * Checks to ensure that the google
+ * reCaptcha has been successfully completed
+ * then enables the submit form button.
+ *
+ */
     onVerify = recaptchaResponse => {
         this.setState({
             verified: true
@@ -56,6 +69,13 @@ class LoginForm extends Component {
             message: "",
             loading: true
         })
+        
+        /**
+        * Passes the login info from the form
+        * then redirects user to to the appropriate
+        * dashboard.
+        *
+        */
         await AuthService.login(this.state.username, this.state.password).then(
             () => {
                 

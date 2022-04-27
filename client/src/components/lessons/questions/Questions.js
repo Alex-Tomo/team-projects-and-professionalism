@@ -20,6 +20,7 @@ class Questions extends React.Component {
         }
     }
 
+    //This function gets the right questions depending on the lesson type. The question id list, lesson id and lesson name are all passed through using the getQuestions function
     getQuestionDetails = async (questionDetails) => {
         let questions = ""
         switch (questionDetails.type) {
@@ -63,4 +64,3 @@ class Questions extends React.Component {
 }
 
 export default Questions
-

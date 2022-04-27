@@ -6,7 +6,8 @@ import { Link } from "react-router-dom"
 import ReactToPrint from 'react-to-print';
 
 /**
- * Displays all the information from the user's completed lesson when they click on view
+ * Displays all the information from the user's completed lesson when they click on view. Makes * the background of the input or button green if correct or red if not. Also displays the
+ * correct answer if the answer is incorrect.  
  *
  * @author Graham Stoves
  */
@@ -26,6 +27,7 @@ class Completed extends React.Component {
         }
     }
 
+    //Only displays the content if the user is logged in using the user service
     componentDidMount() {
         UserService.getUserBoard()
             .then((response) => {
@@ -49,6 +51,7 @@ class Completed extends React.Component {
             })
     }
 
+    //Gets a lesson depending on what the lesson id is
     getLesson = async () => {
         await axios.get('https://kip-learning.herokuapp.com/api/lessons', {
             headers: authHeader(),
@@ -69,7 +72,7 @@ class Completed extends React.Component {
                     error.toString()
             })
         })
-
+        //The question list and lesson type are set
         this.state.lessons.map((result, i) => {
             <div key={i}></div>
             this.setState({
@@ -83,6 +86,7 @@ class Completed extends React.Component {
         })
     }
 
+    //Depending on what the lesson type is, the URL will change to get the correct lesson from the api
     getQuestions = async () => {
         if (this.state.questionValue.length > 0) {
             let questionArray = []
@@ -108,11 +112,12 @@ class Completed extends React.Component {
                 default:
                     break
             }
-
+            //URL is passed through depending on lesson type and the question list for that lesson is set
             await axios.get(url, {
                 headers: authHeader(),
                 params: { questionList: questionArray }
             })
+                //Pushes all the results into the question list
                 .then(res => {
                     let questionDetails = []
                     for (let i = 0; i < questionArray.length; i++) {
@@ -147,6 +152,7 @@ class Completed extends React.Component {
         }
     }
 
+    //Imports the images from the folder
     importAll = (r) => {
         let images = {}
         r.keys().forEach((item, index) => {
@@ -182,6 +188,7 @@ class Completed extends React.Component {
             )
         }
 
+        //Checks maths and verbal reasoning questions
         if (this.state.lessonType == "math" || this.state.lessonType == "verbal_reasoning") {
             if (this.state.questionList.length > 0 && this.state.lessons.length > 0) {
                 lesson = this.state.lessons.map((res, i) => {
@@ -204,6 +211,8 @@ class Completed extends React.Component {
                                         let specialChar = []
                                         let margBott = ""
                                         let displayBoolean = false
+
+                                        //If the question type is 5 and includes a / or :, the answer is split so it can be checked
                                         if (result.question_type == 5 && result.answer.includes("/")) {
                                             specialChar = result.answer.split("/")
                                         } else if (result.question_type == 5 && result.answer.includes(":")) {
@@ -212,6 +221,7 @@ class Completed extends React.Component {
                                             specialChar = result.answer.split(",")
                                         }
 
+                                        //If the value is the same as the correct answer, make the input box green else make it red
                                         for (let x = 0; x < specialChar.length; x++) {
                                             if (answer[index + x + 1].toLowerCase() == specialChar[x]) {
                                                 style.push("#1AA260")
@@ -229,6 +239,7 @@ class Completed extends React.Component {
                                             }
                                         }
 
+                                        //For questions that include {?}, change that back to the input box and display the users answer in that box. If it is correct, make the box green else it is red.
                                         if (result.question.includes("{?}")) {
                                             questionNumber++
                                             question = (
@@ -256,6 +267,7 @@ class Completed extends React.Component {
 
                                             questionNumber++
 
+                                            //For the buttons, the correct one shows as green, if it is incorrect, it will display as red and the correct when will show up in green.
                                             question = (
                                                 questionSubArray.map((arr, i) => {
                                                     let oneAnswer = result.answer.split(",")[i]
@@ -316,6 +328,7 @@ class Completed extends React.Component {
             }
         }
 
+        //Checks English questions
         if (this.state.lessonType == "english") {
             if (this.state.questionList.length > 0 && this.state.lessons.length > 0 && this.state.answerList.length > 0) {
                 lesson = this.state.lessons.map((res, i) => {
@@ -347,6 +360,7 @@ class Completed extends React.Component {
                                                 let userAnswer = this.state.answers.userAnswers[i]
                                                 let col = ""
 
+                                                //If the users answer is same as the answer, make the background green else make it red.
                                                 if (answer == userAnswer) {
                                                     if (answer == oneAnswer) {
                                                         col = "#1AA260"
@@ -395,6 +409,7 @@ class Completed extends React.Component {
             }
         }
 
+        //Checks non-verbal reasoning questions
         if (this.state.lessonType == "non_verbal_reasoning") {
             if (this.state.questionList.length > 0 && this.state.lessons.length > 0) {
                 lesson = this.state.lessons.map((res, i) => {
@@ -416,6 +431,7 @@ class Completed extends React.Component {
                                         let answer = this.state.answers.userAnswers
                                         let array = result.answer.split(",")
 
+                                        //If the users answer is the same as the answer, make the background of the input box green else make it red
                                         for (let x = 0; x < array.length; x++) {
                                             if (answer[index + x + 1].toLowerCase() == array[x]) {
                                                 style.push("#1AA260")
@@ -458,6 +474,7 @@ class Completed extends React.Component {
         }
 
         return (
+            //ReactToPrint allows the user to print the completed lesson or download it to a PDF
             <div ref={(response) => (this.componentRef = response)}>
                 {lesson}
                 < div style={{ textAlign: "center" }}>

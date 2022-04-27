@@ -1,10 +1,24 @@
 import { Link } from "react-router-dom"
 import AuthService from "../../services/auth.service"
 
+/**
+ * Login and logout buttons for the nav bar.
+ * This will be changed based on if the user
+ * is currently logged in.
+ * 
+ * @author Jordan Short, W18039155
+ */
+
 export default function LogButtons(props) {
+    // Calls logout service checks if localhost or dev enviroment
     function logout() {
         AuthService.logout()
-        window.location.href = "https://kipmcgrath.netlify.app/"
+        if (window.location.href.indexOf("localhost") > -1) {
+            window.location.href = "http://localhost:3000/"
+          }else{
+            window.location.href = "https://kipmcgrath.netlify.app/"
+          }
+        
     }
     let visible = false
     if (AuthService.getCurrentUser()) {

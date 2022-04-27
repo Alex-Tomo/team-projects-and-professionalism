@@ -30,6 +30,7 @@ class NonVerbalQuestions extends React.Component {
         this.handleChange = this.handleChange.bind(this)
     }
 
+    //Only displays the content if the user is logged in using the user service
     componentDidMount() {
         UserService.getUserBoard()
             .then((response) => {
@@ -55,11 +56,13 @@ class NonVerbalQuestions extends React.Component {
             })
     }
 
+    //Gets all non-verbal questions from the database, depending on what the lesson id is
     getQuestions = async () => {
         await axios.get('https://kip-learning.herokuapp.com/api/nonverballesson', {
             headers: authHeader(),
             params: { questionList: this.props.question }
         })
+            //Pushes all the results into the question list
             .then(res => {
                 let questionDetails = []
                 for (let i = 0; i < res.data.length; i++) {
@@ -85,6 +88,7 @@ class NonVerbalQuestions extends React.Component {
             })
     }
 
+    //Imports the images from the folder
     importAll = (r) => {
         let images = {}
         r.keys().forEach((item, index) => {
@@ -93,6 +97,7 @@ class NonVerbalQuestions extends React.Component {
         return images
     }
 
+    //Handles the input so the user can only type in 1 letter
     handleChange(e) {
         const numbers = /\d+/g
         const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/g
@@ -113,6 +118,7 @@ class NonVerbalQuestions extends React.Component {
         })
     }
 
+    //Function which handles the next question click, checking answer has correct input
     nextQuestionHandler = async e => {
         let answerLength = this.state.questionList[this.state.currentIndex].answer.split(',').length
         let answerString = this.state.questionList[this.state.currentIndex].answer
@@ -141,17 +147,20 @@ class NonVerbalQuestions extends React.Component {
             }
         }
 
+        //Tallies up the total max number of points the user can get
         this.setState({
             totalNumber: this.state.totalNumber + answerLength,
         })
         this.state.finalAnswer.push(userAnswer)
 
+        //If the users answer is the same as the answer in database they get a point
         if (userAnswer.toLowerCase() === answerString.toLowerCase()) {
             this.setState({
                 score: this.state.score + 1
             })
         }
 
+        //Checks whether there are any more questions, if there isn't, post the lesson data to the user lessons table
         if (this.state.currentIndex !== this.state.questionList.length - 1) {
             await this.setState({
                 currentIndex: this.state.currentIndex + 1,
@@ -199,6 +208,7 @@ class NonVerbalQuestions extends React.Component {
         let lessonName = ""
         let filename = ""
         let currentIndex = ""
+        //Imports the images from the nonverbalreasoningimages file
         const images = this.importAll(require.context('../nonverbalreasoningimages', false, /\.(svg)$/))
 
         if (!this.state.loggedIn) {

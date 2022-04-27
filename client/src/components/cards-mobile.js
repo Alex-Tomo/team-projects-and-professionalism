@@ -1,5 +1,11 @@
 import React from 'react'
 import Check from '../images/check.svg'
+/**
+ * Homepage card component that takes
+ * a colour.
+ * 
+ * @author Jordan Short, W18039155
+ */
 
 export default class cards extends React.Component {
     render() {

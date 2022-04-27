@@ -1,6 +1,16 @@
 import React from 'react'
 import AuthService from "../../services/auth.service"
 
+/**
+ * Password reset form component,
+ * this is the form sent by the password recovery
+ * class.
+ * Contains error handling and client side form 
+ * validation.
+ *
+ * @author Jordan Short, W18039155
+ */
+
 class PassResetForm extends React.Component {
     constructor(props) {
         super(props)
@@ -21,7 +31,10 @@ onChangePassword(e) {
         }
     }
 
-
+/**
+ * Resets password with the provided token
+ * from the users email.
+ */
       handleLogin(e) {
         e.preventDefault()
           let password = this.state.password
@@ -32,6 +45,7 @@ onChangePassword(e) {
     }
     componentDidMount() {
         var url = window.location;
+        //Gets generated token and passes it into state.
         var access_token = new URLSearchParams(url.search).get('token');
         this.setState({token: access_token})
     }
