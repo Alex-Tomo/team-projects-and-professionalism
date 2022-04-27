@@ -10,7 +10,7 @@ The project contains two directories `/client` & `/server`. The server directory
 To run the client locally enter the following commands into your terminal or powershell:
 
     git clone https://github.com/Alex-Tomo/team-projects-and-professionalism.git
-    cd team-projects-and-professionalism
+    cd team-projects-and-professionalism/client
     npm install
     
     ----- wait for installation -----
